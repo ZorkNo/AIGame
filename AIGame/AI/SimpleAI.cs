@@ -9,18 +9,20 @@ namespace AIGame.AI
 {
     public class SimpleAiType : iAiType
     {
-        public iAI getAi()
+        public iAI GetAi()
         {
             return new SimpleAI();
         }
     }
     public class SimpleAI:iAI
     {
-        public UnitSensor unitSensor;
-        public iOrder getOrder(UnitSensor _unitSensor)
+        public Sensor Sensor;
+        public iOrder GetOrder(Sensor sensor,Unit unit)
         {
-            unitSensor = _unitSensor;
-            return new DoNothing();
+            Sensor = sensor;
+            Move move = new Move();
+            move.SetUnit(unit);
+            return move;
         }
         
     }

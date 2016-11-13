@@ -13,11 +13,11 @@ namespace AIGame.CoreGame
         public int ySize;
 
 
-        public Map()
+        public Map(int _xSize, int _ySize)
         {
             Random rnd = new Random();
-            xSize = 20;
-            ySize = 20;
+            xSize = _xSize;
+            ySize = _ySize;
             generateMap(xSize,ySize, rnd);
         }
   
@@ -42,7 +42,7 @@ namespace AIGame.CoreGame
 
             return new Terrain(TerrainType.Sea);
         }
-        public Tuple<int, int> getValidStartPosition(List<Unit> units)
+        public Tuple<int, int> GetValidStartPosition(List<Unit> units)
         {
             Random rnd = new Random();
             Tuple<int, int> rndCoordinates;

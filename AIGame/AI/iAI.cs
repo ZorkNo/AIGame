@@ -9,11 +9,11 @@ namespace AIGame.AI
 {
     public interface iAiType
     {
-        iAI getAi();
+        iAI GetAi();
     }
     public interface iAI
     {
-        iOrder getOrder(UnitSensor _unitSensor);
+        iOrder GetOrder(Sensor sensor, Unit unit);
     }
 
 }

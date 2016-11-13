@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using AIGame.AI;
+using AIGame.CoreGame;
 
 namespace AIGame.CoreGame
 {
@@ -17,14 +18,14 @@ namespace AIGame.CoreGame
 
         public Game(iAiType blue, iAiType red)
         {
-            map = new Map();
+            map = new Map(20,20);
 
             units = new List<Unit>();
 
-            units.Add(new Unit("A", side.blue, blue.getAi(), map.getValidStartPosition(units)));
-            units.Add(new Unit("X", side.red, red.getAi(), map.getValidStartPosition(units)));
-            units.Add(new Unit("B", side.blue, blue.getAi(), map.getValidStartPosition(units)));
-            units.Add(new Unit("Y", side.red, red.getAi(), map.getValidStartPosition(units)));
+            units.Add(new Unit("A", side.blue, blue.GetAi(), map.GetValidStartPosition(units)));
+            units.Add(new Unit("X", side.red, red.GetAi(), map.GetValidStartPosition(units)));
+            units.Add(new Unit("B", side.blue, blue.GetAi(), map.GetValidStartPosition(units)));
+            units.Add(new Unit("Y", side.red, red.GetAi(), map.GetValidStartPosition(units)));
         }
         public void PlayUntilEnd()
         {
@@ -35,7 +36,15 @@ namespace AIGame.CoreGame
             }
         }
         public void NextTurn()
-        {}
+        {
+            foreach(Unit unit in units)
+            {
+                unit.UpdateSensor(map);
+                iOrder order = unit.GetOrder();
+                order.Execute();
+            }
+            turn++;   
+        }
         public void Render()
         {
             RenderBoard();

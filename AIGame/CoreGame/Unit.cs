@@ -9,13 +9,14 @@ namespace AIGame.CoreGame
 {
     public class Unit
     {
-        private int health = 100;
         public string name;
-        private side owner;
         public Tuple<int, int> coordinates;
         public Direction facing;
-        private iAI ai;
-        private UnitSensor unitSensor;
+
+        public int health = 100;
+        public side owner;
+        public iAI ai;
+        public Sensor sensor;
 
 
         public Unit(string _name, side _owner, iAI _ai, Tuple<int, int> _coordinates)
@@ -24,19 +25,24 @@ namespace AIGame.CoreGame
             owner = _owner;
             ai = _ai;
             coordinates = _coordinates;
+            facing = Direction.north;
+            sensor = new Sensor();
+            sensor.health = health;
+            sensor.facing = facing;
         }
-        public iOrder getOrder()
+        public iOrder GetOrder()
         {
-            return ai.getOrder(unitSensor);
+            return ai.GetOrder(sensor,this);
         }
-        public void UpdateUnitSensor(Map map)
+   
+        public void UpdateSensor(Map map)
         {
-            unitSensor.health = health;
-            unitSensor.facing = facing;
+            sensor.health = health;
+            sensor.facing = facing;
 
         }
     }
-    public class UnitSensor
+    public class Sensor
     {
         public int health;
         public Direction facing;

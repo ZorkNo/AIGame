@@ -6,17 +6,7 @@ using System.Threading.Tasks;
 
 namespace AIGame.CoreGame
 {
-
-    public enum side
+    public class Rules
     {
-        red,
-        blue
-    }
-    public enum Direction
-    {
-        north,
-        south,
-        east,
-        west
     }
 }
