@@ -4,6 +4,7 @@
     {
         Move,
         Turn,
-        DoNothing
+        DoNothing,
+        Scan
     }
 }

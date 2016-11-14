@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using AIGame.CoreGame;
 using AIGame.CoreGame.Orders;
+using Rotate = AIGame.CoreGame.Orders.Rotate;
 
 namespace AIGame.AI
 {
@@ -15,6 +16,11 @@ namespace AIGame.AI
         {
             return new RandomAI(Rnd);
         }
+
+        public void SetRandomGenerator(Random rnd)
+        {
+            Rnd=rnd;
+        }
     }
     public class RandomAI:IAi
     {
@@ -22,14 +28,7 @@ namespace AIGame.AI
         private Random Rnd;
         public RandomAI(Random rnd)
         {
-            if (rnd==null)
-            { 
-                Rnd = new Random();
-            }
-            else
-            {
-                Rnd = rnd;
-            }
+            Rnd = rnd;
         }
         public IOrder GetOrder(Sensor sensor)
         {
@@ -51,27 +50,24 @@ namespace AIGame.AI
                     order = new Move();
                     break;
                 case 2:
-                     order = new Turn(getDirection());
+                     order = new Rotate(getDirection());
                     break;
                 default:
                     throw new Exception("not a valid direction");
             }
             return order;
         }
-        private Direction getDirection()
+        private RotateDirection getDirection()
         {
-           
-            int rndInt = Rnd.Next(1,5);
+
+            int rndInt = Rnd.Next(1, 3);
             switch (rndInt)
             {
                 case 1:
-                    return Direction.North;
+                    return RotateDirection.Left;
                 case 2:
-                    return Direction.South;
-                case 3:
-                    return Direction.East;
-                case 4:
-                    return Direction.West;
+                    return RotateDirection.Right;
+
                 default:
                      throw new Exception("not a valid direction");
             }

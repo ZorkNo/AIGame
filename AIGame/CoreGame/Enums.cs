@@ -7,6 +7,11 @@ namespace AIGame.CoreGame
         Red,
         Blue
     }
+    public enum RotateDirection
+    {
+        Left,
+        Right
+    }
     public enum Victory
     {
         RedWin,
@@ -15,9 +20,9 @@ namespace AIGame.CoreGame
     }
     public enum Direction
     {
-        North,
-        South,
-        East,
-        West
+        North = 0,
+        West = 1,
+        South = 2,
+        East = 3
     }
 }

@@ -22,6 +22,9 @@ namespace AIGame.CoreGame
 
         public Terrain GetTerrain(Tuple<int,int> coordinates)
         {
+            if (Helper.IsOutOfbounce(XSize, YSize, coordinates))
+                return new Terrain(TerrainType.Edge);
+
             return Terrain[coordinates.Item1, coordinates.Item2];
         }
         private void GenerateMap(int xSize,int ySize)

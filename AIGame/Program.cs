@@ -12,13 +12,13 @@ namespace AIGame
         static void Main(string[] args)
         {
             Random rnd= new Random(Environment.TickCount);
-            RandomAiType blueAiType = new RandomAiType();
-            blueAiType.Rnd = rnd;
-            RandomAiType redAiType = new RandomAiType();
-            redAiType.Rnd = rnd;
-
+           
+            IAiType blueAiType = new SimpleAiType();
+            blueAiType.SetRandomGenerator(rnd);
+            IAiType redAiType = new SimpleAiType();
+            redAiType.SetRandomGenerator(rnd);
             Game game = new Game(blueAiType,redAiType,40,60,rnd); ;
-            for (int i =0;i<100;i++)
+            for (int i =0;i<100000;i++)
             {
                 Console.Clear();
                 game.Render();

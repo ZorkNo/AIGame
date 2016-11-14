@@ -25,7 +25,6 @@ namespace AIGame.CoreGame
             Facing = Direction.North;
             Sensor = new Sensor();
             Sensor.Health = Health;
-            Sensor.Facing = Facing;
         }
         public IOrder GetOrder()
         {
@@ -35,9 +34,11 @@ namespace AIGame.CoreGame
         public void UpdateSensor(Map map)
         {
             Sensor.Health = Health;
-            Sensor.Facing = Facing;
-            
-            
+
+            Tuple<int, int> infrontXy= Helper.NewCoordinates(Coordinates, Facing);
+            Sensor.Infront = map.GetTerrain(infrontXy);
+
+
 
         }
     }

@@ -17,8 +17,10 @@ namespace AIGame.CoreGame.Orders
         public bool IsValid(Unit unit, Map map)
         {
             Tuple<int, int> newCoordinates= Helper.NewCoordinates(unit.Coordinates,unit.Facing );
+
+            bool isOutOfbounce = Helper.IsOutOfbounce(map.XSize, map.YSize, newCoordinates);
             //Is out of bounce
-            if (newCoordinates.Item1 < 0 || newCoordinates.Item2 < 0 || newCoordinates.Item1 > map.XSize || newCoordinates.Item2 > map.YSize)
+            if (isOutOfbounce)
             {
                 Console.WriteLine(string.Format("{0}: is trying to move out of bounce", unit.Name)); 
                 return false;
@@ -32,5 +34,7 @@ namespace AIGame.CoreGame.Orders
             }
             return true;
         }
+
+        
     }
 }
