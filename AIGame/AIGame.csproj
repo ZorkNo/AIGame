@@ -48,7 +48,11 @@
     <Compile Include="CoreGame\Enums.cs" />
     <Compile Include="CoreGame\Game.cs" />
     <Compile Include="CoreGame\Map.cs" />
-    <Compile Include="CoreGame\Order.cs" />
+    <Compile Include="CoreGame\Orders\DoNothing.cs" />
+    <Compile Include="CoreGame\Orders\iOrder.cs" />
+    <Compile Include="CoreGame\Orders\Move.cs" />
+    <Compile Include="CoreGame\Orders\OrderType.cs" />
+    <Compile Include="CoreGame\Orders\Turn.cs" />
     <Compile Include="CoreGame\Rules.cs" />
     <Compile Include="CoreGame\Terrain.cs" />
     <Compile Include="CoreGame\Unit.cs" />
@@ -58,7 +62,9 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Orders\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

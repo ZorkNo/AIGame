@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using AIGame.CoreGame;
+using AIGame.CoreGame.Orders;
 
 namespace AIGame.AI
 {
@@ -21,7 +22,6 @@ namespace AIGame.AI
         {
             Sensor = sensor;
             Move move = new Move();
-            move.SetUnit(unit);
             return move;
         }
         

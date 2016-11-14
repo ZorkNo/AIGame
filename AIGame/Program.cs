@@ -14,8 +14,10 @@ namespace AIGame
             Game game = new Game(new SimpleAiType(), new SimpleAiType()); ;
             for (int i =0;i<100;i++)
             {
-                game.NextTurn();
+                Console.Clear();
                 game.Render();
+                game.NextTurn();
+                
                 Console.ReadKey();
 
             }

@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using AIGame.AI;
 using AIGame.CoreGame;
+using AIGame.CoreGame.Orders;
 
 namespace AIGame.CoreGame
 {
@@ -33,6 +34,7 @@ namespace AIGame.CoreGame
             {
                 NextTurn();
                 Render();
+
             }
         }
         public void NextTurn()
@@ -41,7 +43,10 @@ namespace AIGame.CoreGame
             {
                 unit.UpdateSensor(map);
                 iOrder order = unit.GetOrder();
-                order.Execute();
+                if (order.IsValid(unit, map))
+                { 
+                    order.Execute(unit, map);
+                }
             }
             turn++;   
         }
@@ -51,7 +56,7 @@ namespace AIGame.CoreGame
         }
         private void RenderBoard()
         {
-            Console.Clear();
+            
             for (int x = 0; x <= map.xSize; x++)
             {
                 string line = "";    

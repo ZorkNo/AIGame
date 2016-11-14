@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using AIGame.CoreGame;
+using AIGame.CoreGame.Orders;
 
 namespace AIGame.AI
 {
