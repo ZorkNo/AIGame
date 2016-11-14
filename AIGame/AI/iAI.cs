@@ -1,18 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using AIGame.CoreGame;
+﻿using AIGame.CoreGame;
 using AIGame.CoreGame.Orders;
 
 namespace AIGame.AI
 {
-    public interface iAiType
+    public interface IAiType
     {
-        iAI GetAi();
+        IAi GetAi();
     }
-    public interface iAI
+    public interface IAi
     {
         IOrder GetOrder(Sensor sensor);
     }

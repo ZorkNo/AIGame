@@ -18,7 +18,7 @@ namespace AIGame.CoreGame.Orders
 
         public void Execute(Unit unit, Map map)
         {
-            unit.facing = Direction;
+            unit.Facing = Direction;
         }
 
         public bool IsValid(Unit unit, Map map)

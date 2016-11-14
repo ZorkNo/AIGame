@@ -8,15 +8,15 @@ using AIGame.CoreGame.Orders;
 
 namespace AIGame.AI
 {
-    public class RandomAiType : iAiType
+    public class RandomAiType : IAiType
     {
         public Random Rnd;
-        public iAI GetAi()
+        public IAi GetAi()
         {
             return new RandomAI(Rnd);
         }
     }
-    public class RandomAI:iAI
+    public class RandomAI:IAi
     {
         private Sensor Sensor;
         private Random Rnd;
@@ -65,13 +65,13 @@ namespace AIGame.AI
             switch (rndInt)
             {
                 case 1:
-                    return Direction.north;
+                    return Direction.North;
                 case 2:
-                    return Direction.south;
+                    return Direction.South;
                 case 3:
-                    return Direction.east;
+                    return Direction.East;
                 case 4:
-                    return Direction.west;
+                    return Direction.West;
                 default:
                      throw new Exception("not a valid direction");
             }

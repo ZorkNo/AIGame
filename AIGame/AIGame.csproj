@@ -45,7 +45,7 @@
   <ItemGroup>
     <Compile Include="AI\RandomAI.cs" />
     <Compile Include="AI\SimpleAI.cs" />
-    <Compile Include="AI\iAI.cs" />
+    <Compile Include="AI\IAi.cs" />
     <Compile Include="CoreGame\Enums.cs" />
     <Compile Include="CoreGame\Game.cs" />
     <Compile Include="CoreGame\Helper.cs" />

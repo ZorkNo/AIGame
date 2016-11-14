@@ -1,37 +1,32 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using AIGame.CoreGame;
+﻿using AIGame.CoreGame;
 using AIGame.CoreGame.Orders;
 
 namespace AIGame.AI
 {
-    public class SimpleAiType : iAiType
+    public class SimpleAiType : IAiType
     {
-        public iAI GetAi()
+        public IAi GetAi()
         {
-            return new SimpleAI();
+            return new SimpleAi();
         }
     }
-    public class SimpleAI:iAI
+    public class SimpleAi:IAi
     {
-        private int turn=0;
+        private int _turn=0;
         public Sensor Sensor;
         public IOrder GetOrder(Sensor sensor)
         {
             IOrder order;
-            if(turn==0)
+            if(_turn==0)
             { 
-                order= new Turn(Direction.east);
+                order= new Turn(Direction.East);
             }
             else
             {
                 order = new Move();
             }
             
-            turn++;
+            _turn++;
             return order;
         }
         

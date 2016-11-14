@@ -1,44 +1,42 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace AIGame.CoreGame
 {
     public class Map
     {
-        public Terrain[,] terrain;
-        public int xSize;
-        public int ySize;
+        public Terrain[,] Terrain;
+        public int XSize;
+        public int YSize;
         private Random Rnd;
 
 
-        public Map(int _xSize, int _ySize,Random rnd)
+        public Map(int xSize, int ySize,Random rnd)
         {
             Rnd = rnd;
-            xSize = _xSize;
-            ySize = _ySize;
-            generateMap(xSize,ySize);
+            XSize = xSize;
+            YSize = ySize;
+            GenerateMap(XSize,YSize);
         }
 
         public Terrain GetTerrain(Tuple<int,int> coordinates)
         {
-            return terrain[coordinates.Item1, coordinates.Item2];
+            return Terrain[coordinates.Item1, coordinates.Item2];
         }
-        private void generateMap(int xSize,int ySize)
+        private void GenerateMap(int xSize,int ySize)
         {
-            terrain = new Terrain[xSize+1, ySize+1];
+            Terrain = new Terrain[xSize+1, ySize+1];
 
             for (int x=0;x<= xSize;x++)
             {
                 for (int y = 0; y <= ySize; y++)
                 {
-                    terrain[x, y] = generateTerrain();
+                    Terrain[x, y] = GenerateTerrain();
                 }
             }
         }
-        private Terrain generateTerrain()
+        private Terrain GenerateTerrain()
         {
             int rndNumber = Rnd.Next(1, 100);
 
@@ -50,12 +48,12 @@ namespace AIGame.CoreGame
         public Tuple<int, int> GetValidStartPosition(List<Unit> units)
         {
             Tuple<int, int> rndCoordinates;
-            while (1==1)
+            while (true)
             {
-                int rndX = Rnd.Next(0, xSize);
-                int rndY = Rnd.Next(0, ySize);
+                int rndX = Rnd.Next(0, XSize);
+                int rndY = Rnd.Next(0, YSize);
                 rndCoordinates = new Tuple<int, int>(rndX, rndY);
-                if(terrain[rndX,rndY].Type != TerrainType.Land && !units.Any(u => u.coordinates.Equals(rndCoordinates)))
+                if(Terrain[rndX,rndY].Type != TerrainType.Land && !units.Any(u => u.Coordinates.Equals(rndCoordinates)))
                     break;
             }
             return rndCoordinates;

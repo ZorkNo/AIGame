@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using AIGame.AI;
 using AIGame.CoreGame.Orders;
 
@@ -10,36 +6,36 @@ namespace AIGame.CoreGame
 {
     public class Unit
     {
-        public string name;
-        public Tuple<int, int> coordinates;
-        public Direction facing;
+        public string Name;
+        public Tuple<int, int> Coordinates;
+        public Direction Facing;
 
-        public int health = 100;
-        public Side owner;
-        public iAI ai;
-        public Sensor sensor;
+        public int Health = 100;
+        public Side Owner;
+        public IAi Ai;
+        public Sensor Sensor;
 
 
-        public Unit(string _name, Side _owner, iAI _ai, Tuple<int, int> _coordinates)
+        public Unit(string name, Side owner, IAi ai, Tuple<int, int> coordinates)
         {
-            name = _name;
-            owner = _owner;
-            ai = _ai;
-            coordinates = _coordinates;
-            facing = Direction.north;
-            sensor = new Sensor();
-            sensor.Health = health;
-            sensor.Facing = facing;
+            Name = name;
+            Owner = owner;
+            Ai = ai;
+            Coordinates = coordinates;
+            Facing = Direction.North;
+            Sensor = new Sensor();
+            Sensor.Health = Health;
+            Sensor.Facing = Facing;
         }
         public IOrder GetOrder()
         {
-            return ai.GetOrder(sensor);
+            return Ai.GetOrder(Sensor);
         }
    
         public void UpdateSensor(Map map)
         {
-            sensor.Health = health;
-            sensor.Facing = facing;
+            Sensor.Health = Health;
+            Sensor.Facing = Facing;
             
             
 

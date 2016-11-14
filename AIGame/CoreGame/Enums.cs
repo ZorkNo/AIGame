@@ -1,28 +1,23 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
+﻿
 namespace AIGame.CoreGame
 {
 
     public enum Side
     {
-        red,
-        blue
+        Red,
+        Blue
     }
     public enum Victory
     {
-        redWin,
-        blueWin,
-        tie,
+        RedWin,
+        BlueWin,
+        Tie,
     }
     public enum Direction
     {
-        north,
-        south,
-        east,
-        west
+        North,
+        South,
+        East,
+        West
     }
 }

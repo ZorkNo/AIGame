@@ -9,17 +9,17 @@ namespace AIGame.CoreGame
             Tuple<int, int> newCoordinates;
             switch (direction)
             {
-                case Direction.north:
+                case Direction.North:
                     newCoordinates = new Tuple<int, int>(oldCoordinates.Item1 - 1, oldCoordinates.Item2);
                     
                     break;
-                case Direction.south:
+                case Direction.South:
                     newCoordinates = new Tuple<int, int>(oldCoordinates.Item1 + 1, oldCoordinates.Item2);
                     break;
-                case Direction.east:
+                case Direction.East:
                     newCoordinates = new Tuple<int, int>(oldCoordinates.Item1, oldCoordinates.Item2 - 1);
                     break;
-                case Direction.west:
+                case Direction.West:
                     newCoordinates = new Tuple<int, int>(oldCoordinates.Item1, oldCoordinates.Item2 + 1);
                     break;
                 default:
