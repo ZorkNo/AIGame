@@ -43,6 +43,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AI\RandomAI.cs" />
     <Compile Include="AI\SimpleAI.cs" />
     <Compile Include="AI\iAI.cs" />
     <Compile Include="CoreGame\Enums.cs" />

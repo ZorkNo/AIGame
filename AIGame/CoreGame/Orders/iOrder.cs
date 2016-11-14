@@ -1,6 +1,6 @@
 ﻿namespace AIGame.CoreGame.Orders
 {
-    public interface iOrder
+    public interface IOrder
     {
         OrderType Type();
         void Execute(Unit unit, Map map);

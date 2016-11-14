@@ -2,7 +2,7 @@
 
 namespace AIGame.CoreGame.Orders
 {
-    public class DoNothing : iOrder
+    public class DoNothing : IOrder
     {
         public OrderType Type()
         {
@@ -12,12 +12,11 @@ namespace AIGame.CoreGame.Orders
 
         public void Execute(Unit unit, Map map)
         {
-            throw new NotImplementedException();
         }
 
         public bool IsValid(Unit unit, Map map)
         {
-            throw new NotImplementedException();
+            return true;
         }
     }
 

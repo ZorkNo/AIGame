@@ -2,7 +2,7 @@
 
 namespace AIGame.CoreGame.Orders
 {
-    public class Turn : iOrder
+    public class Turn : IOrder
     {
         public Direction Direction;
 
@@ -18,12 +18,12 @@ namespace AIGame.CoreGame.Orders
 
         public void Execute(Unit unit, Map map)
         {
-            throw new NotImplementedException();
+            unit.facing = Direction;
         }
 
         public bool IsValid(Unit unit, Map map)
         {
-            throw new NotImplementedException();
+            return true;
         }
     }
 }

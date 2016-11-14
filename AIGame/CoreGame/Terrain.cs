@@ -8,15 +8,15 @@ namespace AIGame.CoreGame
 {
     public class Terrain
     {
-        public TerrainType type;
+        public TerrainType Type;
 
-        public Terrain (TerrainType type1)
+        public Terrain (TerrainType type)
         {
-            type = type1;
+            Type = type;
         }
         public string Render()
         {
-            switch (type)
+            switch (Type)
             {
                 case TerrainType.Land:
                     return ".";

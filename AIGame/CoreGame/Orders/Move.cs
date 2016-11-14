@@ -2,7 +2,7 @@
 
 namespace AIGame.CoreGame.Orders
 {
-    public class Move:iOrder
+    public class Move:IOrder
     {
         public OrderType Type()
         {
@@ -23,8 +23,8 @@ namespace AIGame.CoreGame.Orders
                 return false;
             }
             //on land
-            if (map.terrain[newCoordinates.Item1, newCoordinates.Item2].type == TerrainType.Land ||
-                map.terrain[newCoordinates.Item1, newCoordinates.Item2].type == TerrainType.Edge)
+            if (map.terrain[newCoordinates.Item1, newCoordinates.Item2].Type == TerrainType.Land ||
+                map.terrain[newCoordinates.Item1, newCoordinates.Item2].Type == TerrainType.Edge)
             {
                 Console.WriteLine(string.Format("{0}: is trying to move on land", unit.name));
                 return false;
@@ -38,10 +38,11 @@ namespace AIGame.CoreGame.Orders
             switch (unit.facing)
             {
                 case Direction.north:
-                    newCoordinates = new Tuple<int, int>(unit.coordinates.Item1 + 1, unit.coordinates.Item2);
+                    newCoordinates = new Tuple<int, int>(unit.coordinates.Item1 - 1, unit.coordinates.Item2);
+                    
                     break;
                 case Direction.south:
-                    newCoordinates = new Tuple<int, int>(unit.coordinates.Item1 - 1, unit.coordinates.Item2);
+                    newCoordinates = new Tuple<int, int>(unit.coordinates.Item1 + 1, unit.coordinates.Item2);
                     break;
                 case Direction.east:
                     newCoordinates = new Tuple<int, int>(unit.coordinates.Item1, unit.coordinates.Item2 - 1);

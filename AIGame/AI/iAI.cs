@@ -14,7 +14,7 @@ namespace AIGame.AI
     }
     public interface iAI
     {
-        iOrder GetOrder(Sensor sensor, Unit unit);
+        IOrder GetOrder(Sensor sensor);
     }
 
 }

@@ -51,7 +51,7 @@ namespace AIGame.CoreGame
                 int rndX = rnd.Next(0, xSize);
                 int rndY = rnd.Next(0, ySize);
                 rndCoordinates = new Tuple<int, int>(rndX, rndY);
-                if(terrain[rndX,rndY].type != TerrainType.Land && !units.Any(u => u.coordinates.Equals(rndCoordinates)))
+                if(terrain[rndX,rndY].Type != TerrainType.Land && !units.Any(u => u.coordinates.Equals(rndCoordinates)))
                     break;
             }
             return rndCoordinates;

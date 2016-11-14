@@ -31,9 +31,9 @@ namespace AIGame.CoreGame
             sensor.health = health;
             sensor.facing = facing;
         }
-        public iOrder GetOrder()
+        public IOrder GetOrder()
         {
-            return ai.GetOrder(sensor,this);
+            return ai.GetOrder(sensor);
         }
    
         public void UpdateSensor(Map map)

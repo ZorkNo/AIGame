@@ -17,12 +17,22 @@ namespace AIGame.AI
     }
     public class SimpleAI:iAI
     {
+        private int turn=0;
         public Sensor Sensor;
-        public iOrder GetOrder(Sensor sensor,Unit unit)
+        public IOrder GetOrder(Sensor sensor)
         {
-            Sensor = sensor;
-            Move move = new Move();
-            return move;
+            IOrder order;
+            if(turn==0)
+            { 
+                order= new Turn(Direction.east);
+            }
+            else
+            {
+                order = new Move();
+            }
+            
+            turn++;
+            return order;
         }
         
     }

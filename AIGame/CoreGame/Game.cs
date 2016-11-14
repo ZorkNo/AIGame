@@ -15,11 +15,11 @@ namespace AIGame.CoreGame
         public int maxTurn = 100;
         public Map map;
         public List<Unit> units;
-        //public bool gameEnded = false;
+        public bool gameEnded = false;
 
-        public Game(iAiType blue, iAiType red)
+        public Game(iAiType blue, iAiType red,int xSize,int ySize)
         {
-            map = new Map(20,20);
+            map = new Map(xSize, ySize);
 
             units = new List<Unit>();
 
@@ -33,16 +33,30 @@ namespace AIGame.CoreGame
             for (int i=0;i >maxTurn;i++)
             {
                 NextTurn();
-                Render();
+                if (IsGameEnded())
+                    break;
 
             }
         }
+
+        private bool IsGameEnded()
+        {
+
+            //No more units
+
+            //Only one type of units
+
+            //Max turns
+
+            return false;
+        }
+
         public void NextTurn()
         {
             foreach(Unit unit in units)
             {
                 unit.UpdateSensor(map);
-                iOrder order = unit.GetOrder();
+                IOrder order = unit.GetOrder();
                 if (order.IsValid(unit, map))
                 { 
                     order.Execute(unit, map);
