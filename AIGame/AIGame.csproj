@@ -48,13 +48,14 @@
     <Compile Include="AI\iAI.cs" />
     <Compile Include="CoreGame\Enums.cs" />
     <Compile Include="CoreGame\Game.cs" />
+    <Compile Include="CoreGame\Helper.cs" />
     <Compile Include="CoreGame\Map.cs" />
     <Compile Include="CoreGame\Orders\DoNothing.cs" />
     <Compile Include="CoreGame\Orders\iOrder.cs" />
     <Compile Include="CoreGame\Orders\Move.cs" />
     <Compile Include="CoreGame\Orders\OrderType.cs" />
     <Compile Include="CoreGame\Orders\Turn.cs" />
-    <Compile Include="CoreGame\Rules.cs" />
+    <Compile Include="CoreGame\Sensor.cs" />
     <Compile Include="CoreGame\Terrain.cs" />
     <Compile Include="CoreGame\Unit.cs" />
     <Compile Include="Program.cs" />

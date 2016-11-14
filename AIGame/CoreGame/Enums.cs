@@ -7,10 +7,16 @@ using System.Threading.Tasks;
 namespace AIGame.CoreGame
 {
 
-    public enum side
+    public enum Side
     {
         red,
         blue
+    }
+    public enum Victory
+    {
+        redWin,
+        blueWin,
+        tie,
     }
     public enum Direction
     {

@@ -15,12 +15,12 @@ namespace AIGame.CoreGame
         public Direction facing;
 
         public int health = 100;
-        public side owner;
+        public Side owner;
         public iAI ai;
         public Sensor sensor;
 
 
-        public Unit(string _name, side _owner, iAI _ai, Tuple<int, int> _coordinates)
+        public Unit(string _name, Side _owner, iAI _ai, Tuple<int, int> _coordinates)
         {
             name = _name;
             owner = _owner;
@@ -28,8 +28,8 @@ namespace AIGame.CoreGame
             coordinates = _coordinates;
             facing = Direction.north;
             sensor = new Sensor();
-            sensor.health = health;
-            sensor.facing = facing;
+            sensor.Health = health;
+            sensor.Facing = facing;
         }
         public IOrder GetOrder()
         {
@@ -38,15 +38,11 @@ namespace AIGame.CoreGame
    
         public void UpdateSensor(Map map)
         {
-            sensor.health = health;
-            sensor.facing = facing;
+            sensor.Health = health;
+            sensor.Facing = facing;
+            
+            
 
         }
-    }
-    public class Sensor
-    {
-        public int health;
-        public Direction facing;
-        public Terrain infront;
     }
 }

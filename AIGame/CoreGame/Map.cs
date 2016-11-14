@@ -11,17 +11,22 @@ namespace AIGame.CoreGame
         public Terrain[,] terrain;
         public int xSize;
         public int ySize;
+        private Random Rnd;
 
 
-        public Map(int _xSize, int _ySize)
+        public Map(int _xSize, int _ySize,Random rnd)
         {
-            Random rnd = new Random();
+            Rnd = rnd;
             xSize = _xSize;
             ySize = _ySize;
-            generateMap(xSize,ySize, rnd);
+            generateMap(xSize,ySize);
         }
-  
-        private void generateMap(int xSize,int ySize, Random rnd)
+
+        public Terrain GetTerrain(Tuple<int,int> coordinates)
+        {
+            return terrain[coordinates.Item1, coordinates.Item2];
+        }
+        private void generateMap(int xSize,int ySize)
         {
             terrain = new Terrain[xSize+1, ySize+1];
 
@@ -29,13 +34,13 @@ namespace AIGame.CoreGame
             {
                 for (int y = 0; y <= ySize; y++)
                 {
-                    terrain[x, y] = generateTerrain(rnd);
+                    terrain[x, y] = generateTerrain();
                 }
             }
         }
-        private Terrain generateTerrain(Random rnd)
+        private Terrain generateTerrain()
         {
-            int rndNumber = rnd.Next(1, 100);
+            int rndNumber = Rnd.Next(1, 100);
 
             if (rndNumber > 95)
                 return new Terrain(TerrainType.Land);
@@ -44,12 +49,11 @@ namespace AIGame.CoreGame
         }
         public Tuple<int, int> GetValidStartPosition(List<Unit> units)
         {
-            Random rnd = new Random();
             Tuple<int, int> rndCoordinates;
             while (1==1)
             {
-                int rndX = rnd.Next(0, xSize);
-                int rndY = rnd.Next(0, ySize);
+                int rndX = Rnd.Next(0, xSize);
+                int rndY = Rnd.Next(0, ySize);
                 rndCoordinates = new Tuple<int, int>(rndX, rndY);
                 if(terrain[rndX,rndY].Type != TerrainType.Land && !units.Any(u => u.coordinates.Equals(rndCoordinates)))
                     break;

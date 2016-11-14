@@ -17,16 +17,16 @@ namespace AIGame.CoreGame
         public List<Unit> units;
         public bool gameEnded = false;
 
-        public Game(iAiType blue, iAiType red,int xSize,int ySize)
+        public Game(iAiType blue, iAiType red,int xSize,int ySize,Random rnd)
         {
-            map = new Map(xSize, ySize);
+            map = new Map(xSize, ySize, rnd);
 
             units = new List<Unit>();
 
-            units.Add(new Unit("A", side.blue, blue.GetAi(), map.GetValidStartPosition(units)));
-            units.Add(new Unit("X", side.red, red.GetAi(), map.GetValidStartPosition(units)));
-            units.Add(new Unit("B", side.blue, blue.GetAi(), map.GetValidStartPosition(units)));
-            units.Add(new Unit("Y", side.red, red.GetAi(), map.GetValidStartPosition(units)));
+            units.Add(new Unit("A", Side.blue, blue.GetAi(), map.GetValidStartPosition(units)));
+            units.Add(new Unit("X", Side.red, red.GetAi(), map.GetValidStartPosition(units)));
+            units.Add(new Unit("B", Side.blue, blue.GetAi(), map.GetValidStartPosition(units)));
+            units.Add(new Unit("Y", Side.red, red.GetAi(), map.GetValidStartPosition(units)));
         }
         public void PlayUntilEnd()
         {

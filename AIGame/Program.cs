@@ -17,7 +17,7 @@ namespace AIGame
             RandomAiType redAiType = new RandomAiType();
             redAiType.Rnd = rnd;
 
-            Game game = new Game(blueAiType,redAiType,40,60); ;
+            Game game = new Game(blueAiType,redAiType,40,60,rnd); ;
             for (int i =0;i<100;i++)
             {
                 Console.Clear();
