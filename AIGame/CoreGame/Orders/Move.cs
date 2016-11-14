@@ -19,14 +19,14 @@ namespace AIGame.CoreGame.Orders
             //Is out of bounce
             if (newCoordinates.Item1 < 0 || newCoordinates.Item2 < 0 || newCoordinates.Item1 > map.xSize || newCoordinates.Item2 > map.ySize)
             {
-                Console.WriteLine(string.Format("[0] is trying to move out of bounce"), unit.name); 
+                Console.WriteLine(string.Format("{0}: is trying to move out of bounce", unit.name)); 
                 return false;
             }
             //on land
             if (map.terrain[newCoordinates.Item1, newCoordinates.Item2].type == TerrainType.Land ||
                 map.terrain[newCoordinates.Item1, newCoordinates.Item2].type == TerrainType.Edge)
             {
-                Console.WriteLine(string.Format("[0] is out of bounce"), unit.name);
+                Console.WriteLine(string.Format("{0}: is trying to move on land", unit.name));
                 return false;
             }
             return true;
