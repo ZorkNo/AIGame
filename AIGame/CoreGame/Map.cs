@@ -12,7 +12,6 @@ namespace AIGame.CoreGame
         public int YSize;
         private Random Rnd;
 
-
         public Map(int xSize, int ySize,Random rnd, List<Unit> units)
         {
             Rnd = rnd;
@@ -37,6 +36,8 @@ namespace AIGame.CoreGame
         }
         private void GenerateMap(int xSize,int ySize)
         {
+            //Der måske en mere interassant kort generering med Perlin noise
+
             Terrain = new Terrain[xSize+1, ySize+1];
 
             for (int x=0;x<= xSize;x++)
