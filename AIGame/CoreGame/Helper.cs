@@ -11,7 +11,6 @@ namespace AIGame.CoreGame
             {
                 case Direction.North:
                     newCoordinates = new Tuple<int, int>(oldCoordinates.Item1 - 1, oldCoordinates.Item2);
-                    
                     break;
                 case Direction.South:
                     newCoordinates = new Tuple<int, int>(oldCoordinates.Item1 + 1, oldCoordinates.Item2);

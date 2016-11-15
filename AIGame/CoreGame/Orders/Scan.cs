@@ -12,12 +12,13 @@ namespace AIGame.CoreGame.Orders
 
         public void Execute(Unit unit, Map map)
         {
-            throw new NotImplementedException();
+            //Måske er der mere elegant måde at gøre det her 
+            unit.Sensor.HasScanned=true;
         }
 
         public bool IsValid(Unit unit, Map map)
         {
-            throw new NotImplementedException();
+            return true;
         }
     }
 

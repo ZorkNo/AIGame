@@ -10,19 +10,19 @@ namespace AIGame.CoreGame
         public int Turn;
         public int MaxTurn = 100;
         public Map Map;
-        public List<Unit> Units;
         public bool GameEnded = false;
 
         public Game(IAiType blue, IAiType red,int xSize,int ySize,Random rnd)
         {
-            Map = new Map(xSize, ySize, rnd);
+            List<Unit> units = new List<Unit>();
 
-            Units = new List<Unit>();
+            units.Add(new Unit("A", Side.Blue, blue.GetAi()));
+            units.Add(new Unit("X", Side.Red, red.GetAi()));
+            units.Add(new Unit("B", Side.Blue, blue.GetAi()));
+            units.Add(new Unit("Y", Side.Red, red.GetAi()));
+            Map = new Map(xSize, ySize, rnd, units);
 
-            Units.Add(new Unit("A", Side.Blue, blue.GetAi(), Map.GetValidStartPosition(Units)));
-            Units.Add(new Unit("X", Side.Red, red.GetAi(), Map.GetValidStartPosition(Units)));
-            Units.Add(new Unit("B", Side.Blue, blue.GetAi(), Map.GetValidStartPosition(Units)));
-            Units.Add(new Unit("Y", Side.Red, red.GetAi(), Map.GetValidStartPosition(Units)));
+            
         }
         public void PlayUntilEnd()
         {
@@ -49,7 +49,7 @@ namespace AIGame.CoreGame
 
         public void NextTurn()
         {
-            foreach(Unit unit in Units)
+            foreach(Unit unit in Map.Units)
             {
                 unit.UpdateSensor(Map);
                 IOrder order = unit.GetOrder();
@@ -58,6 +58,7 @@ namespace AIGame.CoreGame
                     order.Execute(unit, Map);
                 }
             }
+            IsGameEnded();
             Turn++;   
         }
         public void Render()
@@ -80,7 +81,7 @@ namespace AIGame.CoreGame
         }
         private string RenderCoordinate(int x, int y)
         {
-            foreach(Unit unit in Units)
+            foreach(Unit unit in Map.Units)
             {
                 if (unit.Coordinates.Equals( new Tuple<int, int>(x, y)))
                     return unit.Name;

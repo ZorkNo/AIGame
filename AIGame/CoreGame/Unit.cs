@@ -16,15 +16,15 @@ namespace AIGame.CoreGame
         public Sensor Sensor;
 
 
-        public Unit(string name, Side owner, IAi ai, Tuple<int, int> coordinates)
+        public Unit(string name, Side owner, IAi ai)
         {
             Name = name;
             Owner = owner;
             Ai = ai;
-            Coordinates = coordinates;
             Facing = Direction.North;
             Sensor = new Sensor();
             Sensor.Health = Health;
+            Coordinates = new Tuple<int, int>(-1,-1);
         }
         public IOrder GetOrder()
         {
@@ -41,5 +41,6 @@ namespace AIGame.CoreGame
 
 
         }
+         
     }
 }

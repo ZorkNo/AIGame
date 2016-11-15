@@ -7,17 +7,25 @@ namespace AIGame.CoreGame
     public class Map
     {
         public Terrain[,] Terrain;
+        public List<Unit> Units;
         public int XSize;
         public int YSize;
         private Random Rnd;
 
 
-        public Map(int xSize, int ySize,Random rnd)
+        public Map(int xSize, int ySize,Random rnd, List<Unit> units)
         {
             Rnd = rnd;
             XSize = xSize;
             YSize = ySize;
             GenerateMap(XSize,YSize);
+            Units = units;
+
+            foreach (Unit unit in Units)
+            {
+                unit.Coordinates = GetValidStartPosition(Units);
+            }
+
         }
 
         public Terrain GetTerrain(Tuple<int,int> coordinates)

@@ -5,5 +5,6 @@
         public int Health;
         public Terrain Infront;
         public bool IsUnitInfront;
+        public bool HasScanned;
     }
 }
