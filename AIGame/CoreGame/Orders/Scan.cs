@@ -24,7 +24,3 @@ namespace AIGame.CoreGame.Orders
 
 }
 
-
-
-    }
-}
