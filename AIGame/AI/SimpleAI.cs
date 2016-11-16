@@ -35,22 +35,35 @@ namespace AIGame.AI
             IOrder order;
             if(sensor.Infront.Type == TerrainType.Land || sensor.Infront.Type == TerrainType.Edge)
             {
-                RotateDirection rotate= RotateDirection.Left;
-
-                if(Rnd.Next(1,100 ) >85)
-                    rotate = RotateDirection.Right;
-
-                order = new Rotate(rotate);
+                order = Rotate();
             }
             else
             {
-                order = new Move();
+                if (Rnd.Next(1, 100) > 50)
+                {
+                    order = Rotate();
+                }
+                else
+                { 
+                    order = new Move();
+                }
             }
             
             _turn++;
             return order;
         }
-        
+
+        private IOrder Rotate()
+        {
+            IOrder order;
+            RotateDirection rotate = RotateDirection.Left;
+
+            if (Rnd.Next(1, 100) > 85)
+                rotate = RotateDirection.Right;
+
+            order = new Rotate(rotate);
+            return order;
+        }
     }
 
 }

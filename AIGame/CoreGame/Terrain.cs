@@ -29,9 +29,9 @@ namespace AIGame.CoreGame
     }
     public enum TerrainType
     {
+        Unknown,
         Sea,
         Land,
         Edge
-
     }
 }

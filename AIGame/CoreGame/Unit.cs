@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using AIGame.AI;
 using AIGame.CoreGame.Orders;
 
@@ -37,8 +38,12 @@ namespace AIGame.CoreGame
 
             Tuple<int, int> infrontXy= Helper.NewCoordinates(Coordinates, Facing);
             Sensor.Infront = map.GetTerrain(infrontXy);
+            Sensor.IsUnitInfront = map.Units.Any(u => u.Coordinates.Equals(infrontXy));
 
-
+            if (Sensor.HasScanned)
+            {
+                
+            }
 
         }
          
