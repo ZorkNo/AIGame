@@ -46,6 +46,7 @@
     <Compile Include="AI\RandomAI.cs" />
     <Compile Include="AI\SimpleAI.cs" />
     <Compile Include="AI\IAi.cs" />
+    <Compile Include="CoreGame\Area.cs" />
     <Compile Include="CoreGame\Enums.cs" />
     <Compile Include="CoreGame\Game.cs" />
     <Compile Include="CoreGame\Helper.cs" />
@@ -57,6 +58,7 @@
     <Compile Include="CoreGame\Orders\OrderType.cs" />
     <Compile Include="CoreGame\Orders\Rotate.cs" />
     <Compile Include="CoreGame\Orders\SonorScan.cs" />
+    <Compile Include="CoreGame\ScannedArea.cs" />
     <Compile Include="CoreGame\Sensor.cs" />
     <Compile Include="CoreGame\Terrain.cs" />
     <Compile Include="CoreGame\Unit.cs" />

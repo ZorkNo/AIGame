@@ -42,9 +42,13 @@ namespace AIGame.CoreGame
 
             if (Sensor.HasScanned)
             {
-                
+                Sensor.ScannedArea = new ScannedArea(this,map);
+                Sensor.ScannedArea.RenderArea();
             }
-
+            else
+            {
+                Sensor.ScannedArea = new ScannedArea();
+            }
         }
          
     }

@@ -4,12 +4,8 @@ using System.Linq;
 
 namespace AIGame.CoreGame
 {
-    public class Map
+    public class Map: Area
     {
-        public Terrain[,] Terrain;
-        public List<Unit> Units;
-        public int XSize;
-        public int YSize;
         private Random Rnd;
 
         public Map(int xSize, int ySize,Random rnd, List<Unit> units)
@@ -25,14 +21,6 @@ namespace AIGame.CoreGame
                 unit.Coordinates = GetValidStartPosition(Units);
             }
 
-        }
-
-        public Terrain GetTerrain(Tuple<int,int> coordinates)
-        {
-            if (Helper.IsOutOfbounce(XSize, YSize, coordinates))
-                return new Terrain(TerrainType.Edge);
-
-            return Terrain[coordinates.Item1, coordinates.Item2];
         }
         private void GenerateMap(int xSize,int ySize)
         {

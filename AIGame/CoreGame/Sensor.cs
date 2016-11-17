@@ -6,5 +6,6 @@
         public Terrain Infront;
         public bool IsUnitInfront;
         public bool HasScanned;
+        public ScannedArea ScannedArea;
     }
 }

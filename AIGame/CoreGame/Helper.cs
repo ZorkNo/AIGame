@@ -31,5 +31,31 @@ namespace AIGame.CoreGame
             return newCoordinates.Item1 < 0 || newCoordinates.Item2 < 0 ||
                    newCoordinates.Item1 > xSize || newCoordinates.Item2 > ySize;
         }
+
+        public static Tuple<int, int> RotateCoordinates(Direction facing, Tuple<int, int> coordinates)
+        {
+            return RotateCoordinates(facing, coordinates.Item1, coordinates.Item2);
+        }
+        private static Tuple<int, int> RotateCoordinates(Direction facing, int x, int y)
+        {
+            switch (facing)
+            {
+                case Direction.North:
+                    break;
+                case Direction.West:
+                    x = y;
+                    y = -x;
+                    break;
+                case Direction.South:
+                    x = -x;
+                    y = -y;
+                    break;
+                case Direction.East:
+                    x = -y;
+                    y = x;
+                    break;
+            }
+            return new Tuple<int, int>(x, y);
+        }
     }
 }
