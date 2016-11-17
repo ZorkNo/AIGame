@@ -4,11 +4,6 @@ namespace AIGame.CoreGame.Orders
 {
     public class Move:IOrder
     {
-
-        public OrderType Type()
-        {
-            return OrderType.Move;
-        }
         public void Execute(Unit unit, Map map)
         {
             unit.Coordinates  = Helper.NewCoordinates(unit.Coordinates, unit.Facing);

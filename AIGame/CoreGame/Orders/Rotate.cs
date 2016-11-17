@@ -10,12 +10,6 @@ namespace AIGame.CoreGame.Orders
         {
             RotateDirection = rotateDirection;
         }
-        public OrderType Type()
-        {
-            return OrderType.Turn;
-        }
-
-
         public void Execute(Unit unit, Map map)
         {
             int rotateInt;

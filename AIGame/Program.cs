@@ -17,7 +17,7 @@ namespace AIGame
             blueAiType.SetRandomGenerator(rnd);
             IAiType redAiType = new SimpleAiType();
             redAiType.SetRandomGenerator(rnd);
-            Game game = new Game(blueAiType,redAiType,10,10,rnd); ;
+            Game game = new Game(blueAiType,redAiType,40,60,rnd); ;
             for (int i =0;i<100000;i++)
             {
                 Console.Clear();
