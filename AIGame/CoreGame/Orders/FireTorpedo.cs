@@ -2,17 +2,19 @@
 
 namespace AIGame.CoreGame.Orders
 {
-    public class Scan : IOrder
+    public class FireTorpedo : IOrder
     {
         public void Execute(Unit unit, Map map)
         {
-            //Måske er der mere elegant måde at gøre det her 
-            unit.Sensor.HasScanned=true;
+            throw new NotImplementedException();
         }
+
         public bool IsValid(Unit unit, Map map)
         {
-            return true;
+            throw new NotImplementedException();
         }
     }
+
+
 }
 

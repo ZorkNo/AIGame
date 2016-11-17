@@ -2,19 +2,17 @@
 
 namespace AIGame.CoreGame.Orders
 {
-    public class Fire : IOrder
+    public class SonorScan : IOrder
     {
         public void Execute(Unit unit, Map map)
         {
-            throw new NotImplementedException();
+            //Måske er der mere elegant måde at gøre det her 
+            unit.Sensor.HasScanned=true;
         }
-
         public bool IsValid(Unit unit, Map map)
         {
-            throw new NotImplementedException();
+            return true;
         }
     }
-
-
 }
 

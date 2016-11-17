@@ -51,12 +51,12 @@
     <Compile Include="CoreGame\Helper.cs" />
     <Compile Include="CoreGame\Map.cs" />
     <Compile Include="CoreGame\Orders\DoNothing.cs" />
-    <Compile Include="CoreGame\Orders\Fire.cs" />
+    <Compile Include="CoreGame\Orders\FireTorpedo.cs" />
     <Compile Include="CoreGame\Orders\IOrder.cs" />
     <Compile Include="CoreGame\Orders\Move.cs" />
     <Compile Include="CoreGame\Orders\OrderType.cs" />
     <Compile Include="CoreGame\Orders\Rotate.cs" />
-    <Compile Include="CoreGame\Orders\Scan.cs" />
+    <Compile Include="CoreGame\Orders\SonorScan.cs" />
     <Compile Include="CoreGame\Sensor.cs" />
     <Compile Include="CoreGame\Terrain.cs" />
     <Compile Include="CoreGame\Unit.cs" />
