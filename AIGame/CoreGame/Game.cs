@@ -18,8 +18,8 @@ namespace AIGame.CoreGame
 
             units.Add(new Unit("A", Side.Blue, blue.GetAi()));
             units.Add(new Unit("X", Side.Red, red.GetAi()));
-            units.Add(new Unit("B", Side.Blue, blue.GetAi()));
-            units.Add(new Unit("Y", Side.Red, red.GetAi()));
+            //units.Add(new Unit("B", Side.Blue, blue.GetAi()));
+            //units.Add(new Unit("Y", Side.Red, red.GetAi()));
             Map = new Map(xSize, ySize, rnd, units);
 
             
@@ -68,10 +68,10 @@ namespace AIGame.CoreGame
         private void RenderBoard()
         {
             
-            for (int x = 0; x <= Map.XSize; x++)
+            for (int x = 0; x < Map.XSize; x++)
             {
                 string line = "";    
-                for (int y = 0; y <= Map.YSize; y++)
+                for (int y = 0; y < Map.YSize; y++)
                 {
                     line += RenderCoordinate(x, y);
                 }

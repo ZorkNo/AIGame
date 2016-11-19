@@ -19,13 +19,26 @@ namespace AIGame.CoreGame
 
             return Terrain[coordinates.Item1, coordinates.Item2];
         }
+
+        internal void InitilizeArea()
+        {
+            Terrain = new Terrain[XSize, YSize];
+
+            for (int x = 0; x < XSize; x++)
+            {
+                for (int y = 0; y < YSize; y++)
+                {
+                    Terrain[x, y] = new Terrain(TerrainType.Unknown);
+                }
+            }
+        }
         public void RenderArea()
         {
 
-            for (int x = 0; x <= XSize; x++)
+            for (int x = 0; x < XSize; x++)
             {
                 string line = "";
-                for (int y = 0; y <= YSize; y++)
+                for (int y = 0; y < YSize; y++)
                 {
                     line += RenderCoordinate(x, y);
                 }

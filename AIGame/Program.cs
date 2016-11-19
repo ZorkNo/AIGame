@@ -13,7 +13,7 @@ namespace AIGame
         {
             Random rnd= new Random(Environment.TickCount);
            
-            IAiType blueAiType = new SimpleAiType();
+            IAiType blueAiType = new RandomAiType();
             blueAiType.SetRandomGenerator(rnd);
             IAiType redAiType = new SimpleAiType();
             redAiType.SetRandomGenerator(rnd);

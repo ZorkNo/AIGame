@@ -42,8 +42,13 @@ namespace AIGame.CoreGame
 
             if (Sensor.HasScanned)
             {
+                Sensor.HasScanned = false;
                 Sensor.ScannedArea = new ScannedArea(this,map);
+
+                //TODO remove rendering
+                Console.WriteLine(Facing);
                 Sensor.ScannedArea.RenderArea();
+                
             }
             else
             {

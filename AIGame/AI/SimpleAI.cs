@@ -32,26 +32,24 @@ namespace AIGame.AI
         }
         public IOrder GetOrder(Sensor sensor)
         {
-            return new SonorScan();
-            //IOrder order;
-            //if(sensor.Infront.Type == TerrainType.Land || sensor.Infront.Type == TerrainType.Edge)
-            //{
-            //    order = Rotate();
-            //}
-            //else
-            //{
-            //    if (Rnd.Next(1, 100) > 65)
-            //    {
-            //        order = Rotate();
-            //    }
-            //    else
-            //    { 
-            //        order = new Move();
-            //    }
-            //}
+            _turn++;
+
+            //Hvis det en lige tur scan
+            if (_turn % 2 == 0)
+                return new SonorScan();
+
+            if (sensor.Infront.Type == TerrainType.Land || sensor.Infront.Type == TerrainType.Edge)
+                return Rotate();
             
-            //_turn++;
-            //return order;
+            if (Rnd.Next(1, 100) > 65)
+                return Rotate();
+
+
+            return new Move();
+                
+            
+
+            
         }
 
         private IOrder Rotate()

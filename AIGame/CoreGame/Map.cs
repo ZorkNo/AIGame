@@ -26,11 +26,11 @@ namespace AIGame.CoreGame
         {
             //Der måske en mere interassant kort generering med Perlin noise
 
-            Terrain = new Terrain[xSize+1, ySize+1];
+            Terrain = new Terrain[xSize, ySize];
 
-            for (int x=0;x<= xSize;x++)
+            for (int x=0;x< xSize;x++)
             {
-                for (int y = 0; y <= ySize; y++)
+                for (int y = 0; y < ySize; y++)
                 {
                     Terrain[x, y] = GenerateTerrain();
                 }
