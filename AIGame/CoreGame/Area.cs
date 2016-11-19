@@ -3,25 +3,29 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using AIGame.Interfaces;
 
 namespace AIGame.CoreGame
 {
-    public class Area
+
+
+    public class Area : IArea
     {
-        public Terrain[,] Terrain;
-        public List<Unit> Units=new List<Unit>();
-        public int XSize;
-        public int YSize;
+        public Terrain[,] Terrain { get; set; }
+        public List<IUnit> Units { get; set; }
+        public int XSize { get; set; }
+        public int YSize { get; set; }
         public Terrain GetTerrain(Tuple<int, int> coordinates)
         {
             if (Helper.IsOutOfbounce(XSize, YSize, coordinates))
                 return new Terrain(TerrainType.Edge);
 
-            return Terrain[coordinates.Item1, coordinates.Item2];
+             return Terrain[coordinates.Item1, coordinates.Item2];
         }
 
         internal void InitilizeArea()
         {
+            Units = new List<IUnit>();
             Terrain = new Terrain[XSize, YSize];
 
             for (int x = 0; x < XSize; x++)
@@ -47,7 +51,7 @@ namespace AIGame.CoreGame
         }
         private string RenderCoordinate(int x, int y)
         {
-            foreach (Unit unit in Units)
+            foreach (IUnit unit in Units)
             {
                 if (unit.Coordinates.Equals(new Tuple<int, int>(x, y)))
                     return unit.Name;

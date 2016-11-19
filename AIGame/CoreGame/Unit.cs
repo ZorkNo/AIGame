@@ -2,19 +2,22 @@
 using System.Linq;
 using AIGame.AI;
 using AIGame.CoreGame.Orders;
+using AIGame.Interfaces;
 
 namespace AIGame.CoreGame
 {
-    public class Unit
-    {
-        public string Name;
-        public Tuple<int, int> Coordinates;
-        public Direction Facing;
 
-        public int Health = 100;
-        public Side Owner;
-        public IAi Ai;
-        public Sensor Sensor;
+
+    public class Unit : IUnit
+    {
+        public string Name { get; set; }
+        public Tuple<int, int> Coordinates { get; set; }
+        public Direction Facing { get; set; }
+
+        public int Health { get; set; }
+        public Side Owner { get; set; }
+        public IAi Ai { get; set; }
+        public Sensor Sensor { get; set; }
 
 
         public Unit(string name, Side owner, IAi ai)
@@ -32,7 +35,7 @@ namespace AIGame.CoreGame
             return Ai.GetOrder(Sensor);
         }
    
-        public void UpdateSensor(Map map)
+        public void UpdateSensor(IMap map)
         {
             Sensor.Health = Health;
 
@@ -43,7 +46,8 @@ namespace AIGame.CoreGame
             if (Sensor.HasScanned)
             {
                 Sensor.HasScanned = false;
-                Sensor.ScannedArea = new ScannedArea(this,map);
+                Sensor.ScannedArea = new ScannedArea();
+                Sensor.ScannedArea.Initilize(this,map);
 
                 //TODO remove rendering
                 Console.WriteLine(Facing);
@@ -53,6 +57,7 @@ namespace AIGame.CoreGame
             else
             {
                 Sensor.ScannedArea = new ScannedArea();
+                Sensor.ScannedArea.Initilize();
             }
         }
          

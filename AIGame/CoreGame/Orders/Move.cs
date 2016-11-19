@@ -1,15 +1,16 @@
 ﻿using System;
+using AIGame.Interfaces;
 
 namespace AIGame.CoreGame.Orders
 {
     public class Move:IOrder
     {
-        public void Execute(Unit unit, Map map)
+        public void Execute(IUnit unit, IMap map)
         {
             unit.Coordinates  = Helper.NewCoordinates(unit.Coordinates, unit.Facing);
         }
 
-        public bool IsValid(Unit unit, Map map)
+        public bool IsValid(IUnit unit, IMap map)
         {
             Tuple<int, int> newCoordinates= Helper.NewCoordinates(unit.Coordinates,unit.Facing );
 

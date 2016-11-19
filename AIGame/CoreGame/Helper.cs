@@ -41,15 +41,14 @@ namespace AIGame.CoreGame
             switch (facing)
             {
                 case Direction.North:
-                    x = -x;
-                    y = -y;
                     break;
                 case Direction.West:
                     x = y;
                     y = -x;
                     break;
                 case Direction.South:
-                    
+                    x = -x;
+                    y = -y;
                     break;
                 case Direction.East:
                     x = -y;

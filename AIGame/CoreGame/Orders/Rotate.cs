@@ -1,4 +1,5 @@
 ﻿using System;
+using AIGame.Interfaces;
 
 namespace AIGame.CoreGame.Orders
 {
@@ -10,7 +11,7 @@ namespace AIGame.CoreGame.Orders
         {
             RotateDirection = rotateDirection;
         }
-        public void Execute(Unit unit, Map map)
+        public void Execute(IUnit unit, IMap map)
         {
             int rotateInt;
 
@@ -41,7 +42,7 @@ namespace AIGame.CoreGame.Orders
             unit.Facing = direction;
         }
 
-        public bool IsValid(Unit unit, Map map)
+        public bool IsValid(IUnit unit, IMap map)
         {
             return true;
         }

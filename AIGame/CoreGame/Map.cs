@@ -1,14 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using AIGame.Interfaces;
 
 namespace AIGame.CoreGame
 {
-    public class Map: Area
+    public class Map: Area, IMap
     {
         private Random Rnd;
 
-        public Map(int xSize, int ySize,Random rnd, List<Unit> units)
+        public Map(int xSize, int ySize,Random rnd, List<IUnit> units)
         {
             Rnd = rnd;
             XSize = xSize;
@@ -16,7 +17,7 @@ namespace AIGame.CoreGame
             GenerateMap(XSize,YSize);
             Units = units;
 
-            foreach (Unit unit in Units)
+            foreach (IUnit unit in Units)
             {
                 unit.Coordinates = GetValidStartPosition(Units);
             }
@@ -40,12 +41,13 @@ namespace AIGame.CoreGame
         {
             int rndNumber = Rnd.Next(1, 100);
 
-            if (rndNumber > 95)
+            //TODO change back to 95
+            if (rndNumber > 50)
                 return new Terrain(TerrainType.Land);
 
             return new Terrain(TerrainType.Sea);
         }
-        public Tuple<int, int> GetValidStartPosition(List<Unit> units)
+        public Tuple<int, int> GetValidStartPosition(List<IUnit> units)
         {
             Tuple<int, int> rndCoordinates;
             while (true)

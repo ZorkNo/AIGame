@@ -1,4 +1,5 @@
 ﻿using System;
+using AIGame.Interfaces;
 
 namespace AIGame.CoreGame.Orders
 {
@@ -10,12 +11,12 @@ namespace AIGame.CoreGame.Orders
         {
             Coordinates = coordinates;
         }
-        public void Execute(Unit unit, Map map)
+        public void Execute(IUnit unit, IMap map)
         {
             throw new NotImplementedException();
         }
 
-        public bool IsValid(Unit unit, Map map)
+        public bool IsValid(IUnit unit, IMap map)
         {
             throw new NotImplementedException();
         }

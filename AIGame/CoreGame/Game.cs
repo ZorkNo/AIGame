@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using AIGame.AI;
 using AIGame.CoreGame.Orders;
+using AIGame.Interfaces;
 
 namespace AIGame.CoreGame
 {
@@ -9,12 +10,12 @@ namespace AIGame.CoreGame
     {
         public int Turn;
         public int MaxTurn = 100;
-        public Map Map;
+        public IMap Map;
         public bool GameEnded = false;
 
         public Game(IAiType blue, IAiType red,int xSize,int ySize,Random rnd)
         {
-            List<Unit> units = new List<Unit>();
+            List<IUnit> units = new List<IUnit>();
 
             units.Add(new Unit("A", Side.Blue, blue.GetAi()));
             units.Add(new Unit("X", Side.Red, red.GetAi()));
@@ -49,7 +50,7 @@ namespace AIGame.CoreGame
 
         public void NextTurn()
         {
-            foreach(Unit unit in Map.Units)
+            foreach(IUnit unit in Map.Units)
             {
                 unit.UpdateSensor(Map);
                 IOrder order = unit.GetOrder();

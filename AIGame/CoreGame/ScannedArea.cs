@@ -3,12 +3,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using AIGame.Interfaces;
 
 namespace AIGame.CoreGame
 {
-    public class ScannedArea: Area
+
+
+    public class ScannedArea: Area, IScannedArea
     {
-        public ScannedArea()
+        public void Initilize()
         {
             XSize = 1;
             YSize = 1;
@@ -17,7 +20,7 @@ namespace AIGame.CoreGame
 
         
 
-        public ScannedArea(Unit unit, Map map)
+        public void Initilize(IUnit unit, IMap map)
         {
             XSize = 5;
             YSize = 3;
@@ -30,18 +33,20 @@ namespace AIGame.CoreGame
                     //TODO Find units 
 
                     //only include view cone
-                    if ((y == 1 && (x == 0 || x == 4)) || (y == 0 && x != 2))
-                    { 
-                        Terrain[x, y] = new Terrain(TerrainType.Unknown);
+                    //if ((y == 1 && (x == 0 || x == 4)) || (y == 0 && x != 2))
+                    if(y == 0 && x == 2)
+                    {
+                        var coor = ConvertMapCoordinates(unit.Facing, unit.Coordinates, new Tuple<int, int>(x - 2, y));
+                        Terrain[x, y] = map.GetTerrain(coor);
 
                     }
                     else
                     {
-                        Terrain[x, y] =
-                        map.GetTerrain(ConvertMapCoordinates(unit.Facing, unit.Coordinates, new Tuple<int, int>(x - 3, y)));
+                        var coor = ConvertMapCoordinates(unit.Facing, unit.Coordinates, new Tuple<int, int>(x - 2, y));
+                        Terrain[x, y] = map.GetTerrain(coor);
                     }
-                    
-                    
+
+
                 }
             }
         }
@@ -49,11 +54,11 @@ namespace AIGame.CoreGame
         private Tuple<int, int> ConvertMapCoordinates(Direction facing, Tuple<int, int> unitCoordinates, Tuple<int,int> scanCoordinates)
         {
 
-            //TODO Somethings wrong with this scanning i fuckup =) 
+            //TODO Somethings wrong with this scanning is fucked up =) 
             Tuple<int, int> scan = Helper.RotateCoordinates(facing, scanCoordinates);
 
-            int x = unitCoordinates.Item1 - scan.Item1;
-            int y = unitCoordinates.Item2 - scan.Item2;
+            int x = unitCoordinates.Item1 + scan.Item1;
+            int y = unitCoordinates.Item2 + scan.Item2;
             
             return new Tuple<int, int>(x,y);
         }

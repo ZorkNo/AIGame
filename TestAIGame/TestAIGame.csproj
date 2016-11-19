@@ -4,17 +4,15 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{182C08FB-B030-4D17-86F3-4440377ED519}</ProjectGuid>
-    <OutputType>Exe</OutputType>
+    <ProjectGuid>{24C60E59-DA06-406B-A8B6-0F51E18B396D}</ProjectGuid>
+    <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>AIGame</RootNamespace>
-    <AssemblyName>AIGame</AssemblyName>
+    <RootNamespace>TestAIGame</RootNamespace>
+    <AssemblyName>TestAIGame</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -24,7 +22,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
@@ -33,6 +30,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="nunit.framework, Version=3.5.0.0, Culture=neutral, PublicKeyToken=2638cd05610744eb, processorArchitecture=MSIL">
+      <HintPath>..\packages\NUnit.3.5.0\lib\net45\nunit.framework.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -43,37 +44,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AI\RandomAI.cs" />
-    <Compile Include="AI\SimpleAI.cs" />
-    <Compile Include="AI\IAi.cs" />
-    <Compile Include="CoreGame\Area.cs" />
-    <Compile Include="CoreGame\Enums.cs" />
-    <Compile Include="CoreGame\Game.cs" />
-    <Compile Include="CoreGame\Helper.cs" />
-    <Compile Include="CoreGame\Map.cs" />
-    <Compile Include="CoreGame\Orders\DoNothing.cs" />
-    <Compile Include="CoreGame\Orders\FireTorpedo.cs" />
-    <Compile Include="CoreGame\Orders\IOrder.cs" />
-    <Compile Include="CoreGame\Orders\Move.cs" />
-    <Compile Include="CoreGame\Orders\OrderType.cs" />
-    <Compile Include="CoreGame\Orders\Rotate.cs" />
-    <Compile Include="CoreGame\Orders\SonorScan.cs" />
-    <Compile Include="CoreGame\ScannedArea.cs" />
-    <Compile Include="CoreGame\Sensor.cs" />
-    <Compile Include="CoreGame\Terrain.cs" />
-    <Compile Include="CoreGame\Unit.cs" />
-    <Compile Include="Interfaces\IArea.cs" />
-    <Compile Include="Interfaces\IMap.cs" />
-    <Compile Include="Interfaces\IScannedArea.cs" />
-    <Compile Include="Interfaces\IUnit.cs" />
-    <Compile Include="Program.cs" />
+    <Compile Include="ScannedAreaTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
+    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Orders\" />
+    <ProjectReference Include="..\AIGame\AIGame.csproj">
+      <Project>{182C08FB-B030-4D17-86F3-4440377ED519}</Project>
+      <Name>AIGame</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
