@@ -11,9 +11,10 @@ namespace AIGame.Interfaces
     {
         Terrain[,] Terrain { get; set; }
         List<IUnit> Units { get; set; }
-        int XSize { get; set; }
-        int YSize { get; set; }
+        int XSize { get; }
+        int YSize { get; }
         Terrain GetTerrain(Tuple<int, int> coordinates);
-        void RenderArea();
+        void ConsoleRenderArea();
+        string RenderArea();
     }
 }

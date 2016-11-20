@@ -12,9 +12,7 @@ namespace AIGame.CoreGame
         public Map(int xSize, int ySize,Random rnd, List<IUnit> units)
         {
             Rnd = rnd;
-            XSize = xSize;
-            YSize = ySize;
-            GenerateMap(XSize,YSize);
+            GenerateMap(xSize, ySize);
             Units = units;
 
             foreach (IUnit unit in Units)

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml;
 using AIGame.Interfaces;
 
 namespace AIGame.CoreGame
@@ -13,17 +14,37 @@ namespace AIGame.CoreGame
     {
         public Terrain[,] Terrain { get; set; }
         public List<IUnit> Units { get; set; }
-        public int XSize { get; set; }
-        public int YSize { get; set; }
+
+        public int XSize
+        {
+            get
+            {
+                if(Terrain == null )
+                    return 0;
+                
+                return Terrain.GetUpperBound(0)+1;
+            }
+        }
+
+        public int YSize
+        {
+            get
+            {
+                if (Terrain == null)
+                    return 0;
+                return Terrain.GetUpperBound(1)+1;
+            }
+        }
+
         public Terrain GetTerrain(Tuple<int, int> coordinates)
         {
-            if (Helper.IsOutOfbounce(XSize, YSize, coordinates))
+            if (Helper.IsOutOfbounce(Terrain.GetUpperBound(0), Terrain.GetUpperBound(1), coordinates))
                 return new Terrain(TerrainType.Edge);
 
              return Terrain[coordinates.Item1, coordinates.Item2];
         }
 
-        internal void InitilizeArea()
+        internal void InitilizeArea(int XSize,int YSize)
         {
             Units = new List<IUnit>();
             Terrain = new Terrain[XSize, YSize];
@@ -36,7 +57,7 @@ namespace AIGame.CoreGame
                 }
             }
         }
-        public void RenderArea()
+        public void ConsoleRenderArea()
         {
 
             for (int x = 0; x < XSize; x++)
@@ -49,6 +70,19 @@ namespace AIGame.CoreGame
                 Console.WriteLine(line);
             }
         }
+        public string RenderArea()
+        {
+            string line = "";
+            for (int x = 0; x < XSize; x++)
+            {
+                for (int y = 0; y < YSize; y++)
+                {
+                    line += RenderCoordinate(x, y);
+                }
+                line +=System.Environment.NewLine;
+            }
+            return line;
+        }
         private string RenderCoordinate(int x, int y)
         {
             foreach (IUnit unit in Units)
@@ -56,7 +90,7 @@ namespace AIGame.CoreGame
                 if (unit.Coordinates.Equals(new Tuple<int, int>(x, y)))
                     return unit.Name;
             }
-            return Terrain[x, y].Render();
+             return Terrain[x, y].Render();
         }
     }
 }

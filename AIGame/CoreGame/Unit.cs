@@ -51,7 +51,7 @@ namespace AIGame.CoreGame
 
                 //TODO remove rendering
                 Console.WriteLine(Facing);
-                Sensor.ScannedArea.RenderArea();
+                Sensor.ScannedArea.ConsoleRenderArea();
                 
             }
             else
