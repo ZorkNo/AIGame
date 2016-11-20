@@ -68,28 +68,8 @@ namespace AIGame.CoreGame
         }
         private void RenderBoard()
         {
-            
-            for (int x = 0; x < Map.XSize; x++)
-            {
-                string line = "";    
-                for (int y = 0; y < Map.YSize; y++)
-                {
-                    line += RenderCoordinate(x, y);
-                }
-                Console.WriteLine(line);
-            }
+            Console.WriteLine(Map.RenderArea());
             Console.WriteLine("Turn:" + Turn);
         }
-        private string RenderCoordinate(int x, int y)
-        {
-            foreach(Unit unit in Map.Units)
-            {
-                if (unit.Coordinates.Equals( new Tuple<int, int>(x, y)))
-                    return unit.Name;
-            }
-            return Map.Terrain[x, y].Render();
-        }
-
-
     }
 }

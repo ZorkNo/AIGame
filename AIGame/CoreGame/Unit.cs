@@ -19,7 +19,6 @@ namespace AIGame.CoreGame
         public IAi Ai { get; set; }
         public Sensor Sensor { get; set; }
 
-
         public Unit(string name, Side owner, IAi ai)
         {
             Name = name;

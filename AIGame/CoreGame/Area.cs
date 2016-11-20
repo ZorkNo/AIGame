@@ -14,6 +14,8 @@ namespace AIGame.CoreGame
     {
         public Terrain[,] Terrain { get; set; }
         public List<IUnit> Units { get; set; }
+        public List<ITarget> Targets { get; set; }
+        
 
         public int XSize
         {
@@ -36,9 +38,14 @@ namespace AIGame.CoreGame
             }
         }
 
+        public Area()
+        {
+            Units = new List<IUnit>();
+            Targets = new List<ITarget>();
+        }
         public Terrain GetTerrain(Tuple<int, int> coordinates)
         {
-            if (Helper.IsOutOfbounce(Terrain.GetUpperBound(0), Terrain.GetUpperBound(1), coordinates))
+            if (Helper.IsOutOfbounce(XSize, YSize, coordinates))
                 return new Terrain(TerrainType.Edge);
 
              return Terrain[coordinates.Item1, coordinates.Item2];
@@ -46,7 +53,6 @@ namespace AIGame.CoreGame
 
         internal void InitilizeArea(int XSize,int YSize)
         {
-            Units = new List<IUnit>();
             Terrain = new Terrain[XSize, YSize];
 
             for (int x = 0; x < XSize; x++)
@@ -59,23 +65,14 @@ namespace AIGame.CoreGame
         }
         public void ConsoleRenderArea()
         {
-
-            for (int x = 0; x < XSize; x++)
-            {
-                string line = "";
-                for (int y = 0; y < YSize; y++)
-                {
-                    line += RenderCoordinate(x, y);
-                }
-                Console.WriteLine(line);
-            }
+            Console.WriteLine(RenderArea());
         }
         public string RenderArea()
         {
             string line = "";
-            for (int x = 0; x < XSize; x++)
+            for (int x = XSize-1; x >=0; x--)
             {
-                for (int y = 0; y < YSize; y++)
+                for (int y = 0; y < YSize ; y++)
                 {
                     line += RenderCoordinate(x, y);
                 }
@@ -90,7 +87,12 @@ namespace AIGame.CoreGame
                 if (unit.Coordinates.Equals(new Tuple<int, int>(x, y)))
                     return unit.Name;
             }
-             return Terrain[x, y].Render();
+            foreach (ITarget target in Targets)
+            {
+                if (target.Coordinates.Equals(new Tuple<int, int>(x, y)))
+                    return "X";
+            }
+            return Terrain[x, y].Render();
         }
     }
 }

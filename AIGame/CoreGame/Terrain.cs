@@ -17,6 +17,10 @@ namespace AIGame.CoreGame
                     return ".";
                 case TerrainType.Sea:
                     return "~";
+                case TerrainType.Edge:
+                    return "|";
+                case TerrainType.Unknown:
+                    return "?";
                 default:
                     return "#";
 

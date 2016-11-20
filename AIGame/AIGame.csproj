@@ -60,10 +60,12 @@
     <Compile Include="CoreGame\Orders\SonorScan.cs" />
     <Compile Include="CoreGame\ScannedArea.cs" />
     <Compile Include="CoreGame\Sensor.cs" />
+    <Compile Include="CoreGame\Target.cs" />
     <Compile Include="CoreGame\Terrain.cs" />
     <Compile Include="CoreGame\Unit.cs" />
     <Compile Include="Interfaces\IArea.cs" />
     <Compile Include="Interfaces\IMap.cs" />
+    <Compile Include="Interfaces\ITarget.cs" />
     <Compile Include="Interfaces\IScannedArea.cs" />
     <Compile Include="Interfaces\IUnit.cs" />
     <Compile Include="Program.cs" />

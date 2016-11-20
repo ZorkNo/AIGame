@@ -10,10 +10,10 @@ namespace AIGame.CoreGame
             switch (direction)
             {
                 case Direction.North:
-                    newCoordinates = new Tuple<int, int>(oldCoordinates.Item1 - 1, oldCoordinates.Item2);
+                    newCoordinates = new Tuple<int, int>(oldCoordinates.Item1 + 1, oldCoordinates.Item2);
                     break;
                 case Direction.South:
-                    newCoordinates = new Tuple<int, int>(oldCoordinates.Item1 + 1, oldCoordinates.Item2);
+                    newCoordinates = new Tuple<int, int>(oldCoordinates.Item1 - 1, oldCoordinates.Item2);
                     break;
                 case Direction.East:
                     newCoordinates = new Tuple<int, int>(oldCoordinates.Item1, oldCoordinates.Item2 - 1);

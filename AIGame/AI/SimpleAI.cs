@@ -33,6 +33,7 @@ namespace AIGame.AI
         public IOrder GetOrder(Sensor sensor)
         {
             _turn++;
+            
 
             //Hvis det en lige tur scan
             if (_turn % 2 == 0)
@@ -40,7 +41,7 @@ namespace AIGame.AI
 
             if (sensor.Infront.Type == TerrainType.Land || sensor.Infront.Type == TerrainType.Edge)
                 return Rotate();
-            
+
             if (Rnd.Next(1, 100) > 65)
                 return Rotate();
 
