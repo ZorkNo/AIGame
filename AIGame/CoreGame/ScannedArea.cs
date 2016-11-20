@@ -65,24 +65,28 @@ namespace AIGame.CoreGame
         }
         private static Tuple<int, int> RotateCoordinates(Direction facing, int x, int y)
         {
+            int newX=0;
+            int newY=0;
             switch (facing)
             {
                 case Direction.North:
+                    newX = x;
+                    newY = y;
                     break;
                 case Direction.West:
-                    x = -y;
-                    y = x;
+                    newX = y;
+                    newY = -x;
                     break;
                 case Direction.South:
-                    x = -x;
-                    y = -y;
+                    newX = -x;
+                    newY = -y;
                     break;
                 case Direction.East:
-                    x = y;
-                    y = -x;
+                    newX = -y;
+                    newY = x;
                     break;
             }
-            return new Tuple<int, int>(x, y);
+            return new Tuple<int, int>(newX, newY);
         }
 
     }

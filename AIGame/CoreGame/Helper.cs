@@ -29,7 +29,7 @@ namespace AIGame.CoreGame
         public static bool IsOutOfbounce(int xSize, int ySize, Tuple<int, int> newCoordinates)
         {
             return newCoordinates.Item1 < 0 || newCoordinates.Item2 < 0 ||
-                   newCoordinates.Item1 > xSize || newCoordinates.Item2 > ySize;
+                   newCoordinates.Item1 >= xSize || newCoordinates.Item2 >= ySize;
         }
 
         

@@ -22,7 +22,7 @@ namespace AIGame.CoreGame.Orders
                 return false;
             }
             //on land
-            if (map.Terrain[newCoordinates.Item1, newCoordinates.Item2].Type == TerrainType.Land ||
+             if (map.Terrain[newCoordinates.Item1, newCoordinates.Item2].Type == TerrainType.Land ||
                 map.Terrain[newCoordinates.Item1, newCoordinates.Item2].Type == TerrainType.Edge)
             {
                 Console.WriteLine(string.Format("{0}: is trying to move on land", unit.Name));

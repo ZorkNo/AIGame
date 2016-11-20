@@ -46,10 +46,7 @@ namespace AIGame.AI
 
 
             return new Move();
-                
-            
-
-            
+  
         }
 
         private IOrder Rotate()

@@ -38,9 +38,8 @@ namespace AIGame.CoreGame
         private Terrain GenerateTerrain()
         {
             int rndNumber = Rnd.Next(1, 100);
-
-            //TODO change back to 95
-            if (rndNumber > 50)
+            
+            if (rndNumber > 95)
                 return new Terrain(TerrainType.Land);
 
             return new Terrain(TerrainType.Sea);
