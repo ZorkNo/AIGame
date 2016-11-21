@@ -57,7 +57,7 @@ namespace AIGame.CoreGame
 
         public void NextTurn()
         {
-            if (GameResult != GameResult.GameNotEnded)
+            if (GameResult == GameResult.GameNotEnded)
             { 
                 foreach (IUnit unit in Map.Units)
                 {
