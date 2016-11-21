@@ -17,9 +17,6 @@ namespace AIGame.CoreGame
         {
             InitilizeArea(1,1);
         }
-
-        
-
         public void Initilize(IUnit unit, IMap map)
         {
             int xSize = 5;

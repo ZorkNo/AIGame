@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using AIGame.AI;
 using AIGame.CoreGame.Orders;
 using AIGame.Interfaces;
@@ -25,7 +26,17 @@ namespace AIGame.CoreGame
 
                 //Max turns
                 if (Turn >= MaxTurn)
-                    return GameResult.Tie;
+                {
+                    int blueHealth = Map.Units.Where(u => u.Owner == Side.Blue).Sum(u => u.Health);
+                    int redHealth = Map.Units.Where(u => u.Owner == Side.Red).Sum(u => u.Health);
+
+                    if (blueHealth == redHealth) 
+                        return GameResult.Tie;
+                    if (blueHealth > redHealth)
+                        return GameResult.BlueWin;
+                    if (blueHealth < redHealth)
+                        return GameResult.RedWin;
+                }
 
                 return GameResult.GameNotEnded;
             }
@@ -45,7 +56,7 @@ namespace AIGame.CoreGame
         }
         public void PlayUntilEnd()
         {
-            for (int i=0;i >MaxTurn;i++)
+            while (true)
             {
                 NextTurn();
                 if (GameResult != GameResult.GameNotEnded)

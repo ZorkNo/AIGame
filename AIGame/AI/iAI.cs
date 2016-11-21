@@ -8,6 +8,7 @@ namespace AIGame.AI
     {
         IAi GetAi();
         void SetRandomGenerator(Random Rnd);
+        string Name { get; }
     }
     public interface IAi
     {

@@ -21,6 +21,10 @@ namespace AIGame.AI
         {
             Rnd=rnd;
         }
+
+        public string Name {
+            get { return "RandomAi";}
+        }
     }
     public class RandomAI:IAi
     {
@@ -43,7 +47,7 @@ namespace AIGame.AI
         {
             IOrder order;  
             
-            int rndInt = Rnd.Next(1,3);
+            int rndInt = Rnd.Next(1,4);
             switch (rndInt)
             {
                 case 1:
@@ -52,11 +56,22 @@ namespace AIGame.AI
                 case 2:
                      order = new Rotate(getDirection());
                     break;
+                case 3:
+                    order = new FireTorpedo(getCoordinates());
+                    break;
                 default:
                     throw new Exception("not a valid direction");
             }
             return order;
         }
+
+        private Tuple<int, int> getCoordinates()
+        {
+            int rndX = Rnd.Next(1, 6);
+            int rndY = Rnd.Next(1, 4);
+            return new Tuple<int, int>(rndX-2, rndY);
+        }
+
         private RotateDirection getDirection()
         {
 

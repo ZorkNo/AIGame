@@ -16,19 +16,19 @@ namespace AIGame.CoreGame.Orders
             Tuple<int, int> Coordinates= new Tuple<int, int>(unit.Coordinates.Item1 + RelativeCoordinates.Item1,unit.Coordinates.Item2 + RelativeCoordinates.Item2  );
 
             //TODO remove console 
-            Console.WriteLine("Clack......");
+            //Console.WriteLine("Clack......");
             foreach (IUnit unitOnMap in map.Units.FindAll(u => u.Coordinates.Equals(Coordinates)))
             {
                 unit.Health -= 34;
-                Console.WriteLine("Boooom!");
+                //Console.WriteLine("Boooom!");
             }
 
         }
 
         public bool IsValid(IUnit unit, IMap map)
         {
-            //TODO Max range
-            return true;
+            return RelativeCoordinates.Item1 <= -2 || RelativeCoordinates.Item2 <= 0 ||
+                   RelativeCoordinates.Item1 >= 2 || RelativeCoordinates.Item2 >= 3;
         }
     }
 

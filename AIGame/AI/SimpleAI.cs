@@ -19,6 +19,10 @@ namespace AIGame.AI
                 throw new NullReferenceException("rnd is null: No random generator");
             Rnd =rnd;
         }
+        public string Name
+        {
+            get { return "SimpleAi"; }
+        }
     }
     public class SimpleAi:IAi
     {

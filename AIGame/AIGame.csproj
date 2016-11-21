@@ -68,6 +68,7 @@
     <Compile Include="Interfaces\ITarget.cs" />
     <Compile Include="Interfaces\IScannedArea.cs" />
     <Compile Include="Interfaces\IUnit.cs" />
+    <Compile Include="League\League.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

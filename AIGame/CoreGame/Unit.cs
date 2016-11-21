@@ -16,7 +16,7 @@ namespace AIGame.CoreGame
 
         public int Health { get; set; }
 
-        public bool IsDead => Health < 0;
+        public bool IsDead => Health <= 0;
 
         public Side Owner { get; set; }
         public IAi Ai { get; set; }
@@ -28,6 +28,8 @@ namespace AIGame.CoreGame
             Owner = owner;
             Ai = ai;
             Facing = Direction.North;
+            Health = 100;
+
             Sensor = new Sensor();
             Sensor.Health = Health;
             Coordinates = new Tuple<int, int>(-1,-1);
@@ -52,8 +54,8 @@ namespace AIGame.CoreGame
                 Sensor.ScannedArea.Initilize(this,map);
 
                 //TODO remove rendering
-                Console.WriteLine(Facing);
-                Sensor.ScannedArea.ConsoleRenderArea();
+                //Console.WriteLine(Facing);
+                //Sensor.ScannedArea.ConsoleRenderArea();
                 
             }
             else
