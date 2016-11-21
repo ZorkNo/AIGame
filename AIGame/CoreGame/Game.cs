@@ -11,7 +11,25 @@ namespace AIGame.CoreGame
         public int Turn;
         public int MaxTurn = 100;
         public IMap Map;
-        private GameResult gameResult;
+        public GameResult GameResult {
+            get{ //No more units
+                if (Map.Units.TrueForAll(u => u.IsDead && (u.Owner == Side.Blue || u.Owner == Side.Red)))
+                    return GameResult.Tie;
+
+                //Only one type of units
+                if (Map.Units.TrueForAll(u => u.IsDead && u.Owner == Side.Blue))
+                    return GameResult.RedWin;
+
+                if (Map.Units.TrueForAll(u => u.IsDead && u.Owner == Side.Red))
+                    return GameResult.BlueWin;
+
+                //Max turns
+                if (Turn >= MaxTurn)
+                    return GameResult.Tie;
+
+                return GameResult.GameNotEnded;
+            }
+        }
 
         public Game(IAiType blue, IAiType red,int xSize,int ySize,Random rnd)
         {
@@ -30,35 +48,16 @@ namespace AIGame.CoreGame
             for (int i=0;i >MaxTurn;i++)
             {
                 NextTurn();
-                if (GetGameResult() !=GameResult.GameNotEnded)
+                if (GameResult != GameResult.GameNotEnded)
                     break;
 
             }
         }
-        public GameResult GetGameResult()
-        {
-
-            //No more units
-            if (Map.Units.TrueForAll(u => u.IsDead && (u.Owner == Side.Blue || u.Owner == Side.Red )))
-                return GameResult.Tie;
-
-            //Only one type of units
-            if (Map.Units.TrueForAll(u => u.IsDead && u.Owner == Side.Blue))
-                return GameResult.RedWin;
-
-            if (Map.Units.TrueForAll(u => u.IsDead && u.Owner == Side.Red ))
-                return GameResult.BlueWin;
-
-            //Max turns
-            if(Turn >= MaxTurn)
-                return GameResult.Tie;
-
-            return GameResult.GameNotEnded;
-        }
+     
 
         public void NextTurn()
         {
-            if (GetGameResult() != GameResult.GameNotEnded)
+            if (GameResult != GameResult.GameNotEnded)
             { 
                 foreach (IUnit unit in Map.Units)
                 {
@@ -79,8 +78,8 @@ namespace AIGame.CoreGame
         {
             Console.WriteLine(Map.RenderArea());
             Console.WriteLine("Turn:" + Turn);
-            if(gameResult != GameResult.GameNotEnded)
-                Console.WriteLine("GameResult:{0}" , gameResult);
+            if(GameResult != GameResult.GameNotEnded)
+                Console.WriteLine("GameResult:{0}" , GameResult);
         }
     }
 }
