@@ -12,11 +12,12 @@ namespace AIGame.CoreGame
         Left,
         Right
     }
-    public enum Victory
+    public enum GameResult
     {
         RedWin,
         BlueWin,
         Tie,
+        GameNotEnded
     }
     public enum Direction
     {
@@ -25,4 +26,5 @@ namespace AIGame.CoreGame
         South = 2,
         East = 3
     }
+
 }

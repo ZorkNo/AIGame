@@ -11,7 +11,7 @@ namespace AIGame.CoreGame
         public int Turn;
         public int MaxTurn = 100;
         public IMap Map;
-        public bool GameEnded = false;
+        private GameResult gameResult;
 
         public Game(IAiType blue, IAiType red,int xSize,int ySize,Random rnd)
         {
@@ -30,46 +30,57 @@ namespace AIGame.CoreGame
             for (int i=0;i >MaxTurn;i++)
             {
                 NextTurn();
-                if (IsGameEnded())
+                if (GetGameResult() !=GameResult.GameNotEnded)
                     break;
 
             }
         }
-
-        private bool IsGameEnded()
+        public GameResult GetGameResult()
         {
 
             //No more units
+            if (Map.Units.TrueForAll(u => u.IsDead && (u.Owner == Side.Blue || u.Owner == Side.Red )))
+                return GameResult.Tie;
 
             //Only one type of units
+            if (Map.Units.TrueForAll(u => u.IsDead && u.Owner == Side.Blue))
+                return GameResult.RedWin;
+
+            if (Map.Units.TrueForAll(u => u.IsDead && u.Owner == Side.Red ))
+                return GameResult.BlueWin;
 
             //Max turns
+            if(Turn >= MaxTurn)
+                return GameResult.Tie;
 
-            return false;
+            return GameResult.GameNotEnded;
         }
 
         public void NextTurn()
         {
-            foreach(IUnit unit in Map.Units)
-            {
-                unit.UpdateSensor(Map);
-                IOrder order = unit.GetOrder();
-                if (order.IsValid(unit, Map))
-                { 
-                    order.Execute(unit, Map);
+            if (GetGameResult() != GameResult.GameNotEnded)
+            { 
+                foreach (IUnit unit in Map.Units)
+                {
+                    if(!unit.IsDead)
+                    { 
+                        unit.UpdateSensor(Map);
+                        IOrder order = unit.GetOrder();
+                        if (order.IsValid(unit, Map))
+                        { 
+                            order.Execute(unit, Map);
+                        }
+                    }
                 }
+                Turn++;
             }
-            IsGameEnded();
-            Turn++;   
         }
         public void Render()
         {
-            RenderBoard();
-        }
-        private void RenderBoard()
-        {
             Console.WriteLine(Map.RenderArea());
             Console.WriteLine("Turn:" + Turn);
+            if(gameResult != GameResult.GameNotEnded)
+                Console.WriteLine("GameResult:{0}" , gameResult);
         }
     }
 }

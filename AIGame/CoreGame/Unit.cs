@@ -15,6 +15,9 @@ namespace AIGame.CoreGame
         public Direction Facing { get; set; }
 
         public int Health { get; set; }
+
+        public bool IsDead => Health < 0;
+
         public Side Owner { get; set; }
         public IAi Ai { get; set; }
         public Sensor Sensor { get; set; }

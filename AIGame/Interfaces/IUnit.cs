@@ -19,6 +19,7 @@ namespace AIGame.Interfaces
         Side Owner { get; set; }
         IAi Ai { get; set; }
         Sensor Sensor { get; set; }
+        bool IsDead { get; }
 
         IOrder GetOrder();
         void UpdateSensor(IMap map);
