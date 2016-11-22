@@ -19,6 +19,13 @@ namespace AIGame.CoreGame
         Tie,
         GameNotEnded
     }
+    public enum GameMode
+    {
+        //FullInfomation
+        HiddenInfoNoBroadcast
+        //HiddenInfoBroadcast
+
+    }
     public enum Direction
     {
         North = 0,

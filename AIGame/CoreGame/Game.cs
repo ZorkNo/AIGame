@@ -9,37 +9,14 @@ namespace AIGame.CoreGame
 {
     public class Game
     {
-        public int Turn;
-        public int MaxTurn = 100;
-        public IMap Map;
+        private int Turn;
+        private int MaxTurn = 100;
+        private IMap Map;
         private string message="";
         public GameResult GameResult {
-            get{ //No more units
-                if (Map.Units.TrueForAll(u => u.IsDead && (u.Owner == Side.Blue || u.Owner == Side.Red)))
-                    return GameResult.Tie;
-
-                //Only one type of units
-                if (Map.Units.TrueForAll(u => u.IsDead && u.Owner == Side.Blue))
-                    return GameResult.RedWin;
-
-                if (Map.Units.TrueForAll(u => u.IsDead && u.Owner == Side.Red))
-                    return GameResult.BlueWin;
-
-                //Max turns
-                if (Turn >= MaxTurn)
-                {
-                    int blueHealth = Map.Units.Where(u => u.Owner == Side.Blue).Sum(u => u.Health);
-                    int redHealth = Map.Units.Where(u => u.Owner == Side.Red).Sum(u => u.Health);
-
-                    if (blueHealth == redHealth) 
-                        return GameResult.Tie;
-                    if (blueHealth > redHealth)
-                        return GameResult.BlueWin;
-                    if (blueHealth < redHealth)
-                        return GameResult.RedWin;
-                }
-
-                return GameResult.GameNotEnded;
+            get
+            {
+                return CalculateResult();
             }
         }
 
@@ -49,8 +26,8 @@ namespace AIGame.CoreGame
 
             units.Add(new Unit("A", Side.Blue, blue.GetAi()));
             units.Add(new Unit("X", Side.Red, red.GetAi()));
-            //units.Add(new Unit("B", Side.Blue, blue.GetAi()));
-            //units.Add(new Unit("Y", Side.Red, red.GetAi()));
+            units.Add(new Unit("B", Side.Blue, blue.GetAi()));
+            units.Add(new Unit("Y", Side.Red, red.GetAi()));
             Map = new Map(xSize, ySize, rnd, units);
 
             
@@ -100,6 +77,35 @@ namespace AIGame.CoreGame
                 Console.WriteLine("Result:{0}" , GameResult);
 
             message = string.Empty;
+        }
+        private GameResult CalculateResult()
+        {
+            //No more units
+            if (Map.Units.TrueForAll(u => u.IsDead && (u.Owner == Side.Blue || u.Owner == Side.Red)))
+                return GameResult.Tie;
+
+            //Only one type of units
+            if (Map.Units.TrueForAll(u => u.IsDead && u.Owner == Side.Blue))
+                return GameResult.RedWin;
+
+            if (Map.Units.TrueForAll(u => u.IsDead && u.Owner == Side.Red))
+                return GameResult.BlueWin;
+
+            //Max turns
+            if (Turn >= MaxTurn)
+            {
+                int blueHealth = Map.Units.Where(u => u.Owner == Side.Blue).Sum(u => u.Health);
+                int redHealth = Map.Units.Where(u => u.Owner == Side.Red).Sum(u => u.Health);
+
+                if (blueHealth == redHealth)
+                    return GameResult.Tie;
+                if (blueHealth > redHealth)
+                    return GameResult.BlueWin;
+                if (blueHealth < redHealth)
+                    return GameResult.RedWin;
+            }
+
+            return GameResult.GameNotEnded;
         }
     }
 }
