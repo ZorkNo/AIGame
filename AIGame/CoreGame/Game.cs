@@ -12,6 +12,7 @@ namespace AIGame.CoreGame
         public int Turn;
         public int MaxTurn = 100;
         public IMap Map;
+        private string message="";
         public GameResult GameResult {
             get{ //No more units
                 if (Map.Units.TrueForAll(u => u.IsDead && (u.Owner == Side.Blue || u.Owner == Side.Red)))
@@ -80,6 +81,8 @@ namespace AIGame.CoreGame
                         { 
                             order.Execute(unit, Map);
                         }
+                        if(order.Render()!=string.Empty)
+                            message = string.Format("{0}{1}{2}", message, order.Render(), System.Environment.NewLine);
                     }
                 }
                 Turn++;
@@ -88,9 +91,15 @@ namespace AIGame.CoreGame
         public void Render()
         {
             Console.WriteLine(Map.RenderArea());
+            Console.WriteLine("Messages:");
+            Console.WriteLine(message);
+
             Console.WriteLine("Turn:" + Turn);
+
             if(GameResult != GameResult.GameNotEnded)
-                Console.WriteLine("GameResult:{0}" , GameResult);
+                Console.WriteLine("Result:{0}" , GameResult);
+
+            message = string.Empty;
         }
     }
 }

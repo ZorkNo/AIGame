@@ -5,6 +5,7 @@ namespace AIGame.CoreGame.Orders
 {
     public class Move:IOrder
     {
+        private string message="";
         public void Execute(IUnit unit, IMap map)
         {
             unit.Coordinates  = Helper.NewCoordinates(unit.Coordinates, unit.Facing);
@@ -18,19 +19,22 @@ namespace AIGame.CoreGame.Orders
             //Is out of bounce
             if (isOutOfbounce)
             {
-                //Console.WriteLine(string.Format("{0}: is trying to move out of bounce", unit.Name)); 
+                message = string.Format("{0}{1}{2}{3}", message, unit.Name, ": is trying to move out of bounce", System.Environment.NewLine);
                 return false;
             }
             //on land
              if (map.Terrain[newCoordinates.Item1, newCoordinates.Item2].Type == TerrainType.Land ||
                 map.Terrain[newCoordinates.Item1, newCoordinates.Item2].Type == TerrainType.Edge)
             {
-                //Console.WriteLine(string.Format("{0}: is trying to move on land", unit.Name));
+                message = string.Format("{0}{1}{2}{3}", message, unit.Name, ": is trying to move on land", System.Environment.NewLine);
                 return false;
             }
             return true;
         }
 
-        
+        public string Render()
+        {
+            return message;
+        }
     }
 }

@@ -7,6 +7,7 @@ namespace AIGame.CoreGame.Orders
     {
 
         public Tuple<int, int> RelativeCoordinates;
+        private string message;
         public FireTorpedo(Tuple<int, int> relativeCoordinates)
         {
             RelativeCoordinates = relativeCoordinates;
@@ -16,11 +17,11 @@ namespace AIGame.CoreGame.Orders
             Tuple<int, int> Coordinates= new Tuple<int, int>(unit.Coordinates.Item1 + RelativeCoordinates.Item1,unit.Coordinates.Item2 + RelativeCoordinates.Item2  );
 
             //TODO remove console 
-            //Console.WriteLine("Clack......");
+            message = string.Format("{0}{1}{2}{3}", message,unit.Name, ": Firing", System.Environment.NewLine);
             foreach (IUnit unitOnMap in map.Units.FindAll(u => u.Coordinates.Equals(Coordinates)))
             {
-                unit.Health -= 34;
-                //Console.WriteLine("Boooom!");
+                unitOnMap.Health -= 34;
+                message = string.Format("{0}{1}{2}{3}", message, unitOnMap.Name, ": Hit!", System.Environment.NewLine);
             }
 
         }
@@ -29,6 +30,11 @@ namespace AIGame.CoreGame.Orders
         {
             return RelativeCoordinates.Item1 <= -2 || RelativeCoordinates.Item2 <= 0 ||
                    RelativeCoordinates.Item1 >= 2 || RelativeCoordinates.Item2 >= 3;
+        }
+
+        public string Render()
+        {
+            return message;
         }
     }
 

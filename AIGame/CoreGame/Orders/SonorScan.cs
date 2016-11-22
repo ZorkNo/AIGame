@@ -14,6 +14,11 @@ namespace AIGame.CoreGame.Orders
         {
             return true;
         }
+
+        public string Render()
+        {
+            return "";
+        }
     }
 }
 

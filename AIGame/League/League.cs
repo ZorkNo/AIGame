@@ -24,6 +24,8 @@ namespace AIGame.League
             redAiType.SetRandomGenerator(rnd);
 
             DateTime starTime = DateTime.Now;
+            Console.Clear();
+            Console.WriteLine("Running");
             for (int i = 0; i < gamesPerMatchUp; i++)
             {
                 Game game = new Game(blueAiType, redAiType, 50, 50, rnd); ;
@@ -31,10 +33,13 @@ namespace AIGame.League
                 game.PlayUntilEnd();
 
                 UpdateScore(game);
+
+                if(i % 1000 ==0)
+                    Console.Write(".");
             }
             TimeSpan CalculationTime = DateTime.Now.Subtract(starTime);
             Console.WriteLine("Match ups: {0} Calculation time milliseconds:{1}", gamesPerMatchUp, CalculationTime.TotalMilliseconds);
-            Console.WriteLine("Score results red:{0} blue:{1}", redPoints, bluePoints);
+            Console.WriteLine("Score results {2}(blue):{3} {0}(red):{1}", redAiType.Name,redPoints, blueAiType.Name,bluePoints);
             Console.ReadKey();
         }
 
