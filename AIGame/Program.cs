@@ -16,13 +16,13 @@ namespace AIGame
             Console.WriteLine("L for 10.000 match ups");
             ConsoleKeyInfo key =Console.ReadKey();
 
-            if(key.Key == ConsoleKey.G)
+            if(key.Key == ConsoleKey.L)
             {
-                SingleGame(); 
+                MatchUp();
             }
             else
             {
-                MatchUp();
+                SingleGame();
             }
             
         }

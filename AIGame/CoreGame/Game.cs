@@ -68,10 +68,9 @@ namespace AIGame.CoreGame
         public void Render()
         {
             Console.WriteLine(Map.RenderArea());
+            Console.WriteLine("Turn:" + Turn);
             Console.WriteLine("Messages:");
             Console.WriteLine(message);
-
-            Console.WriteLine("Turn:" + Turn);
 
             if(GameResult != GameResult.GameNotEnded)
                 Console.WriteLine("Result:{0}" , GameResult);
