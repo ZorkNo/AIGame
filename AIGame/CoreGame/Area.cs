@@ -84,7 +84,7 @@ namespace AIGame.CoreGame
         {
             foreach (IUnit unit in Units)
             {
-                if (unit.Coordinates.Equals(new Tuple<int, int>(x, y)))
+                if (!unit.IsDead && unit.Coordinates.Equals(new Tuple<int, int>(x, y)))
                     return unit.Name;
             }
             foreach (ITarget target in Targets)

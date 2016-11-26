@@ -14,11 +14,12 @@ namespace AIGame.CoreGame.Orders
         }
         public void Execute(IUnit unit, IMap map)
         {
-            Tuple<int, int> Coordinates= new Tuple<int, int>(unit.Coordinates.Item1 + RelativeCoordinates.Item1,unit.Coordinates.Item2 + RelativeCoordinates.Item2  );
+            Tuple<int, int> rotatedCoordinates = Helper.RotateCoordinates(unit.Facing, RelativeCoordinates.Item1,RelativeCoordinates.Item2);
 
-            //TODO remove console 
-            message = string.Format("{0}{1}{2}{3}", message,unit.Name, ": Firing", System.Environment.NewLine);
-            foreach (IUnit unitOnMap in map.Units.FindAll(u => u.Coordinates.Equals(Coordinates)))
+            Tuple <int, int> coordinates= new Tuple<int, int>(unit.Coordinates.Item1 + rotatedCoordinates.Item1,unit.Coordinates.Item2 + rotatedCoordinates.Item2  );
+
+            message = string.Format("{0}{1}{2}{3}", message, unit.Name, ": Firing", System.Environment.NewLine);
+            foreach (IUnit unitOnMap in map.Units.FindAll(u => u.Coordinates.Equals(coordinates)))
             {
                 unitOnMap.Health -= 34;
                 message = string.Format("{0}{1}{2}{3}", message, unitOnMap.Name, ": Hit!", System.Environment.NewLine);

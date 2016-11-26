@@ -10,7 +10,7 @@ namespace AIGame.CoreGame
     public class Game
     {
         private int Turn;
-        private int MaxTurn = 100;
+        private int MaxTurn = 1000;
         private IMap Map;
         private string message="";
         public GameResult GameResult {
@@ -26,8 +26,8 @@ namespace AIGame.CoreGame
 
             units.Add(new Unit("A", Side.Blue, blue.GetAi()));
             units.Add(new Unit("X", Side.Red, red.GetAi()));
-            units.Add(new Unit("B", Side.Blue, blue.GetAi()));
-            units.Add(new Unit("Y", Side.Red, red.GetAi()));
+            //units.Add(new Unit("B", Side.Blue, blue.GetAi()));
+            //units.Add(new Unit("Y", Side.Red, red.GetAi()));
             Map = new Map(xSize, ySize, rnd, units);
 
             
@@ -80,14 +80,14 @@ namespace AIGame.CoreGame
         private GameResult CalculateResult()
         {
             //No more units
-            if (Map.Units.TrueForAll(u => u.IsDead && (u.Owner == Side.Blue || u.Owner == Side.Red)))
+            if (Map.Units.FindAll(u => u.Owner == Side.Blue || u.Owner == Side.Red).TrueForAll(u => u.IsDead))
                 return GameResult.Tie;
 
             //Only one type of units
-            if (Map.Units.TrueForAll(u => u.IsDead && u.Owner == Side.Blue))
+            if (Map.Units.FindAll( u => u.Owner == Side.Blue).TrueForAll(u => u.IsDead))
                 return GameResult.RedWin;
 
-            if (Map.Units.TrueForAll(u => u.IsDead && u.Owner == Side.Red))
+            if (Map.Units.FindAll(u => u.Owner == Side.Red).TrueForAll(u => u.IsDead))
                 return GameResult.BlueWin;
 
             //Max turns

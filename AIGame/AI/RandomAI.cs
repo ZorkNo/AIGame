@@ -57,6 +57,7 @@ namespace AIGame.AI
                      order = new Rotate(getDirection());
                     break;
                 case 3:
+                    
                     order = new FireTorpedo(getCoordinates());
                     break;
                 default:

@@ -28,7 +28,7 @@ namespace TestAIGame
         [Test, Ignore("not working")]
         public void ScanNorthTest()
         {
-            var map = GetMap();
+            var map = TestHelper.GetMap();
 
             MockUnit.Setup(u => u.Facing).Returns(Direction.North);
             MockUnit.Setup(u => u.Coordinates).Returns(new Tuple<int, int>(2,0));
@@ -46,23 +46,7 @@ namespace TestAIGame
             }
         }
         
-        private static IMap GetMap()
-        {
-            int xSize = 5;
-            int ySize = 3;
-            Terrain[,] Terrain = new Terrain[xSize, ySize];
-
-            for (int x = 0; x < xSize; x++)
-            {
-                for (int y = 0; y < ySize; y++)
-                {
-                    Terrain[x, y] = new Terrain(TerrainType.Sea);
-                }
-            }
-            IMap map = new Map(xSize, ySize, new Random(), new List<IUnit>());
-            map.Terrain = Terrain;
-            return map;
-        }
+        
 
         
         [Test]

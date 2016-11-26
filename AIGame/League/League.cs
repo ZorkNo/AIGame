@@ -18,7 +18,7 @@ namespace AIGame.League
         {
             Random rnd = new Random(Environment.TickCount);
 
-            IAiType blueAiType = new RandomAiType();
+            IAiType blueAiType = new DoNothingAIType();
             blueAiType.SetRandomGenerator(rnd);
             IAiType redAiType = new SimpleAiType();
             redAiType.SetRandomGenerator(rnd);
@@ -28,7 +28,7 @@ namespace AIGame.League
             Console.WriteLine("Running");
             for (int i = 0; i < gamesPerMatchUp; i++)
             {
-                Game game = new Game(blueAiType, redAiType, 50, 50, rnd); ;
+                Game game = new Game(blueAiType, redAiType, 10, 10, rnd); ;
 
                 game.PlayUntilEnd();
 

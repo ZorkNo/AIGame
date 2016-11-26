@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using AIGame.CoreGame;
 using AIGame.CoreGame.Orders;
 using Rotate = AIGame.CoreGame.Orders.Rotate;
@@ -37,11 +38,15 @@ namespace AIGame.AI
         public IOrder GetOrder(Sensor sensor)
         {
             _turn++;
-            
-
             //Hvis det en lige tur scan
             if (_turn % 2 == 0)
                 return new SonorScan();
+
+            if (sensor.ScannedArea.Targets.Any())
+            {
+                IOrder fireOrder = new FireTorpedo(sensor.ScannedArea.Targets.First().RelativeCoordinates);
+                return fireOrder;
+            }
 
             if (sensor.Infront.Type == TerrainType.Land || sensor.Infront.Type == TerrainType.Edge)
                 return Rotate();
