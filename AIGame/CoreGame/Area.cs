@@ -70,9 +70,11 @@ namespace AIGame.CoreGame
         public string RenderArea()
         {
             string line = "";
-            for (int x = XSize-1; x >=0; x--)
+            //for (int y = -1; y < YSize; y++)
+            for (int y = YSize - 1; y >= -1; y--)
             {
-                for (int y = 0; y < YSize ; y++)
+                //for (int x = XSize-1; x >=-1; x--)
+                for (int x =  - 1; x < XSize; x++)
                 {
                     line += RenderCoordinate(x, y);
                 }
@@ -82,6 +84,13 @@ namespace AIGame.CoreGame
         }
         private string RenderCoordinate(int x, int y)
         {
+            if (x < 0 && y < 0)
+                return "  ";
+            if (x < 0 )
+                return y.ToString().Last( ).ToString( );
+            if ( y < 0)
+                return x.ToString().Last().ToString();
+
             foreach (IUnit unit in Units)
             {
                 if (!unit.IsDead && unit.Coordinates.Equals(new Tuple<int, int>(x, y)))

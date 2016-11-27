@@ -28,7 +28,7 @@ namespace AIGame.League
             Console.WriteLine("Running");
             for (int i = 0; i < gamesPerMatchUp; i++)
             {
-                Game game = new Game(blueAiType, redAiType, 10, 10, rnd); ;
+                Game game = new Game(blueAiType, redAiType, GameMode.HiddenInfo1ShipSmallNoBroadcast, rnd); ;
 
                 game.PlayUntilEnd();
 

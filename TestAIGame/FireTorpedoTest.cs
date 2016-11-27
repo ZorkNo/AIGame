@@ -27,8 +27,10 @@ namespace TestAIGame
             sut = new FireTorpedo(new Tuple<int, int>(0,0));
         }
         [Test]
-        [TestCase(Direction.North, -2, 2,4,0)]
-        [TestCase(Direction.East, 2, 2, 4, 0)]
+        [TestCase(Direction.North, -1, 2, 1, 4)]
+        [TestCase(Direction.East, -1, 2, 0, 1)]
+        [TestCase(Direction.South, -1, 2, 3, 0)]
+        [TestCase(Direction.West, -1, 2, 4, 3)]
         public void Fire(Direction facing, int x, int y,int targetX,int targetY)
         {
             MockUnit.Setup(u => u.Facing).Returns(facing);
@@ -44,6 +46,27 @@ namespace TestAIGame
             sut.Execute(MockUnit.Object,MockMap.Object);
 
             Assert.AreEqual(66,unitOnMap.Health);
+        }
+          [Test,TestCaseSource("IsValidCases")]
+        public void IsValidTest(int x, int y,bool valid)
+        {
+            sut.RelativeCoordinates = new Tuple<int, int>(x, y);
+            bool isValid = sut.IsValid(MockUnit.Object , MockMap.Object);
+
+            Assert.AreEqual(valid, isValid);
+        }
+        public static object[] IsValidCases()
+        {
+            List<object> objects = new List<object>();
+            for (int x=-10; x<10;x++)
+            {
+                for (int y = -10; y<10; y++)
+                {
+                    objects.Add( new object[] { x, y,(x<=-2 && x >=2 && y>=0 && y<=2) });
+                }
+            }
+            return objects.ToArray();
+
         }
     }
 }

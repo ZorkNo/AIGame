@@ -18,7 +18,7 @@ namespace AIGame
 
             if(key.Key == ConsoleKey.L)
             {
-                MatchUp();
+                LeagueMatchUp();
             }
             else
             {
@@ -35,7 +35,7 @@ namespace AIGame
             blueAiType.SetRandomGenerator(rnd);
             IAiType redAiType = new SimpleAiType();
             redAiType.SetRandomGenerator(rnd);
-            Game game = new Game(blueAiType, redAiType, 10, 10, rnd);
+            Game game = new Game(blueAiType, redAiType, GameMode.HiddenInfo1ShipSmallNoBroadcast, rnd);
             ;
             for (int i = 0; i < 100000; i++)
             {
@@ -47,7 +47,7 @@ namespace AIGame
             }
         }
 
-        private static void MatchUp()
+        private static void LeagueMatchUp()
         {
             League.League league = new League.League();
 

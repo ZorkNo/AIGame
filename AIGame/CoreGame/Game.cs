@@ -12,6 +12,7 @@ namespace AIGame.CoreGame
         private int Turn;
         private int MaxTurn = 1000;
         private IMap Map;
+        private GameMode gameMode;
         private string message="";
         public GameResult GameResult {
             get
@@ -19,18 +20,29 @@ namespace AIGame.CoreGame
                 return CalculateResult();
             }
         }
-
-        public Game(IAiType blue, IAiType red,int xSize,int ySize,Random rnd)
+        public Game(IAiType blue, IAiType red, GameMode gameMode, Random rnd)
         {
             List<IUnit> units = new List<IUnit>();
-
+            this.gameMode = gameMode;
             units.Add(new Unit("A", Side.Blue, blue.GetAi()));
             units.Add(new Unit("X", Side.Red, red.GetAi()));
             //units.Add(new Unit("B", Side.Blue, blue.GetAi()));
             //units.Add(new Unit("Y", Side.Red, red.GetAi()));
-            Map = new Map(xSize, ySize, rnd, units);
+            Tuple<int, int> size = GetGameSize(this.gameMode);
+            Map = new Map(size.Item1, size.Item2, rnd, units);
 
-            
+
+        }
+
+        private Tuple<int, int> GetGameSize(GameMode gameMode)
+        {
+            if(gameMode == GameMode.HiddenInfo1ShipSmallNoBroadcast)
+                return new Tuple<int, int>(10,10);
+
+            if (gameMode == GameMode.HiddenInfo1ShipLargeNoBroadcast || gameMode == GameMode.HiddenInfo2ShipLargeNoBroadcast)
+                return new Tuple<int, int>(20, 20);
+
+            return new Tuple<int, int>(10, 10);
         }
         public void PlayUntilEnd()
         {
@@ -58,7 +70,9 @@ namespace AIGame.CoreGame
                         { 
                             order.Execute(unit, Map);
                         }
-                        if(order.Render()!=string.Empty)
+                        if (unit.Render() != string.Empty)
+                            message = string.Format("{0}{1}{2}", message, unit.Render(), System.Environment.NewLine);
+                        if (order.Render()!=string.Empty)
                             message = string.Format("{0}{1}{2}", message, order.Render(), System.Environment.NewLine);
                     }
                 }

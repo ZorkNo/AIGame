@@ -24,6 +24,7 @@ namespace AIGame.Interfaces
         IOrder GetOrder();
         void UpdateSensor(IMap map);
 
-        
+
+        string Render();
     }
 }

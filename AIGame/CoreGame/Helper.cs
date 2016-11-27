@@ -10,16 +10,16 @@ namespace AIGame.CoreGame
             switch (direction)
             {
                 case Direction.North:
-                    newCoordinates = new Tuple<int, int>(oldCoordinates.Item1 + 1, oldCoordinates.Item2);
+                    newCoordinates = new Tuple<int, int>(oldCoordinates.Item1, oldCoordinates.Item2 + 1);
                     break;
                 case Direction.South:
-                    newCoordinates = new Tuple<int, int>(oldCoordinates.Item1 - 1, oldCoordinates.Item2);
+                    newCoordinates = new Tuple<int, int>(oldCoordinates.Item1 , oldCoordinates.Item2 - 1);
                     break;
                 case Direction.East:
-                    newCoordinates = new Tuple<int, int>(oldCoordinates.Item1, oldCoordinates.Item2 - 1);
+                    newCoordinates = new Tuple<int, int>(oldCoordinates.Item1 - 1, oldCoordinates.Item2 );
                     break;
                 case Direction.West:
-                    newCoordinates = new Tuple<int, int>(oldCoordinates.Item1, oldCoordinates.Item2 + 1);
+                    newCoordinates = new Tuple<int, int>(oldCoordinates.Item1 + 1, oldCoordinates.Item2 );
                     break;
                 default:
                     throw new Exception("no direction");
@@ -38,19 +38,19 @@ namespace AIGame.CoreGame
             int newY = 0;
             switch (facing)
             {
-                case Direction.West:
+                case Direction.North:
                     newX = x;
                     newY = y;
                     break;
-                case Direction.North:
+                case Direction.West:
                     newX = y;
                     newY = -x;
                     break;
-                case Direction.East:
+                case Direction.South:
                     newX = -x;
                     newY = -y;
                     break;
-                case Direction.South:
+                case Direction.East:
                     newX = -y;
                     newY = x;
                     break;

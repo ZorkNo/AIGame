@@ -38,7 +38,16 @@ namespace AIGame.CoreGame
         {
             return Ai.GetOrder(Sensor);
         }
-   
+
+        public string Render()
+        {
+            string message = "";
+
+            message = string.Format("{0}{1}{2}{3}", message, "Unit:", Name, System.Environment.NewLine);
+            message = string.Format("{0}{1}{2}{3}", message, "Facing:", Facing, System.Environment.NewLine);
+            message = string.Format("{0}{1}{2},{3}{4}", message, "Coordinates:", Coordinates.Item1 ,Coordinates.Item2, System.Environment.NewLine);
+            return message;
+        }
         public void UpdateSensor(IMap map)
         {
             Sensor.Health = Health;
