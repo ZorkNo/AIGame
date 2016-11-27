@@ -39,7 +39,7 @@ namespace AIGame.CoreGame
                     //else
                     //{
                     Terrain[x, y] = map.GetTerrain(coor);
-                    List<IUnit> units = map.Units.FindAll(u => u.Coordinates.Equals(coor));
+                    List<IUnit> units = map.Units.FindAll(u => u.Coordinates.Item1 == coor.Item1 && u.Coordinates.Item2 == coor.Item2);
                     foreach (IUnit unitOnMap in units)
                     {
                         if(!unitOnMap.IsDead &&  unit.Name != unitOnMap.Name)

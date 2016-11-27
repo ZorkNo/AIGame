@@ -11,55 +11,68 @@ namespace AIGame.League
     public class League
     {
         private int gamesPerMatchUp=10000;
-        private int redPoints = 0;
-        private int bluePoints = 0;
+        private MatchUp _matchUp = new MatchUp();
+        private bool parallelGames = true;
 
         public void RunSingleMatchUp()
         {
-            Random rnd = new Random(Environment.TickCount);
-
-            IAiType blueAiType = new DoNothingAIType();
-            blueAiType.SetRandomGenerator(rnd);
+            IAiType blueAiType = new RandomAiType();
             IAiType redAiType = new SimpleAiType();
-            redAiType.SetRandomGenerator(rnd);
 
             DateTime starTime = DateTime.Now;
             Console.Clear();
             Console.WriteLine("Running");
-            for (int i = 0; i < gamesPerMatchUp; i++)
-            {
-                Game game = new Game(blueAiType, redAiType, GameMode.HiddenInfo1ShipSmallNoBroadcast, rnd); ;
+            RunAllGames(blueAiType, redAiType);
 
-                game.PlayUntilEnd();
-
-                UpdateScore(game);
-
-                if(i % 1000 ==0)
-                    Console.Write(".");
-            }
+            Console.WriteLine("");
             TimeSpan CalculationTime = DateTime.Now.Subtract(starTime);
             Console.WriteLine("Match ups: {0} Calculation time milliseconds:{1}", gamesPerMatchUp, CalculationTime.TotalMilliseconds);
-            Console.WriteLine("Score results {2}(blue):{3} {0}(red):{1}", redAiType.Name,redPoints, blueAiType.Name,bluePoints);
+            Console.WriteLine("Score results {0}(blue):{1}:{2} {3}(red):{4}:{5}",
+                blueAiType.Name, _matchUp.blueWins, _matchUp.blueTies,
+                redAiType.Name, _matchUp.redWins, _matchUp.redTies);
             Console.ReadKey();
         }
 
-        private void UpdateScore(Game game)
+        private void RunAllGames(IAiType blueAiType, IAiType redAiType)
         {
-            switch (game.GameResult)
+            if (!parallelGames)
             {
-                case GameResult.RedWin:
-                    redPoints += 2;
-                    break;
-                case GameResult.BlueWin:
-                    bluePoints += 2;
-                    break;
-                case GameResult.Tie:
-                    redPoints += 1;
-                    bluePoints += 1;
-                    break;
-                default:
-                    throw new Exception("Unknown result");
+                for (int i = 0; i < gamesPerMatchUp; i++)
+                {
+                    PlayGame(blueAiType, redAiType, false, i);
+                }
             }
+            else
+            {
+                Parallel.For(0, gamesPerMatchUp, i => { PlayGame(blueAiType, redAiType, true, i); });
+            }
+        
+        }
+
+        private void PlayGame(IAiType blueAiType, IAiType redAiType,bool withLock, int gameInt)
+        {
+            long longRnd = Environment.TickCount + gameInt;
+            Random rnd = new Random((int)longRnd);
+
+            blueAiType.SetRandomGenerator(rnd);
+            redAiType.SetRandomGenerator(rnd);
+
+            Game game = new Game(blueAiType, redAiType, GameMode.HiddenInfo1ShipLarge, rnd);
+            game.PlayUntilEnd();
+
+            if(withLock)
+            { 
+                lock (_matchUp)
+                {
+                    _matchUp.AddGame(game);
+                }
+            }
+            else
+            {
+                _matchUp.AddGame(game);
+            }
+            if (_matchUp.gamesPlayed % 250 == 0)
+                Console.Write(".");
         }
     }
 }

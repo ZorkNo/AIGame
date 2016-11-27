@@ -21,6 +21,7 @@ namespace AIGame.CoreGame
         public Side Owner { get; set; }
         public IAi Ai { get; set; }
         public Sensor Sensor { get; set; }
+        public IOrder LastOrder { get; set; }
 
         public Unit(string name, Side owner, IAi ai)
         {

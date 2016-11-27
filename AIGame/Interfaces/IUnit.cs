@@ -20,6 +20,7 @@ namespace AIGame.Interfaces
         IAi Ai { get; set; }
         Sensor Sensor { get; set; }
         bool IsDead { get; }
+        IOrder LastOrder { get; set; }
 
         IOrder GetOrder();
         void UpdateSensor(IMap map);

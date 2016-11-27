@@ -22,9 +22,9 @@ namespace AIGame.CoreGame
     public enum GameMode
     {
         //FullInfomation
-        HiddenInfo1ShipSmallNoBroadcast,
-        HiddenInfo1ShipLargeNoBroadcast,
-        HiddenInfo2ShipLargeNoBroadcast,
+        HiddenInfo1ShipSmall,
+        HiddenInfo1ShipLarge,
+        HiddenInfo2ShipLarge,
         //HiddenInfoBroadcast
 
     }

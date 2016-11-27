@@ -13,7 +13,6 @@ namespace AIGame.CoreGame
         private int MaxTurn = 1000;
         private IMap Map;
         private GameMode gameMode;
-        private string message="";
         public GameResult GameResult {
             get
             {
@@ -24,22 +23,31 @@ namespace AIGame.CoreGame
         {
             List<IUnit> units = new List<IUnit>();
             this.gameMode = gameMode;
-            units.Add(new Unit("A", Side.Blue, blue.GetAi()));
-            units.Add(new Unit("X", Side.Red, red.GetAi()));
-            //units.Add(new Unit("B", Side.Blue, blue.GetAi()));
-            //units.Add(new Unit("Y", Side.Red, red.GetAi()));
+            AddUnits(blue, red, units, this.gameMode);
             Tuple<int, int> size = GetGameSize(this.gameMode);
             Map = new Map(size.Item1, size.Item2, rnd, units);
 
 
         }
 
+        private static void AddUnits(IAiType blue, IAiType red, List<IUnit> units, GameMode gameMode)
+        {
+            units.Add(new Unit("A", Side.Blue, blue.GetAi()));
+            units.Add(new Unit("X", Side.Red, red.GetAi()));
+
+            if (gameMode == GameMode.HiddenInfo2ShipLarge)
+            {
+                units.Add(new Unit("B", Side.Blue, blue.GetAi()));
+                units.Add(new Unit("Y", Side.Red, red.GetAi()));
+            }
+        }
+
         private Tuple<int, int> GetGameSize(GameMode gameMode)
         {
-            if(gameMode == GameMode.HiddenInfo1ShipSmallNoBroadcast)
+            if(gameMode == GameMode.HiddenInfo1ShipSmall)
                 return new Tuple<int, int>(10,10);
 
-            if (gameMode == GameMode.HiddenInfo1ShipLargeNoBroadcast || gameMode == GameMode.HiddenInfo2ShipLargeNoBroadcast)
+            if (gameMode == GameMode.HiddenInfo1ShipLarge || gameMode == GameMode.HiddenInfo2ShipLarge)
                 return new Tuple<int, int>(20, 20);
 
             return new Tuple<int, int>(10, 10);
@@ -70,10 +78,7 @@ namespace AIGame.CoreGame
                         { 
                             order.Execute(unit, Map);
                         }
-                        if (unit.Render() != string.Empty)
-                            message = string.Format("{0}{1}{2}", message, unit.Render(), System.Environment.NewLine);
-                        if (order.Render()!=string.Empty)
-                            message = string.Format("{0}{1}{2}", message, order.Render(), System.Environment.NewLine);
+                        unit.LastOrder = order;
                     }
                 }
                 Turn++;
@@ -81,9 +86,19 @@ namespace AIGame.CoreGame
         }
         public void Render()
         {
+            string message = "";
             Console.WriteLine(Map.RenderArea());
             Console.WriteLine("Turn:" + Turn);
             Console.WriteLine("Messages:");
+            foreach (IUnit unit in Map.Units)
+            {
+                
+                    if (unit.Render() != string.Empty)
+                        message = string.Format("{0}{1}{2}", message, unit.Render(), System.Environment.NewLine);
+                    if (unit.LastOrder !=null && unit.LastOrder.Render() != string.Empty)
+                        message = string.Format("{0}{1}{2}", message, unit.LastOrder.Render(), System.Environment.NewLine);
+                
+            }
             Console.WriteLine(message);
 
             if(GameResult != GameResult.GameNotEnded)

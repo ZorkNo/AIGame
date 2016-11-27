@@ -31,11 +31,11 @@ namespace AIGame
         {
             Random rnd = new Random(Environment.TickCount);
 
-            IAiType blueAiType = new DoNothingAIType();
+            IAiType blueAiType = new RandomAiType();
             blueAiType.SetRandomGenerator(rnd);
             IAiType redAiType = new SimpleAiType();
             redAiType.SetRandomGenerator(rnd);
-            Game game = new Game(blueAiType, redAiType, GameMode.HiddenInfo1ShipSmallNoBroadcast, rnd);
+            Game game = new Game(blueAiType, redAiType, GameMode.HiddenInfo1ShipSmall, rnd);
             ;
             for (int i = 0; i < 100000; i++)
             {
