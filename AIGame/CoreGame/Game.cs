@@ -9,6 +9,8 @@ namespace AIGame.CoreGame
 {
     public class Game
     {
+        public IAiType BlueAi;
+        public IAiType RedAi;
         private int Turn;
         private int MaxTurn = 1000;
         private IMap Map;
@@ -21,24 +23,26 @@ namespace AIGame.CoreGame
         }
         public Game(IAiType blue, IAiType red, GameMode gameMode, Random rnd)
         {
+            BlueAi = blue;
+            RedAi = red;
             List<IUnit> units = new List<IUnit>();
             this.gameMode = gameMode;
-            AddUnits(blue, red, units, this.gameMode);
+            AddUnits(blue, red, units, this.gameMode,rnd);
             Tuple<int, int> size = GetGameSize(this.gameMode);
             Map = new Map(size.Item1, size.Item2, rnd, units);
 
 
         }
 
-        private static void AddUnits(IAiType blue, IAiType red, List<IUnit> units, GameMode gameMode)
+        private static void AddUnits(IAiType blue, IAiType red, List<IUnit> units, GameMode gameMode, Random rnd)
         {
-            units.Add(new Unit("A", Side.Blue, blue.GetAi()));
-            units.Add(new Unit("X", Side.Red, red.GetAi()));
+            units.Add(new Unit("A", Side.Blue, blue.GetAi(rnd)));
+            units.Add(new Unit("X", Side.Red, red.GetAi(rnd)));
 
             if (gameMode == GameMode.HiddenInfo2ShipLarge)
             {
-                units.Add(new Unit("B", Side.Blue, blue.GetAi()));
-                units.Add(new Unit("Y", Side.Red, red.GetAi()));
+                units.Add(new Unit("B", Side.Blue, blue.GetAi(rnd)));
+                units.Add(new Unit("Y", Side.Red, red.GetAi(rnd)));
             }
         }
 

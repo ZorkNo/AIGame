@@ -71,6 +71,7 @@
     <Compile Include="Interfaces\IUnit.cs" />
     <Compile Include="League\League.cs" />
     <Compile Include="League\MatchUp.cs" />
+    <Compile Include="League\Player.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

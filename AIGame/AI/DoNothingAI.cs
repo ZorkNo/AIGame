@@ -10,15 +10,10 @@ namespace AIGame.AI
 {
     public class DoNothingAIType : IAiType
     {
-        public IAi GetAi()
+        public IAi GetAi(Random rnd)
         {
             return new DoNothingAI();
         }
-
-        public void SetRandomGenerator(Random rnd)
-        {
-        }
-
         public string Name
         {
             get { return "DoNothingAi"; }

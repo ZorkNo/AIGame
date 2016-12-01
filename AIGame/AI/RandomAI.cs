@@ -11,17 +11,12 @@ namespace AIGame.AI
 {
     public class RandomAiType : IAiType
     {
-        public Random Rnd;
-        public IAi GetAi()
+        public IAi GetAi(Random rnd)
         {
-            return new RandomAI(Rnd);
+            if (rnd == null)
+                throw new NullReferenceException("rnd is null: No random generator");
+            return new RandomAI(rnd);
         }
-
-        public void SetRandomGenerator(Random rnd)
-        {
-            Rnd=rnd;
-        }
-
         public string Name {
             get { return "RandomAi";}
         }

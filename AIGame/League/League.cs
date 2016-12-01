@@ -10,69 +10,88 @@ namespace AIGame.League
 {
     public class League
     {
-        private int gamesPerMatchUp=10000;
+        private int gamesPerMatchUp=4000;
+        private int gamesPlayed = 0;
+        public List<Player> Players;
         private MatchUp _matchUp = new MatchUp();
-        private bool parallelGames = true;
 
         public void RunSingleMatchUp()
         {
-            IAiType blueAiType = new RandomAiType();
-            IAiType redAiType = new SimpleAiType();
+            AddPlayers();
 
             DateTime starTime = DateTime.Now;
             Console.Clear();
             Console.WriteLine("Running");
-            RunAllGames(blueAiType, redAiType);
+            RunAllGames();
 
             Console.WriteLine("");
             TimeSpan CalculationTime = DateTime.Now.Subtract(starTime);
-            Console.WriteLine("Match ups: {0} Calculation time milliseconds:{1}", gamesPerMatchUp, CalculationTime.TotalMilliseconds);
-            Console.WriteLine("Score results {0}(blue):{1}:{2} {3}(red):{4}:{5}",
-                blueAiType.Name, _matchUp.blueWins, _matchUp.blueTies,
-                redAiType.Name, _matchUp.redWins, _matchUp.redTies);
+            Console.WriteLine("Games: {0} Calculation time milliseconds:{1}", gamesPlayed, CalculationTime.TotalMilliseconds);
+
+            foreach (Player player in Players)
+            { 
+                Console.WriteLine("{0}: score results Games played:{1} Wins:{2} Ties:{3} Loses:{4} ",
+                    player.AiType.Name, player.GamesPlayed, player.Wins, player.Ties,player.Loses);
+            }
             Console.ReadKey();
         }
 
-        private void RunAllGames(IAiType blueAiType, IAiType redAiType)
+        private void AddPlayers()
         {
-            if (!parallelGames)
+            Players = new List<Player>
             {
-                for (int i = 0; i < gamesPerMatchUp; i++)
-                {
-                    PlayGame(blueAiType, redAiType, false, i);
-                }
-            }
-            else
-            {
-                Parallel.For(0, gamesPerMatchUp, i => { PlayGame(blueAiType, redAiType, true, i); });
-            }
-        
+                new Player {AiType = new DoNothingAIType()},
+                new Player {AiType = new RandomAiType()},
+                new Player {AiType = new SimpleAiType()},
+            };
         }
 
-        private void PlayGame(IAiType blueAiType, IAiType redAiType,bool withLock, int gameInt)
+        private void RunAllGames()
+        {
+            foreach (Player blue in Players)
+            {
+                foreach (Player red in Players)
+                {
+                    if(blue.AiType.Name !=red.AiType.Name)
+                    {
+                        Console.WriteLine();
+                        Console.WriteLine($"{blue.AiType.Name} vs {red.AiType.Name}");
+                        Parallel.For(0, gamesPerMatchUp, i =>
+                        {
+                            PlayGame(blue, red, true, i);
+                            if (gamesPlayed% 250 == 0)
+                                Console.Write(".");
+                        });
+                    }
+                }
+            }
+        }
+
+        private void PlayGame(Player blue, Player red,bool withLock, int gameInt)
         {
             long longRnd = Environment.TickCount + gameInt;
             Random rnd = new Random((int)longRnd);
 
-            blueAiType.SetRandomGenerator(rnd);
-            redAiType.SetRandomGenerator(rnd);
-
-            Game game = new Game(blueAiType, redAiType, GameMode.HiddenInfo1ShipLarge, rnd);
+            Game game = new Game(blue.AiType, red.AiType, GameMode.HiddenInfo2ShipLarge, rnd);
             game.PlayUntilEnd();
 
             if(withLock)
             { 
-                lock (_matchUp)
+                lock (Players)
                 {
-                    _matchUp.AddGame(game);
+                    blue.AddGame(game);
+                    red.AddGame(game);
+                    gamesPlayed++;
+
                 }
             }
             else
             {
-                _matchUp.AddGame(game);
+                blue.AddGame(game);
+                red.AddGame(game);
+                gamesPlayed++;
             }
-            if (_matchUp.gamesPlayed % 250 == 0)
-                Console.Write(".");
+            
         }
     }
 }

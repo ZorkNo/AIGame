@@ -6,8 +6,7 @@ namespace AIGame.AI
 {
     public interface IAiType
     {
-        IAi GetAi();
-        void SetRandomGenerator(Random Rnd);
+        IAi GetAi(Random Rnd);
         string Name { get; }
     }
     public interface IAi
