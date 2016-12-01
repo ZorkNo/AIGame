@@ -13,7 +13,7 @@ namespace AIGame
         static void Main(string[] args)
         {
             Console.WriteLine("G for Single game");
-            Console.WriteLine("L for 10.000 match ups");
+            Console.WriteLine("L for League match ups");
             ConsoleKeyInfo key =Console.ReadKey();
 
             if(key.Key == ConsoleKey.L)

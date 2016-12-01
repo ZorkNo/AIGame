@@ -10,7 +10,7 @@ namespace AIGame.League
 {
     public class League
     {
-        private int gamesPerMatchUp=4000;
+        private int gamesPerMatchUp=1000;
         private int gamesPlayed = 0;
         public List<Player> Players;
         private MatchUp _matchUp = new MatchUp();
@@ -22,11 +22,12 @@ namespace AIGame.League
             DateTime starTime = DateTime.Now;
             Console.Clear();
             Console.WriteLine("Running");
+
             RunAllGames();
 
             Console.WriteLine("");
             TimeSpan CalculationTime = DateTime.Now.Subtract(starTime);
-            Console.WriteLine("Games: {0} Calculation time milliseconds:{1}", gamesPlayed, CalculationTime.TotalMilliseconds);
+            Console.WriteLine("Games: {0} Calculation time seconds:{1}", gamesPlayed, CalculationTime.TotalSeconds);
 
             foreach (Player player in Players)
             { 
@@ -43,6 +44,9 @@ namespace AIGame.League
                 new Player {AiType = new DoNothingAIType()},
                 new Player {AiType = new RandomAiType()},
                 new Player {AiType = new SimpleAiType()},
+                new Player {AiType = new RunAwayAiType()},
+                new Player {AiType = new FireAllTheTimeAiType()},
+                new Player {AiType = new ScanNFireAiType() },
             };
         }
 

@@ -6,47 +6,48 @@ using Rotate = AIGame.CoreGame.Orders.Rotate;
 
 namespace AIGame.AI
 {
-    public class SimpleAiType : IAiType
+    public class RunAwayAiType : IAiType
     {
         public IAi GetAi(Random rnd)
         {
             if (rnd == null)
                 throw new NullReferenceException("rnd is null: No random generator");
-            return new SimpleAi(rnd);
+            return new RunAwayAi(rnd);
         }
         public string Name
         {
-            get { return "SimpleAi"; }
+            get { return "RunAwayAi"; }
         }
     }
-    public class SimpleAi:IAi
+    public class RunAwayAi: IAi
     {
         private int _turn=0;
+        private int health = 0;
         public Random Rnd;
 
-        public SimpleAi(Random rnd)
+        public RunAwayAi(Random rnd)
         {
             Rnd = rnd;
         }
         public IOrder GetOrder(Sensor sensor)
         {
             _turn++;
-            //Hvis det en lige tur scan
-            if (_turn % 2 == 0)
-                return new SonorScan();
 
-            if (sensor.ScannedArea.Targets.Any())
+            bool hit = false;
+            if (sensor.Health != health)
             {
-                IOrder fireOrder = new FireTorpedo(sensor.ScannedArea.Targets.First().RelativeCoordinates);
-                return fireOrder;
+                health = sensor.Health;
+                hit = true;
             }
+
+            if (Rnd.Next(1, 100) > 75 && hit == false)
+                return new FireTorpedo(getCoordinates());
 
             if (sensor.Infront.Type == TerrainType.Land || sensor.Infront.Type == TerrainType.Edge)
                 return Rotate();
 
-            if (Rnd.Next(1, 100) > 65)
+            if (Rnd.Next(1, 100) > 65 && hit==false)
                 return Rotate();
-
 
             return new Move();
   
@@ -62,6 +63,12 @@ namespace AIGame.AI
 
             order = new Rotate(rotate);
             return order;
+        }
+        private Tuple<int, int> getCoordinates()
+        {
+            int rndX = Rnd.Next(1, 6);
+            int rndY = Rnd.Next(1, 4);
+            return new Tuple<int, int>(rndX - 2, rndY);
         }
     }
 
