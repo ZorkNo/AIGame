@@ -19,6 +19,12 @@ namespace AIGame.CoreGame
         Tie,
         GameNotEnded
     }
+    public enum Result
+    {
+        Win=2,
+        Tie=1,
+        Lost=0
+    }
     public enum GameMode
     {
         //FullInfomation

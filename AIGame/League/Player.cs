@@ -14,31 +14,7 @@ namespace AIGame.League
         public int Wins;
         public int Loses;
         public int Ties;
+        public double EloRating =2000;
         public int GamesPlayed;
-
-        public void AddGame(Game game)
-        {
-            GamesPlayed++;
-
-            if (game.BlueAi.Name ==AiType.Name && game.GameResult == GameResult.BlueWin)
-            { 
-                Wins++;
-                return;
-            }
-
-            if (game.RedAi.Name == AiType.Name && game.GameResult == GameResult.RedWin)
-            { 
-                Wins++;
-                return;
-            }
-
-            if (game.GameResult == GameResult.Tie)
-            {
-                Ties++;
-                return;
-            }
-            Loses++;
-            //throw new Exception("no result");
-        }
     }
 }

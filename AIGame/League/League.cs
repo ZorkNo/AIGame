@@ -10,7 +10,7 @@ namespace AIGame.League
 {
     public class League
     {
-        private int gamesPerMatchUp=1000;
+        private int gamesPerMatchUp=100;
         private int gamesPlayed = 0;
         public List<Player> Players;
         private MatchUp _matchUp = new MatchUp();
@@ -31,8 +31,8 @@ namespace AIGame.League
 
             foreach (Player player in Players)
             { 
-                Console.WriteLine("{0}: score results Games played:{1} Wins:{2} Ties:{3} Loses:{4} ",
-                    player.AiType.Name, player.GamesPlayed, player.Wins, player.Ties,player.Loses);
+                Console.WriteLine("{0}: score results Games played:{1} Wins:{2} Ties:{3} Loses:{4} Elo rating:{5}",
+                    player.AiType.Name, player.GamesPlayed, player.Wins, player.Ties,player.Loses,player.EloRating);
             }
             Console.ReadKey();
         }
@@ -70,7 +70,43 @@ namespace AIGame.League
                 }
             }
         }
+        public void AddGame(Game game, Player bluePlayer, Player redPlayer)
+        {
+            bluePlayer.GamesPlayed++;
+            redPlayer.GamesPlayed++;
+            double blueElo = bluePlayer.EloRating;
+            double redElo = redPlayer.EloRating;
 
+            if (game.GameResult == GameResult.BlueWin)
+            {
+                bluePlayer.EloRating = EloRatingCalc.GetRating(Result.Win, blueElo, redElo);
+                redPlayer.EloRating = EloRatingCalc.GetRating(Result.Lost, blueElo, redElo);
+
+                bluePlayer.Wins++;
+                redPlayer.Loses++;
+                return;
+            }
+
+            if (game.GameResult == GameResult.RedWin)
+            {
+                bluePlayer.EloRating = EloRatingCalc.GetRating(Result.Lost , blueElo, redElo);
+                redPlayer.EloRating = EloRatingCalc.GetRating(Result.Win, blueElo, redElo);
+                
+                bluePlayer.Loses++;
+                redPlayer.Wins++;
+                return;
+            }
+
+            if (game.GameResult == GameResult.Tie)
+            {
+                bluePlayer.EloRating = EloRatingCalc.GetRating(Result.Tie, blueElo, redElo);
+                redPlayer.EloRating = EloRatingCalc.GetRating(Result.Tie, blueElo, redElo);
+
+                bluePlayer.Ties++;
+                redPlayer.Ties++;
+                return;
+            }
+        }
         private void PlayGame(Player blue, Player red,bool withLock, int gameInt)
         {
             long longRnd = Environment.TickCount + gameInt;
@@ -83,16 +119,14 @@ namespace AIGame.League
             { 
                 lock (Players)
                 {
-                    blue.AddGame(game);
-                    red.AddGame(game);
+                    AddGame(game,blue,red);
                     gamesPlayed++;
 
                 }
             }
             else
             {
-                blue.AddGame(game);
-                red.AddGame(game);
+                AddGame(game, blue, red);
                 gamesPlayed++;
             }
             

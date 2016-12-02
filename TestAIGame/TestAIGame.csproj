@@ -52,6 +52,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="EloRatingTest.cs" />
     <Compile Include="FireTorpedoTest.cs" />
     <Compile Include="ScannedAreaTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
