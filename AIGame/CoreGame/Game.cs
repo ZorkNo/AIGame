@@ -15,12 +15,13 @@ namespace AIGame.CoreGame
         private int MaxTurn = 1000;
         private IMap Map;
         private GameMode gameMode;
-        public GameResult GameResult {
-            get
-            {
-                return CalculateResult();
-            }
+        public GameResult GameResult => CalculateResult();
+
+        public static Game Create<TBlue,TRed>(GameMode gameMode, Random rnd) where TBlue : IAi where TRed : IAi
+        {
+            return new Game(typeof(TBlue), typeof(TRed), gameMode, rnd);
         }
+
         public Game(Type blue, Type red, GameMode gameMode, Random rnd)
         {
             BlueAiType = blue;
