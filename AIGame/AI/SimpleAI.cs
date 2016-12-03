@@ -6,29 +6,13 @@ using Rotate = AIGame.CoreGame.Orders.Rotate;
 
 namespace AIGame.AI
 {
-    public class SimpleAiType : IAiType
-    {
-        public IAi GetAi(Random rnd)
-        {
-            if (rnd == null)
-                throw new NullReferenceException("rnd is null: No random generator");
-            return new SimpleAi(rnd);
-        }
-        public string Name
-        {
-            get { return "SimpleAi"; }
-        }
-    }
-    public class SimpleAi:IAi
+    public class SimpleAi : BaseAi
     {
         private int _turn=0;
-        public Random Rnd;
 
-        public SimpleAi(Random rnd)
-        {
-            Rnd = rnd;
-        }
-        public IOrder GetOrder(Sensor sensor)
+        public SimpleAi(Random random) : base(random) { }
+
+        public override IOrder GetOrder(Sensor sensor)
         {
             _turn++;
             //Hvis det en lige tur scan
@@ -44,7 +28,7 @@ namespace AIGame.AI
             if (sensor.Infront.Type == TerrainType.Land || sensor.Infront.Type == TerrainType.Edge)
                 return Rotate();
 
-            if (Rnd.Next(1, 100) > 65)
+            if (_random.Next(1, 100) > 65)
                 return Rotate();
 
 
@@ -57,7 +41,7 @@ namespace AIGame.AI
             IOrder order;
             RotateDirection rotate = RotateDirection.Left;
 
-            if (Rnd.Next(1, 100) > 85)
+            if (_random.Next(1, 100) > 85)
                 rotate = RotateDirection.Right;
 
             order = new Rotate(rotate);

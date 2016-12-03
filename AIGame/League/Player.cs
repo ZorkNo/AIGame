@@ -1,32 +1,40 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using AIGame.AI;
 using AIGame.CoreGame;
+using AIGame.Interfaces;
 
 namespace AIGame.League
 {
     public class Player
     {
-        public IAiType AiType;
-        public int Wins;
-        public int Loses;
-        public int Ties;
-        public int GamesPlayed;
+        public static Player Create<T>() where T : BaseAi
+        {
+            return new Player(typeof(T));
+        }
+        public Type AiType { get; }
+
+        public string AiName => AiType.Name;
+        public int Wins { get; private set; }
+        public int Loses { get; private set; }
+        public int Ties { get; private set; }
+        public int GamesPlayed { get; private set; }
+
+        private Player(Type aiType)
+        {
+            AiType = aiType;
+        }
 
         public void AddGame(Game game)
         {
             GamesPlayed++;
 
-            if (game.BlueAi.Name ==AiType.Name && game.GameResult == GameResult.BlueWin)
+            if (game.BlueAiType == AiType && game.GameResult == GameResult.BlueWin)
             { 
                 Wins++;
                 return;
             }
 
-            if (game.RedAi.Name == AiType.Name && game.GameResult == GameResult.RedWin)
+            if (game.RedAiType == AiType && game.GameResult == GameResult.RedWin)
             { 
                 Wins++;
                 return;

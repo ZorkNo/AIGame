@@ -1,37 +1,21 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using AIGame.CoreGame;
 using AIGame.CoreGame.Orders;
 
 namespace AIGame.AI
 {
-    public class ScanNFireAiType : IAiType
+    public class ScanNFireAi : BaseAi
     {
-        public IAi GetAi(Random rnd)
-        {
-            return new ScanNFireAi(rnd);
-        }
-        public string Name
-        {
-            get { return "ScanNFireAi"; }
-        }
-    }
-    public class ScanNFireAi : IAi
-    {
-        public Random Rnd;
         private int fireCounter = 0;
         private Tuple<int, int> target;
         private int _turn = 0;
 
-        public ScanNFireAi(Random rnd)
+        public ScanNFireAi(Random random) : base(random) { }
+        
+        public override IOrder GetOrder(Sensor sensor)
         {
-            Rnd = rnd;
-        }
-        public IOrder GetOrder(Sensor sensor)
-        {
+            _turn++;
             if (sensor.ScannedArea.Targets.Any())
             {
                 fireCounter = 3;
@@ -53,13 +37,15 @@ namespace AIGame.AI
             {
                 return new Rotate(RotateDirection.Right);
             }
-            return new FireTorpedo(getCoordinates()); ;
+            //return new FireTorpedo(getCoordinates()); ;
         }
+        /* unused code atm, todo: remove or use
         private Tuple<int, int> getCoordinates()
         {
-            int rndX = Rnd.Next(1, 6);
-            int rndY = Rnd.Next(1, 4);
+            int rndX = _random.Next(1, 6);
+            int rndY = _random.Next(1, 4);
             return new Tuple<int, int>(rndX - 2, rndY);
         }
+        */
     }
 }

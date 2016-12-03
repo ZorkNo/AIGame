@@ -16,6 +16,7 @@ namespace TestAIGame
         private Mock<IMap> MockMap;
         private Mock<IUnit> MockUnit;
         private Mock<List<IUnit>> MockUnits;
+        private Mock<Random> MockRandom;
         FireTorpedo sut;
         [SetUp]
         public void Setup()
@@ -23,6 +24,7 @@ namespace TestAIGame
             MockMap = new Mock<IMap>();
             MockUnit = new Mock<IUnit>();
             MockUnits = new Mock<List<IUnit>>();
+            MockRandom = new Mock<Random>();
 
             sut = new FireTorpedo(new Tuple<int, int>(0,0));
         }
@@ -37,7 +39,7 @@ namespace TestAIGame
             MockUnit.Setup(u => u.Coordinates).Returns(new Tuple<int, int>(2, 2));
             
             List<IUnit> units = new List<IUnit>();
-            Unit unitOnMap = new Unit("a", Side.Blue, new DoNothingAI());
+            Unit unitOnMap = new Unit("a", Side.Blue, new DoNothingAI(MockRandom.Object));
             unitOnMap.Coordinates = new Tuple<int, int>(targetX, targetY);
             units.Add(unitOnMap);
             MockMap.Setup(m => m.Units).Returns(units);

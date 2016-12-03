@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using AIGame.CoreGame;
 using AIGame.AI;
+using AIGame.Interfaces;
 using AIGame.League;
 namespace AIGame
 {
@@ -30,10 +31,8 @@ namespace AIGame
         private static void SingleGame()
         {
             Random rnd = new Random(Environment.TickCount);
-
-            IAiType blueAiType = new RandomAiType();
-            IAiType redAiType = new SimpleAiType();
-            Game game = new Game(blueAiType, redAiType, GameMode.HiddenInfo1ShipSmall, rnd);
+            
+            var game = new Game(typeof(RandomAI),typeof(SimpleAi), GameMode.HiddenInfo1ShipSmall, rnd);
             ;
             for (int i = 0; i < 100000; i++)
             {

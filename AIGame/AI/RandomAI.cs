@@ -1,35 +1,17 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using AIGame.CoreGame;
 using AIGame.CoreGame.Orders;
 using Rotate = AIGame.CoreGame.Orders.Rotate;
 
 namespace AIGame.AI
 {
-    public class RandomAiType : IAiType
-    {
-        public IAi GetAi(Random rnd)
-        {
-            if (rnd == null)
-                throw new NullReferenceException("rnd is null: No random generator");
-            return new RandomAI(rnd);
-        }
-        public string Name {
-            get { return "RandomAi";}
-        }
-    }
-    public class RandomAI:IAi
+    public class RandomAI : BaseAi
     {
         private Sensor Sensor;
-        private Random Rnd;
-        public RandomAI(Random rnd)
-        {
-            Rnd = rnd;
-        }
-        public IOrder GetOrder(Sensor sensor)
+        
+        public RandomAI(Random random) :base(random) { }
+
+        public override IOrder GetOrder(Sensor sensor)
         {
             IOrder order;
 
@@ -42,7 +24,7 @@ namespace AIGame.AI
         {
             IOrder order;  
             
-            int rndInt = Rnd.Next(1,4);
+            int rndInt = _random.Next(1,4);
             switch (rndInt)
             {
                 case 1:
@@ -62,15 +44,15 @@ namespace AIGame.AI
 
         private Tuple<int, int> getCoordinates()
         {
-            int rndX = Rnd.Next(1, 6);
-            int rndY = Rnd.Next(1, 4);
+            int rndX = _random.Next(1, 6);
+            int rndY = _random.Next(1, 4);
             return new Tuple<int, int>(rndX-2, rndY);
         }
 
         private RotateDirection getDirection()
         {
 
-            int rndInt = Rnd.Next(1, 3);
+            int rndInt = _random.Next(1, 3);
             switch (rndInt)
             {
                 case 1:
