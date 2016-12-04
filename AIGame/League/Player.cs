@@ -1,20 +1,29 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using AIGame.AI;
 using AIGame.CoreGame;
+using AIGame.Interfaces;
 
 namespace AIGame.League
 {
     public class Player
     {
-        public IAiType AiType;
-        public int Wins;
-        public int Loses;
-        public int Ties;
-        public double EloRating =2000;
-        public int GamesPlayed;
+        public static Player Create<T>() where T : BaseAi
+        {
+            return new Player(typeof(T));
+        }
+        public Type AiType { get; }
+
+        public string AiName => AiType.Name;
+        public int Wins { get; private set; }
+        public int Loses { get; private set; }
+        public int Ties { get; private set; }
+        public int GamesPlayed { get; private set; }
+        public double EloRating = 2000;
+
+        private Player(Type aiType)
+        {
+            AiType = aiType;
+        }
+        
     }
 }

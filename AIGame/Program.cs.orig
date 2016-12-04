@@ -34,6 +34,13 @@ namespace AIGame
             
             var game = Game.Create<RandomAI,SimpleAi>(GameMode.HiddenInfo1ShipSmall, rnd);
 
+<<<<<<< HEAD
+            IAiType blueAiType = new ScanNFireAiType();
+            IAiType redAiType = new SimplePlusAiType();
+            Game game = new Game(blueAiType, redAiType, GameMode.HiddenInfo2ShipLarge, rnd);
+            ;
+=======
+>>>>>>> pr/n1_bobend
             for (int i = 0; i < 100000; i++)
             {
                 Console.Clear();

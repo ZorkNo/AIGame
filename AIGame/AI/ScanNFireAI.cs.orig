@@ -36,7 +36,10 @@ namespace AIGame.AI
             {
                 return new Rotate(RotateDirection.Right);
             }
-            
+<<<<<<< HEAD
+=======
+            //return new FireTorpedo(getCoordinates()); ;
+>>>>>>> pr/n1_bobend
         }
         /* unused code atm, todo: remove or use
         private Tuple<int, int> getCoordinates()

@@ -1,37 +1,20 @@
 ﻿using System;
-using System.Linq;
 using AIGame.CoreGame;
 using AIGame.CoreGame.Orders;
 using Rotate = AIGame.CoreGame.Orders.Rotate;
 
 namespace AIGame.AI
 {
-    public class RunAwayAiType : IAiType
+    public class RunAwayAi : BaseAi
     {
-        public IAi GetAi(Random rnd)
-        {
-            if (rnd == null)
-                throw new NullReferenceException("rnd is null: No random generator");
-            return new RunAwayAi(rnd);
-        }
-        public string Name
-        {
-            get { return "RunAwayAi"; }
-        }
-    }
-    public class RunAwayAi: IAi
-    {
-        private int _turn=0;
+        //private int _turn=0;
         private int health = 0;
-        public Random Rnd;
 
-        public RunAwayAi(Random rnd)
+        public RunAwayAi(Random random) : base(random) { }
+
+        public override IOrder GetOrder(Sensor sensor)
         {
-            Rnd = rnd;
-        }
-        public IOrder GetOrder(Sensor sensor)
-        {
-            _turn++;
+            //_turn++;
 
             bool hit = false;
             if (sensor.Health != health)
@@ -40,13 +23,13 @@ namespace AIGame.AI
                 hit = true;
             }
 
-            if (Rnd.Next(1, 100) > 75 && hit == false)
+            if (_random.Next(1, 100) > 75 && hit == false)
                 return new FireTorpedo(getCoordinates());
 
             if (sensor.Infront.Type == TerrainType.Land || sensor.Infront.Type == TerrainType.Edge)
                 return Rotate();
 
-            if (Rnd.Next(1, 100) > 65 && hit==false)
+            if (_random.Next(1, 100) > 65 && hit==false)
                 return Rotate();
 
             return new Move();
@@ -58,7 +41,7 @@ namespace AIGame.AI
             IOrder order;
             RotateDirection rotate = RotateDirection.Left;
 
-            if (Rnd.Next(1, 100) > 85)
+            if (_random.Next(1, 100) > 85)
                 rotate = RotateDirection.Right;
 
             order = new Rotate(rotate);
@@ -66,8 +49,8 @@ namespace AIGame.AI
         }
         private Tuple<int, int> getCoordinates()
         {
-            int rndX = Rnd.Next(1, 6);
-            int rndY = Rnd.Next(1, 4);
+            int rndX = _random.Next(1, 6);
+            int rndY = _random.Next(1, 4);
             return new Tuple<int, int>(rndX - 2, rndY);
         }
     }

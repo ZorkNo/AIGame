@@ -9,41 +9,44 @@ namespace AIGame.CoreGame
 {
     public class Game
     {
-        public IAiType BlueAi;
-        public IAiType RedAi;
+        public readonly Type BlueAiType;
+        public readonly Type RedAiType;
         private int Turn;
         private int MaxTurn = 1000;
         private IMap Map;
         private GameMode gameMode;
-        public GameResult GameResult {
-            get
-            {
-                return CalculateResult();
-            }
-        }
-        public Game(IAiType blue, IAiType red, GameMode gameMode, Random rnd)
+        public GameResult GameResult => CalculateResult();
+
+        public static Game Create<TBlue,TRed>(GameMode gameMode, Random rnd) where TBlue : IAi where TRed : IAi
         {
-            BlueAi = blue;
-            RedAi = red;
-            List<IUnit> units = new List<IUnit>();
+            return new Game(typeof(TBlue), typeof(TRed), gameMode, rnd);
+        }
+
+        public Game(Type blue, Type red, GameMode gameMode, Random rnd)
+        {
+            BlueAiType = blue;
+            RedAiType = red;
+            
             this.gameMode = gameMode;
-            AddUnits(blue, red, units, this.gameMode,rnd);
+            List<IUnit> units = AddUnits(this.gameMode, rnd);
             Tuple<int, int> size = GetGameSize(this.gameMode);
             Map = new Map(size.Item1, size.Item2, rnd, units);
 
 
         }
 
-        private static void AddUnits(IAiType blue, IAiType red, List<IUnit> units, GameMode gameMode, Random rnd)
+        private List<IUnit> AddUnits(GameMode gameMode, Random rnd)
         {
-            units.Add(new Unit("A", Side.Blue, blue.GetAi(rnd)));
-            units.Add(new Unit("X", Side.Red, red.GetAi(rnd)));
+            List<IUnit> units = new List<IUnit>();
+            units.Add(new Unit("A", Side.Blue, AIFactory.CreateAi(BlueAiType, rnd)));
+            units.Add(new Unit("X", Side.Red, AIFactory.CreateAi(RedAiType, rnd)));
 
             if (gameMode == GameMode.HiddenInfo2ShipLarge)
             {
-                units.Add(new Unit("B", Side.Blue, blue.GetAi(rnd)));
-                units.Add(new Unit("Y", Side.Red, red.GetAi(rnd)));
+                units.Add(new Unit("B", Side.Blue, AIFactory.CreateAi(BlueAiType, rnd)));
+                units.Add(new Unit("Y", Side.Red, AIFactory.CreateAi(RedAiType, rnd)));
             }
+            return units;
         }
 
         private Tuple<int, int> GetGameSize(GameMode gameMode)

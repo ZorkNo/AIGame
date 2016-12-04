@@ -12,9 +12,14 @@ namespace AIGame.League
 {
     public class League
     {
+<<<<<<< HEAD
+        private int gamesPerMatchUp=500;
+        private int gamesPlayed = 0;
+=======
         private int gamesPerMatchUp=1000;
         private int gamesPlayed = 0, blueWins = 0, redWins = 0, ties = 0, didNotFinish = 0;
             
+>>>>>>> pr/n1_bobend
         public List<Player> Players;
         private MatchUp _matchUp = new MatchUp();
 
@@ -40,8 +45,12 @@ namespace AIGame.League
             Console.WriteLine();
             foreach (Player player in Players)
             { 
+<<<<<<< HEAD
                 Console.WriteLine("{0}: score results Games played:{1} Wins:{2} Ties:{3} Loses:{4} Elo:{5}",
                     player.AiType.Name, player.GamesPlayed, player.Wins, player.Ties,player.Loses,player.EloRating);
+=======
+                Console.WriteLine($"{player.AiName}: score results Games played:{player.GamesPlayed} Wins:{player.Wins} Ties:{player.Ties} Loses:{player.Loses} ");
+>>>>>>> pr/n1_bobend
             }
             Console.ReadKey();
         }
@@ -50,17 +59,28 @@ namespace AIGame.League
         {
             Players = new List<Player>
             {
+<<<<<<< HEAD
+                new Player {AiType = new DoNothingAIType()},
+                new Player {AiType = new RandomAiType()},
+                new Player {AiType = new SimpleAiType()},
+                new Player {AiType = new RunAwayAiType()},
+                new Player {AiType = new FireAllTheTimeAiType()},
+                new Player {AiType = new ScanNFireAiType() },
+                new Player {AiType = new SimplePlusAiType() },
+=======
                 Player.Create<DoNothingAI>(),
                 Player.Create<RandomAI>(),
                 Player.Create<SimpleAi>(),
                 Player.Create<RunAwayAi>(),
                 Player.Create<FireAllTheTimeAi>(),
                 Player.Create<ScanNFireAi>()
+>>>>>>> pr/n1_bobend
             };
         }
 
         private void RunAllGames()
         {
+<<<<<<< HEAD
             for(int i =0; i <100;i++)
             { 
                 foreach (Player blue in Players)
@@ -78,6 +98,24 @@ namespace AIGame.League
                             });
                         }
                     }
+=======
+
+            foreach (Player blue in Players)
+            {
+                foreach (Player red in Players)
+                {
+                    if (blue.AiType == red.AiType)
+                         continue;
+
+                    Console.WriteLine();
+                    Console.WriteLine($"{blue.AiName} vs {red.AiName}");
+                    Parallel.For(0, gamesPerMatchUp, i =>
+                        {
+                            PlayGame(blue, red, true, i);
+                            if (gamesPlayed% 250 == 0)
+                                Console.Write(".");
+                        });
+>>>>>>> pr/n1_bobend
                 }
                 if (i % 1 == 0)
                     Console.Write(".");
@@ -132,31 +170,35 @@ namespace AIGame.League
             { 
                 lock (Players)
                 {
-            switch (game.GameResult)
-            {
-                case GameResult.RedWin:
-                    redWins++;
-                    break;
-                case GameResult.BlueWin:
-                    blueWins++;
-                    break;
-                case GameResult.Tie:
-                    ties++;
-                    break;
-                case GameResult.GameNotEnded:
-                    didNotFinish++;
-                    break;
-                default:
-                    throw new ArgumentOutOfRangeException();
-            }
-            AddGame(game,blue,red);
+<<<<<<< HEAD
+                    AddGame(game,blue,red);
+=======
+                    blue.AddGame(game);
+                    red.AddGame(game);
+                    switch (game.GameResult)
+                    {
+                        case GameResult.RedWin:
+                            redWins++;
+                            break;
+                        case GameResult.BlueWin:
+                            blueWins++;
+                            break;
+                        case GameResult.Tie:
+                            ties++;
+                            break;
+                        case GameResult.GameNotEnded:
+                            didNotFinish++;
+                            break;
+                        default:
+                            throw new ArgumentOutOfRangeException();
+                    }
+>>>>>>> pr/n1_bobend
                     gamesPlayed++;
 
                 }
             }
             else
             {
-
                 AddGame(game, blue, red);
                 gamesPlayed++;
             }

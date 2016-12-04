@@ -43,6 +43,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AI\BaseAi.cs" />
     <Compile Include="AI\ScanNFireAI.cs" />
     <Compile Include="AI\FireAllTheTimeAI.cs" />
     <Compile Include="AI\DoNothingAI.cs" />
@@ -50,7 +51,8 @@
     <Compile Include="AI\RunAwayAI.cs" />
     <Compile Include="AI\SimplePlusAI.cs" />
     <Compile Include="AI\SimpleAI.cs" />
-    <Compile Include="AI\IAi.cs" />
+    <Compile Include="CoreGame\AIFactory.cs" />
+    <Compile Include="Interfaces\IAi.cs" />
     <Compile Include="CoreGame\Area.cs" />
     <Compile Include="CoreGame\Enums.cs" />
     <Compile Include="CoreGame\Game.cs" />
