@@ -8,18 +8,15 @@ using Rotate = AIGame.CoreGame.Orders.Rotate;
 namespace AIGame.AI
 {
 
-    public class SimplePlusAi : IAi
+    public class SimplePlusAi : BaseAi
     {
         private int _turn=0;
-        private Random _rnd;
         private int _fireCounter = 0;
         private Tuple<int, int> _target;
 
-        public SimplePlusAi(Random rnd)
-        {
-            _rnd = rnd;
-        }
-        public IOrder GetOrder(Sensor sensor)
+        public SimplePlusAi(Random random) : base(random) { }
+
+        public override IOrder GetOrder(Sensor sensor)
         {
             _turn++;
 
@@ -42,7 +39,7 @@ namespace AIGame.AI
             if (sensor.Infront.Type == TerrainType.Land || sensor.Infront.Type == TerrainType.Edge)
                 return Rotate();
 
-            if (_rnd.Next(1, 100) > 65)
+            if (_random.Next(1, 100) > 65)
                 return Rotate();
 
             return new Move();
@@ -54,7 +51,7 @@ namespace AIGame.AI
             IOrder order;
             RotateDirection rotate = RotateDirection.Left;
 
-            if (_rnd.Next(1, 100) > 85)
+            if (_random.Next(1, 100) > 85)
                 rotate = RotateDirection.Right;
 
             order = new Rotate(rotate);

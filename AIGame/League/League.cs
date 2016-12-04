@@ -55,7 +55,8 @@ namespace AIGame.League
                 Player.Create<SimpleAi>(),
                 Player.Create<RunAwayAi>(),
                 Player.Create<FireAllTheTimeAi>(),
-                Player.Create<ScanNFireAi>()
+                Player.Create<ScanNFireAi>(),
+                Player.Create<SimplePlusAi>(),
             };
         }
 
