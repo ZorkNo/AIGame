@@ -7,8 +7,6 @@ namespace AIGame.AI
 {
     public class RandomAI : BaseAi
     {
-        private Sensor Sensor;
-        
         public RandomAI(Random random) :base(random) { }
 
         public override IOrder GetOrder(Sensor sensor)

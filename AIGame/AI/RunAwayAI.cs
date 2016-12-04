@@ -7,19 +7,16 @@ namespace AIGame.AI
 {
     public class RunAwayAi : BaseAi
     {
-        //private int _turn=0;
-        private int health = 0;
+        private int _health = 0;
 
         public RunAwayAi(Random random) : base(random) { }
 
         public override IOrder GetOrder(Sensor sensor)
         {
-            //_turn++;
-
             bool hit = false;
-            if (sensor.Health != health)
+            if (sensor.Health != _health)
             {
-                health = sensor.Health;
+                _health = sensor.Health;
                 hit = true;
             }
 

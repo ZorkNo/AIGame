@@ -7,8 +7,8 @@ namespace AIGame.AI
 {
     public class ScanNFireAi : BaseAi
     {
-        private int fireCounter = 0;
-        private Tuple<int, int> target;
+        private int _fireCounter = 0;
+        private Tuple<int, int> _target;
         private int _turn = 0;
 
         public ScanNFireAi(Random random) : base(random) { }
@@ -18,14 +18,14 @@ namespace AIGame.AI
             _turn++;
             if (sensor.ScannedArea.Targets.Any())
             {
-                fireCounter = 3;
-                target = sensor.ScannedArea.Targets.First().RelativeCoordinates;
+                _fireCounter = 3;
+                _target = sensor.ScannedArea.Targets.First().RelativeCoordinates;
             }
 
-            if (fireCounter > 0)
+            if (_fireCounter > 0)
             {
-                fireCounter--;
-                return new FireTorpedo(target);
+                _fireCounter--;
+                return new FireTorpedo(_target);
             }
 
             if (_turn%2 == 0)

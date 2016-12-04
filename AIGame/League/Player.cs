@@ -14,10 +14,10 @@ namespace AIGame.League
         public Type AiType { get; }
 
         public string AiName => AiType.Name;
-        public int Wins { get; private set; }
-        public int Loses { get; private set; }
-        public int Ties { get; private set; }
-        public int GamesPlayed { get; private set; }
+        public int Wins { get;  set; }
+        public int Loses { get;  set; }
+        public int Ties { get;  set; }
+        public int GamesPlayed { get;  set; }
         public double EloRating = 2000;
 
         private Player(Type aiType)

@@ -2,33 +2,22 @@
 using System.Linq;
 using AIGame.CoreGame;
 using AIGame.CoreGame.Orders;
+using AIGame.Interfaces;
 using Rotate = AIGame.CoreGame.Orders.Rotate;
 
 namespace AIGame.AI
 {
-    public class SimplePlusAiType : IAiType
-    {
-        public IAi GetAi(Random rnd)
-        {
-            if (rnd == null)
-                throw new NullReferenceException("rnd is null: No random generator");
-            return new SimplePlusAi(rnd);
-        }
-        public string Name
-        {
-            get { return "SimplePlusAi"; }
-        }
-    }
+
     public class SimplePlusAi : IAi
     {
         private int _turn=0;
-        public Random Rnd;
-        private int fireCounter = 0;
-        private Tuple<int, int> target;
+        private Random _rnd;
+        private int _fireCounter = 0;
+        private Tuple<int, int> _target;
 
         public SimplePlusAi(Random rnd)
         {
-            Rnd = rnd;
+            _rnd = rnd;
         }
         public IOrder GetOrder(Sensor sensor)
         {
@@ -36,14 +25,14 @@ namespace AIGame.AI
 
             if (sensor.ScannedArea.Targets.Any())
             {
-                fireCounter = 3;
-                target = sensor.ScannedArea.Targets.First().RelativeCoordinates;
+                _fireCounter = 3;
+                _target = sensor.ScannedArea.Targets.First().RelativeCoordinates;
             }
 
-            if (fireCounter > 0)
+            if (_fireCounter > 0)
             {
-                fireCounter--;
-                return new FireTorpedo(target);
+                _fireCounter--;
+                return new FireTorpedo(_target);
             }
 
             //Hvis det en lige tur scan
@@ -53,7 +42,7 @@ namespace AIGame.AI
             if (sensor.Infront.Type == TerrainType.Land || sensor.Infront.Type == TerrainType.Edge)
                 return Rotate();
 
-            if (Rnd.Next(1, 100) > 65)
+            if (_rnd.Next(1, 100) > 65)
                 return Rotate();
 
             return new Move();
@@ -65,7 +54,7 @@ namespace AIGame.AI
             IOrder order;
             RotateDirection rotate = RotateDirection.Left;
 
-            if (Rnd.Next(1, 100) > 85)
+            if (_rnd.Next(1, 100) > 85)
                 rotate = RotateDirection.Right;
 
             order = new Rotate(rotate);
