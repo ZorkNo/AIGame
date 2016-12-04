@@ -10,9 +10,11 @@ namespace AIGame.League
         public Player(AiType aiType)
         {
             AiType = aiType;
+            Id = Guid.NewGuid();
         }
         public AiType AiType { get; }
 
+        public Guid Id { get; }
         public string AiName => AiType.Type.Name;
         public int Wins { get;  set; }
         public int Loses { get;  set; }

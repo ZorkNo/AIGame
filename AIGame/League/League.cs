@@ -12,10 +12,11 @@ namespace AIGame.League
 {
     public class League
     {
-        private int gamePlayedGoal=10000;
+        private int gamePlayedGoal=100000;
         private int gamesPlayed = 0, blueWins = 0, redWins = 0, ties = 0, didNotFinish = 0;
             
         public List<Player> Players;
+        public List<Player> currentPlayers;
         private MatchUp _matchUp = new MatchUp();
 
         public void RunSingleMatchUp()
@@ -52,9 +53,10 @@ namespace AIGame.League
 
         private void AddPlayers()
         {
+            Random rnd = new Random((int)DateTime.Now.Ticks);
             Players = new List<Player>
             {
-                new Player(AiType.Create<MutableAi>(new string[]{ "0","50","65","0","3"})),
+                new Player(AiType.Create<SimpleMutableAi>(new string[]{ "0","50","65","0","3"})),
                 //new Player(AiType.Create<DoNothingAI>()),
                 //new Player(AiType.Create<RandomAI>()),
                 //new Player(AiType.Create<SimpleAi>()),
@@ -64,6 +66,17 @@ namespace AIGame.League
                 new Player(AiType.Create<SimplePlusAi>()),
                 
             };
+
+            for (int i = 0; i < 10; i++)
+            {
+                Players.Add(
+                    new Player(
+                        AiType.Create<SimpleMutableAi>(new string[]
+                        {
+                            rnd.Next(0, 100).ToString(), rnd.Next(0, 100).ToString(), rnd.Next(0, 100).ToString(),
+                            rnd.Next(0, 100).ToString(), "3"
+                        })));
+            }
         }
 
         private void RunAllGames()
@@ -77,7 +90,7 @@ namespace AIGame.League
                 {
                     foreach (Player red in Players)
                     {
-                        if(blue.AiName !=red.AiName)
+                        if(blue.Id!=red.Id)
                         {
                             Parallel.For(0, 10, j =>
                             {

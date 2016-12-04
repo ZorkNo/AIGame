@@ -8,13 +8,13 @@ using Rotate = AIGame.CoreGame.Orders.Rotate;
 namespace AIGame.AI
 {
 
-    public class MutableAi : BaseAi
+    public class SimpleMutableAi : BaseAi
     {
         private Tuple<int, int> _target;
         private MutableParameters mutableParameters;
         private int _fireCounter = 0;
 
-        public MutableAi(Random random, string[] args) : base(random, args)
+        public SimpleMutableAi(Random random, string[] args) : base(random, args)
         {
             mutableParameters = new MutableParameters(args);
         }
