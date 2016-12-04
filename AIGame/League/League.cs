@@ -12,7 +12,7 @@ namespace AIGame.League
 {
     public class League
     {
-        private int gamesPerMatchUp=1000;
+        private int gamePlayedGoal=10000;
         private int gamesPlayed = 0, blueWins = 0, redWins = 0, ties = 0, didNotFinish = 0;
             
         public List<Player> Players;
@@ -30,7 +30,7 @@ namespace AIGame.League
 
             Console.WriteLine("");
             sw.Stop();
-            Console.WriteLine($"Games: {gamesPlayed} Calculation time seconds:{sw.Elapsed.TotalSeconds}");
+            Console.WriteLine($"Games: {gamesPlayed} Calculation time seconds:{sw.Elapsed.TotalSeconds} Seconds per 100 games {Math.Round(sw.Elapsed.TotalSeconds * 100 / gamesPlayed,3)  }");
             Console.ForegroundColor = ConsoleColor.Blue;
             Console.Write($"Blue wins : {blueWins} ");
             Console.ForegroundColor = ConsoleColor.Red;
@@ -40,8 +40,8 @@ namespace AIGame.League
             Console.WriteLine();
             foreach (Player player in Players)
             { 
-                Console.WriteLine("{0}: score results Games played:{1} Wins:{2} Ties:{3} Loses:{4} Elo:{5}",
-                    player.AiType.Name, player.GamesPlayed, player.Wins, player.Ties,player.Loses,player.EloRating);
+                Console.WriteLine("{0}: Score results Games played:{1} Wins:{2} Ties:{3} Loses:{4} Elo:{5}",
+                    player.AiType.Name, player.GamesPlayed, player.Wins, player.Ties,player.Loses, Math.Round(player.EloRating,0));
             }
             Console.ReadKey();
         }
@@ -62,7 +62,10 @@ namespace AIGame.League
 
         private void RunAllGames()
         {
-            for(int i =0; i <100;i++)
+            int parallelMatchUps = 10;
+            int playerCombination = Players.Count*(Players.Count - 1);
+            int gameInterations = (int) Math.Ceiling((gamePlayedGoal /(double)(playerCombination*parallelMatchUps)));
+            for (int i =0; i < gameInterations; i++)
             { 
                 foreach (Player blue in Players)
                 {
@@ -70,8 +73,6 @@ namespace AIGame.League
                     {
                         if(blue.AiType.Name !=red.AiType.Name)
                         {
-                            //Console.WriteLine();
-                            //Console.WriteLine($"{blue.AiType.Name} vs {red.AiType.Name}");
                             Parallel.For(0, 10, j =>
                             {
                                 PlayGame(blue, red, true, j);
@@ -84,8 +85,36 @@ namespace AIGame.League
                     Console.Write(".");
             }
         }
+        
+        private void PlayGame(Player blue, Player red,bool withLock, int gameInt)
+        {
+            long longRnd = Environment.TickCount + gameInt;
+            Random rnd = new Random((int)longRnd);
+
+            Game game = new Game(blue.AiType, red.AiType, GameMode.HiddenInfo2ShipLarge, rnd);
+            game.PlayUntilEnd();
+
+            if(withLock)
+            { 
+                lock (Players)
+                {
+            
+            AddGame(game,blue,red);
+                    gamesPlayed++;
+
+                }
+            }
+            else
+            {
+
+                AddGame(game, blue, red);
+                gamesPlayed++;
+            }
+            
+        }
         public void AddGame(Game game, Player bluePlayer, Player redPlayer)
         {
+            AddGlobalCounter(game);
             bluePlayer.GamesPlayed++;
             redPlayer.GamesPlayed++;
             double blueElo = bluePlayer.EloRating;
@@ -103,9 +132,9 @@ namespace AIGame.League
 
             if (game.GameResult == GameResult.RedWin)
             {
-                bluePlayer.EloRating = EloRatingCalc.GetRating(Result.Lost , blueElo, redElo);
+                bluePlayer.EloRating = EloRatingCalc.GetRating(Result.Lost, blueElo, redElo);
                 redPlayer.EloRating = EloRatingCalc.GetRating(Result.Win, blueElo, redElo);
-                
+
                 bluePlayer.Loses++;
                 redPlayer.Wins++;
                 return;
@@ -121,18 +150,8 @@ namespace AIGame.League
                 return;
             }
         }
-        private void PlayGame(Player blue, Player red,bool withLock, int gameInt)
+        private void AddGlobalCounter(Game game)
         {
-            long longRnd = Environment.TickCount + gameInt;
-            Random rnd = new Random((int)longRnd);
-
-            Game game = new Game(blue.AiType, red.AiType, GameMode.HiddenInfo2ShipLarge, rnd);
-            game.PlayUntilEnd();
-
-            if(withLock)
-            { 
-                lock (Players)
-                {
             switch (game.GameResult)
             {
                 case GameResult.RedWin:
@@ -150,18 +169,6 @@ namespace AIGame.League
                 default:
                     throw new ArgumentOutOfRangeException();
             }
-            AddGame(game,blue,red);
-                    gamesPlayed++;
-
-                }
-            }
-            else
-            {
-
-                AddGame(game, blue, red);
-                gamesPlayed++;
-            }
-            
         }
     }
 }
