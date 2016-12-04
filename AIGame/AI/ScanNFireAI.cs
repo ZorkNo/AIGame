@@ -47,13 +47,11 @@ namespace AIGame.AI
             if (_turn%2 == 0)
             {
                 return new SonorScan();
-
             }
             else
             {
                 return new Rotate(RotateDirection.Right);
             }
-            return new FireTorpedo(getCoordinates()); ;
         }
         private Tuple<int, int> getCoordinates()
         {

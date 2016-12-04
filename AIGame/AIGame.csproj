@@ -48,6 +48,7 @@
     <Compile Include="AI\DoNothingAI.cs" />
     <Compile Include="AI\RandomAI.cs" />
     <Compile Include="AI\RunAwayAI.cs" />
+    <Compile Include="AI\SimplePlusAI.cs" />
     <Compile Include="AI\SimpleAI.cs" />
     <Compile Include="AI\IAi.cs" />
     <Compile Include="CoreGame\Area.cs" />

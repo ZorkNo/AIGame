@@ -10,7 +10,7 @@ namespace AIGame.League
 {
     public class League
     {
-        private int gamesPerMatchUp=100;
+        private int gamesPerMatchUp=500;
         private int gamesPlayed = 0;
         public List<Player> Players;
         private MatchUp _matchUp = new MatchUp();
@@ -31,7 +31,7 @@ namespace AIGame.League
 
             foreach (Player player in Players)
             { 
-                Console.WriteLine("{0}: score results Games played:{1} Wins:{2} Ties:{3} Loses:{4} Elo rating:{5}",
+                Console.WriteLine("{0}: score results Games played:{1} Wins:{2} Ties:{3} Loses:{4} Elo:{5}",
                     player.AiType.Name, player.GamesPlayed, player.Wins, player.Ties,player.Loses,player.EloRating);
             }
             Console.ReadKey();
@@ -47,27 +47,32 @@ namespace AIGame.League
                 new Player {AiType = new RunAwayAiType()},
                 new Player {AiType = new FireAllTheTimeAiType()},
                 new Player {AiType = new ScanNFireAiType() },
+                new Player {AiType = new SimplePlusAiType() },
             };
         }
 
         private void RunAllGames()
         {
-            foreach (Player blue in Players)
-            {
-                foreach (Player red in Players)
+            for(int i =0; i <100;i++)
+            { 
+                foreach (Player blue in Players)
                 {
-                    if(blue.AiType.Name !=red.AiType.Name)
+                    foreach (Player red in Players)
                     {
-                        Console.WriteLine();
-                        Console.WriteLine($"{blue.AiType.Name} vs {red.AiType.Name}");
-                        Parallel.For(0, gamesPerMatchUp, i =>
+                        if(blue.AiType.Name !=red.AiType.Name)
                         {
-                            PlayGame(blue, red, true, i);
-                            if (gamesPlayed% 250 == 0)
-                                Console.Write(".");
-                        });
+                            //Console.WriteLine();
+                            //Console.WriteLine($"{blue.AiType.Name} vs {red.AiType.Name}");
+                            Parallel.For(0, 10, j =>
+                            {
+                                PlayGame(blue, red, true, j);
+                            
+                            });
+                        }
                     }
                 }
+                if (i % 1 == 0)
+                    Console.Write(".");
             }
         }
         public void AddGame(Game game, Player bluePlayer, Player redPlayer)

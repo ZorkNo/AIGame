@@ -13,8 +13,9 @@ namespace AIGame.League
     {
         public static double GetRating(Result result, double oldRating, double opponentRating)
         {
-            double kFactor = 4;
-            double newRating =oldRating + kFactor *((result.GetHashCode()/2.0) - CalculateChanceOfWinning(oldRating, opponentRating));
+            double kFactor = 32;
+            double resultValue = (result.GetHashCode()/2.0d);
+            double newRating =oldRating + kFactor *(resultValue - CalculateChanceOfWinning(oldRating, opponentRating));
             return newRating;
             
         }

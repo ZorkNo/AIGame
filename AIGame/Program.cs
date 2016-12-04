@@ -31,9 +31,9 @@ namespace AIGame
         {
             Random rnd = new Random(Environment.TickCount);
 
-            IAiType blueAiType = new RandomAiType();
-            IAiType redAiType = new SimpleAiType();
-            Game game = new Game(blueAiType, redAiType, GameMode.HiddenInfo1ShipSmall, rnd);
+            IAiType blueAiType = new ScanNFireAiType();
+            IAiType redAiType = new SimplePlusAiType();
+            Game game = new Game(blueAiType, redAiType, GameMode.HiddenInfo2ShipLarge, rnd);
             ;
             for (int i = 0; i < 100000; i++)
             {
