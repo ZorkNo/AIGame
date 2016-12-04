@@ -12,22 +12,27 @@ namespace AIGame.League
 {
     public class League
     {
-        private int gamePlayedGoal=100000;
+        private int _gamePlayedGoal=1000;
         private int gamesPlayed = 0, blueWins = 0, redWins = 0, ties = 0, didNotFinish = 0;
             
         public List<Player> Players;
-        public List<Player> currentPlayers;
-        private MatchUp _matchUp = new MatchUp();
+        public List<Player> CurrentPlayers;
 
-        public void RunSingleMatchUp()
+        public List<Player> Tournament()
         {
-            AddPlayers();
+            return Tournament(GetLeaguePlayers(),TournamentType.Dropout,10000);
+        }
+
+        public List<Player> Tournament(List<Player> players,TournamentType tournamentType, int gamePlayedGoal)
+        {
+            Players = players;
+            _gamePlayedGoal = gamePlayedGoal;
             Stopwatch sw = new Stopwatch();
             sw.Start();
-            Console.Clear();
+            
             Console.WriteLine("Running");
 
-            RunAllGames();
+            RunAllGames(tournamentType);
 
             Console.WriteLine("");
             sw.Stop();
@@ -39,72 +44,110 @@ namespace AIGame.League
             Console.ForegroundColor = ConsoleColor.Gray;
             Console.WriteLine($"Ties : {ties}, did not finish : {didNotFinish}");
             Console.WriteLine();
-            foreach (Player player in Players)
+            int rank = Players.Count;
+            foreach (Player player in Players.OrderByDescending(p => p.Wins).ThenByDescending((l => l.Ties)))
             {
-                string args = "";
-                if (player.AiType.Args!=null)
-                    args = player.AiType.Args.Aggregate((i, j) => i + ":" + j);
 
                 Console.WriteLine("{0}: Score results Games played:{1} Wins:{2} Ties:{3} Loses:{4} Elo:{5} Args:{6}",
-                    player.AiName, player.GamesPlayed, player.Wins, player.Ties,player.Loses, Math.Round(player.EloRating,0), args);
+                    player.AiName, player.GamesPlayed, player.Wins, player.Ties,player.Loses, Math.Round(player.EloRating,0), player.GetArgs());
             }
-            Console.ReadKey();
+            
+            return Players;
+
         }
 
-        private void AddPlayers()
+        private List<Player> GetLeaguePlayers()
         {
             Random rnd = new Random((int)DateTime.Now.Ticks);
-            Players = new List<Player>
+            List<Player> leaguePlayers = new List<Player>
             {
-                new Player(AiType.Create<SimpleMutableAi>(new string[]{ "0","50","65","0","3"})),
-                //new Player(AiType.Create<DoNothingAI>()),
-                //new Player(AiType.Create<RandomAI>()),
-                //new Player(AiType.Create<SimpleAi>()),
-                //new Player(AiType.Create<RunAwayAi>()),
-                //new Player(AiType.Create<FireAllTheTimeAi>()),
-                //new Player(AiType.Create<ScanNFireAi>()),
+                new Player(AiType.Create<SimpleMutableAi>()),
+                new Player(AiType.Create<SimpleMutableAi>(new string[] {"23","6","21","82","3"})),
+                new Player(AiType.Create<SimpleMutableAi>(new string[] {"0","14","83","98","4"})),
+                new Player(AiType.Create<SimpleMutableAi>(new string[] {"0","20", "83", "88","3"})),
+                new Player(AiType.Create<DoNothingAI>()),
+                new Player(AiType.Create<RandomAI>()),
+                new Player(AiType.Create<SimpleAi>()),
+                new Player(AiType.Create<RunAwayAi>()),
+                new Player(AiType.Create<FireAllTheTimeAi>()),
+                new Player(AiType.Create<ScanNFireAi>()),
                 new Player(AiType.Create<SimplePlusAi>()),
                 
             };
 
-            for (int i = 0; i < 10; i++)
-            {
-                Players.Add(
-                    new Player(
-                        AiType.Create<SimpleMutableAi>(new string[]
-                        {
-                            rnd.Next(0, 100).ToString(), rnd.Next(0, 100).ToString(), rnd.Next(0, 100).ToString(),
-                            rnd.Next(0, 100).ToString(), "3"
-                        })));
-            }
+            return leaguePlayers;
         }
 
-        private void RunAllGames()
+        private void RunAllGames(TournamentType tournamentType)
+        {
+            if(tournamentType == TournamentType.AllvsAll)
+                AllvsAllTournement();
+
+            if(tournamentType == TournamentType.Dropout)
+                DropoutTournement();
+        }
+
+        private void AllvsAllTournement()
         {
             int parallelMatchUps = 10;
             int playerCombination = Players.Count*(Players.Count - 1);
-            int gameInterations = (int) Math.Ceiling((gamePlayedGoal /(double)(playerCombination*parallelMatchUps)));
-            for (int i =0; i < gameInterations; i++)
-            { 
-                foreach (Player blue in Players)
-                {
-                    foreach (Player red in Players)
-                    {
-                        if(blue.Id!=red.Id)
-                        {
-                            Parallel.For(0, 10, j =>
-                            {
-                                PlayGame(blue, red, true, j);
-                            
-                            });
-                        }
-                    }
-                }
-                if (i % 1 == 0)
+            int gameInterations = (int) Math.Ceiling((_gamePlayedGoal/(double) (playerCombination*parallelMatchUps)));
+            for (int i = 0; i < gameInterations; i++)
+            {
+                RunIteration(Players);
+                if (i%1 == 0)
                     Console.Write(".");
             }
         }
-        
+
+        private void RunIteration(List<Player> players)
+        {
+            foreach (Player blue in players)
+            {
+                foreach (Player red in players)
+                {
+                    if (blue.Id != red.Id)
+                    {
+                        Parallel.For(0, 10, j => { PlayGame(blue, red, true, j); });
+                    }
+                }
+            }
+        }
+
+        private void DropoutTournement()
+        {
+            int parallelMatchUps = 10;
+            int playerCombination = Players.Count * (Players.Count - 1);
+            int gameInterations = (int)Math.Ceiling((_gamePlayedGoal / (double)(playerCombination * parallelMatchUps)));
+            int gameInterarionsPerDropout = (int)Math.Ceiling((gameInterations / (double)(Players.Count)));
+            int gameInterarionsSinceDropout = 0;
+
+            CurrentPlayers = new List<Player>();
+            CurrentPlayers.AddRange(Players);
+            for (int i = 0; i < gameInterations; i++)
+            {
+                playerCombination = CurrentPlayers.Count * (CurrentPlayers.Count - 1);
+                gameInterations = (int)Math.Ceiling((_gamePlayedGoal / (double)(playerCombination * parallelMatchUps)));
+                gameInterarionsPerDropout = (int)Math.Ceiling((gameInterations / (double)(CurrentPlayers.Count)));
+
+                RunIteration(CurrentPlayers);
+
+                if (i % 1 == 0)
+                    Console.Write(".");
+                gameInterarionsSinceDropout++;
+
+                if (gameInterarionsSinceDropout > gameInterarionsPerDropout)
+                {
+                    gameInterarionsSinceDropout = 0;
+                    Player removePlayer = CurrentPlayers.OrderBy(p => p.Wins).ThenBy(l => l.Ties).First();
+                    CurrentPlayers.Remove(removePlayer);
+                    Console.WriteLine();
+                    Console.WriteLine($"Player:{removePlayer.AiName}{removePlayer.GetArgs()} Rank:{CurrentPlayers.Count}");
+                }
+
+
+            }
+        }
         private void PlayGame(Player blue, Player red,bool withLock, int gameInt)
         {
             long longRnd = Environment.TickCount + gameInt;
@@ -118,7 +161,7 @@ namespace AIGame.League
                 lock (Players)
                 {
             
-            AddGame(game,blue,red);
+                    AddGame(game,blue,red);
                     gamesPlayed++;
 
                 }
@@ -189,5 +232,11 @@ namespace AIGame.League
                     throw new ArgumentOutOfRangeException();
             }
         }
+    }
+
+    public  enum TournamentType
+    {
+        AllvsAll,
+        Dropout
     }
 }

@@ -15,15 +15,23 @@ namespace AIGame
         {
             Console.WriteLine("G for Single game");
             Console.WriteLine("L for League match ups");
+            Console.WriteLine("E for Ecosystem");
             ConsoleKeyInfo key =Console.ReadKey();
 
             if(key.Key == ConsoleKey.L)
             {
+                Console.Clear();
                 LeagueMatchUp();
+            }
+            else if (key.Key == ConsoleKey.G)
+            {
+                Console.Clear();
+                SingleGame();
             }
             else
             {
-                SingleGame();
+                Console.Clear();
+                Ecosystem();
             }
             
         }
@@ -47,7 +55,15 @@ namespace AIGame
         {
             League.League league = new League.League();
 
-            league.RunSingleMatchUp();
+            league.Tournament();
+            Console.ReadKey();
+        }
+        private static void Ecosystem()
+        {
+            Ecosystem ecosystem = new Ecosystem();
+
+            ecosystem.RunEco();
+            Console.ReadKey();
         }
     }
 }

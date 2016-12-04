@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using AIGame.AI;
 using AIGame.CoreGame;
 using AIGame.Interfaces;
@@ -11,6 +12,22 @@ namespace AIGame.League
         {
             AiType = aiType;
             Id = Guid.NewGuid();
+        }
+
+        public void Reset()
+        {
+            Wins = 0;
+            Loses = 0;
+            Ties = 0;
+            GamesPlayed = 0;
+            EloRating = 2000;
+        }
+        public string GetArgs()
+        {
+            string args = "";
+            if (AiType.Args != null)
+                args = AiType.Args.Aggregate((i, j) => i + ":" + j);
+            return args;
         }
         public AiType AiType { get; }
 
