@@ -31,8 +31,7 @@ namespace AIGame
         private static void SingleGame()
         {
             Random rnd = new Random(Environment.TickCount);
-            
-            var game = Game.Create<RandomAI,SimpleAi>(GameMode.HiddenInfo1ShipSmall, rnd);
+            var game = Game.Create(AiType.Create<RandomAI>(), AiType.Create<SimpleAi>(), GameMode.HiddenInfo1ShipSmall, rnd);
 
             for (int i = 0; i < 100000; i++)
             {

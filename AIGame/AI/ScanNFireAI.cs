@@ -11,8 +11,8 @@ namespace AIGame.AI
         private Tuple<int, int> _target;
         private int _turn = 0;
 
-        public ScanNFireAi(Random random) : base(random) { }
-        
+        public ScanNFireAi(Random random, string[] args) : base(random, args) { }
+
         public override IOrder GetOrder(Sensor sensor)
         {
             _turn++;

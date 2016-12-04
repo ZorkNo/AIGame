@@ -7,23 +7,20 @@ namespace AIGame.League
 {
     public class Player
     {
-        public static Player Create<T>() where T : BaseAi
+        public Player(AiType aiType)
         {
-            return new Player(typeof(T));
+            AiType = aiType;
         }
-        public Type AiType { get; }
+        public AiType AiType { get; }
 
-        public string AiName => AiType.Name;
+        public string AiName => AiType.Type.Name;
         public int Wins { get;  set; }
         public int Loses { get;  set; }
         public int Ties { get;  set; }
         public int GamesPlayed { get;  set; }
         public double EloRating = 2000;
 
-        private Player(Type aiType)
-        {
-            AiType = aiType;
-        }
+        
         
     }
 }

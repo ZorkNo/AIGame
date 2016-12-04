@@ -39,7 +39,7 @@ namespace TestAIGame
             MockUnit.Setup(u => u.Coordinates).Returns(new Tuple<int, int>(2, 2));
             
             List<IUnit> units = new List<IUnit>();
-            Unit unitOnMap = new Unit("a", Side.Blue, new DoNothingAI(MockRandom.Object));
+            Unit unitOnMap = new Unit("a", Side.Blue, new DoNothingAI(MockRandom.Object,new string[1]));
             unitOnMap.Coordinates = new Tuple<int, int>(targetX, targetY);
             units.Add(unitOnMap);
             MockMap.Setup(m => m.Units).Returns(units);

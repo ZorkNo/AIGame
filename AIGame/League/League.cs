@@ -39,9 +39,13 @@ namespace AIGame.League
             Console.WriteLine($"Ties : {ties}, did not finish : {didNotFinish}");
             Console.WriteLine();
             foreach (Player player in Players)
-            { 
-                Console.WriteLine("{0}: Score results Games played:{1} Wins:{2} Ties:{3} Loses:{4} Elo:{5}",
-                    player.AiType.Name, player.GamesPlayed, player.Wins, player.Ties,player.Loses, Math.Round(player.EloRating,0));
+            {
+                string args = "";
+                if (player.AiType.Args!=null)
+                    args = player.AiType.Args.Aggregate((i, j) => i + ":" + j);
+
+                Console.WriteLine("{0}: Score results Games played:{1} Wins:{2} Ties:{3} Loses:{4} Elo:{5} Args:{6}",
+                    player.AiName, player.GamesPlayed, player.Wins, player.Ties,player.Loses, Math.Round(player.EloRating,0), args);
             }
             Console.ReadKey();
         }
@@ -50,13 +54,15 @@ namespace AIGame.League
         {
             Players = new List<Player>
             {
-                Player.Create<DoNothingAI>(),
-                Player.Create<RandomAI>(),
-                Player.Create<SimpleAi>(),
-                Player.Create<RunAwayAi>(),
-                Player.Create<FireAllTheTimeAi>(),
-                Player.Create<ScanNFireAi>(),
-                Player.Create<SimplePlusAi>(),
+                new Player(AiType.Create<MutableAi>(new string[]{ "0","50","65","0","3"})),
+                //new Player(AiType.Create<DoNothingAI>()),
+                //new Player(AiType.Create<RandomAI>()),
+                //new Player(AiType.Create<SimpleAi>()),
+                //new Player(AiType.Create<RunAwayAi>()),
+                //new Player(AiType.Create<FireAllTheTimeAi>()),
+                //new Player(AiType.Create<ScanNFireAi>()),
+                new Player(AiType.Create<SimplePlusAi>()),
+                
             };
         }
 
@@ -71,7 +77,7 @@ namespace AIGame.League
                 {
                     foreach (Player red in Players)
                     {
-                        if(blue.AiType.Name !=red.AiType.Name)
+                        if(blue.AiName !=red.AiName)
                         {
                             Parallel.For(0, 10, j =>
                             {

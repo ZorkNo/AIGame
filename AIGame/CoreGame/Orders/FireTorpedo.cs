@@ -29,6 +29,9 @@ namespace AIGame.CoreGame.Orders
 
         public bool IsValid(IUnit unit, IMap map)
         {
+            if (RelativeCoordinates == null)
+                return false;
+
             var isValid = !(RelativeCoordinates.Item1 < -2 || RelativeCoordinates.Item2 < 0 ||
                           RelativeCoordinates.Item1 > 2 || RelativeCoordinates.Item2 > 3);
             return isValid;

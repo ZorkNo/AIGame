@@ -9,7 +9,7 @@ namespace AIGame.AI
 
     {
         protected Random _random;
-        protected BaseAi(Random random)
+        protected BaseAi(Random random, string[] args)
         {
             if (random == null)
                 throw new ArgumentNullException(nameof(random));

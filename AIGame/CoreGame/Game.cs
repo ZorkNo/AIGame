@@ -9,20 +9,20 @@ namespace AIGame.CoreGame
 {
     public class Game
     {
-        public readonly Type BlueAiType;
-        public readonly Type RedAiType;
+        public readonly AiType BlueAiType;
+        public readonly AiType RedAiType;
         private int Turn;
         private int MaxTurn = 1000;
         private IMap Map;
         private GameMode gameMode;
         public GameResult GameResult => CalculateResult();
 
-        public static Game Create<TBlue,TRed>(GameMode gameMode, Random rnd) where TBlue : IAi where TRed : IAi
+        public static Game Create(AiType blue, AiType red, GameMode gameMode, Random rnd)
         {
-            return new Game(typeof(TBlue), typeof(TRed), gameMode, rnd);
+            return new Game(blue, red, gameMode, rnd);
         }
 
-        public Game(Type blue, Type red, GameMode gameMode, Random rnd)
+        public Game(AiType blue, AiType red, GameMode gameMode, Random rnd)
         {
             BlueAiType = blue;
             RedAiType = red;
@@ -38,13 +38,13 @@ namespace AIGame.CoreGame
         private List<IUnit> AddUnits(GameMode gameMode, Random rnd)
         {
             List<IUnit> units = new List<IUnit>();
-            units.Add(new Unit("A", Side.Blue, AIFactory.CreateAi(BlueAiType, rnd)));
-            units.Add(new Unit("X", Side.Red, AIFactory.CreateAi(RedAiType, rnd)));
+            units.Add(new Unit("A", Side.Blue, AIFactory.CreateAi(BlueAiType.Type, rnd, BlueAiType.Args)));
+            units.Add(new Unit("X", Side.Red, AIFactory.CreateAi(RedAiType.Type, rnd, RedAiType.Args)));
 
             if (gameMode == GameMode.HiddenInfo2ShipLarge)
             {
-                units.Add(new Unit("B", Side.Blue, AIFactory.CreateAi(BlueAiType, rnd)));
-                units.Add(new Unit("Y", Side.Red, AIFactory.CreateAi(RedAiType, rnd)));
+                units.Add(new Unit("B", Side.Blue, AIFactory.CreateAi(BlueAiType.Type, rnd, BlueAiType.Args)));
+                units.Add(new Unit("Y", Side.Red, AIFactory.CreateAi(RedAiType.Type, rnd, RedAiType.Args)));
             }
             return units;
         }
