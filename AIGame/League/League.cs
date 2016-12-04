@@ -13,7 +13,8 @@ namespace AIGame.League
     public class League
     {
         private int gamesPerMatchUp=1000;
-        private int gamesPlayed = 0;
+        private int gamesPlayed = 0, blueWins = 0, redWins = 0, ties = 0, didNotFinish = 0;
+            
         public List<Player> Players;
         private MatchUp _matchUp = new MatchUp();
 
@@ -30,7 +31,13 @@ namespace AIGame.League
             Console.WriteLine("");
             sw.Stop();
             Console.WriteLine($"Games: {gamesPlayed} Calculation time seconds:{sw.Elapsed.TotalSeconds}");
-
+            Console.ForegroundColor = ConsoleColor.Blue;
+            Console.Write($"Blue wins : {blueWins} ");
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.Write($"Red wins : {redWins} ");
+            Console.ForegroundColor = ConsoleColor.Gray;
+            Console.WriteLine($"Ties : {ties}, did not finish : {didNotFinish}");
+            Console.WriteLine();
             foreach (Player player in Players)
             { 
                 Console.WriteLine($"{player.AiName}: score results Games played:{player.GamesPlayed} Wins:{player.Wins} Ties:{player.Ties} Loses:{player.Loses} ");
@@ -58,17 +65,17 @@ namespace AIGame.League
             {
                 foreach (Player red in Players)
                 {
-                    if(blue.AiName !=red.AiName)
-                    {
-                        Console.WriteLine();
-                        Console.WriteLine($"{blue.AiName} vs {red.AiName}");
-                        Parallel.For(0, gamesPerMatchUp, i =>
+                    if (blue.AiType == red.AiType)
+                         continue;
+
+                    Console.WriteLine();
+                    Console.WriteLine($"{blue.AiName} vs {red.AiName}");
+                    Parallel.For(0, gamesPerMatchUp, i =>
                         {
                             PlayGame(blue, red, true, i);
                             if (gamesPlayed% 250 == 0)
                                 Console.Write(".");
                         });
-                    }
                 }
             }
         }
@@ -87,6 +94,23 @@ namespace AIGame.League
                 {
                     blue.AddGame(game);
                     red.AddGame(game);
+                    switch (game.GameResult)
+                    {
+                        case GameResult.RedWin:
+                            redWins++;
+                            break;
+                        case GameResult.BlueWin:
+                            blueWins++;
+                            break;
+                        case GameResult.Tie:
+                            ties++;
+                            break;
+                        case GameResult.GameNotEnded:
+                            didNotFinish++;
+                            break;
+                        default:
+                            throw new ArgumentOutOfRangeException();
+                    }
                     gamesPlayed++;
 
                 }
