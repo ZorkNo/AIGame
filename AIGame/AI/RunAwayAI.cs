@@ -9,7 +9,7 @@ namespace AIGame.AI
     {
         private int _health = 0;
 
-        public RunAwayAi(Random random, string[] args) : base(random, args) { }
+        public RunAwayAi(Random random, params string[] args) : base(random, args) { }
 
         public override IOrder GetOrder(Sensor sensor)
         {

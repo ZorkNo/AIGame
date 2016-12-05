@@ -6,7 +6,7 @@ namespace AIGame.AI
 {
    public class DoNothingAI : BaseAi
     {
-        public DoNothingAI(Random random, string[] args) : base(random, args) { }
+        public DoNothingAI(Random random, params string[] args) : base(random,args) { }
 
         public override IOrder GetOrder(Sensor sensor)
         {

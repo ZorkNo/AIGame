@@ -7,7 +7,7 @@ namespace AIGame.AI
 {
     public class RandomAI : BaseAi
     {
-        public RandomAI(Random random, string[] args) : base(random, args) { }
+        public RandomAI(Random random, params string[] args) : base(random, args) { }
 
         public override IOrder GetOrder(Sensor sensor)
         {

@@ -14,7 +14,7 @@ namespace AIGame.AI
         private readonly MutableParameters _mutableParameters;
         private int _fireCounter = 0;
 
-        public SimpleMutableAi(Random random, string[] args) : base(random, args)
+        public SimpleMutableAi(Random random, params string[] args) : base(random, args)
         {
             _mutableParameters = new MutableParameters(args);
         }
@@ -71,16 +71,17 @@ namespace AIGame.AI
 
     internal class MutableParameters
     {
-        public MutableParameters(string[] args)
+        public MutableParameters(params string[] args)
         {
+            //new string[] {"0","14","83","98","4"}
             int outVal = 0;
-            FireChance = 6;
-            ScanChance = 30;
-            RotateChance = 81;
-            MoveChange = 80;
+            FireChance = 0;
+            ScanChance = 14;
+            RotateChance = 83;
+            MoveChange = 98;
             FireCounter = 4;
 
-            if (args == null)
+            if (args == null || args.Length!=5)
                 return;
             if (int.TryParse(args[0],out outVal))
                 FireChance = int.Parse(args[0]);

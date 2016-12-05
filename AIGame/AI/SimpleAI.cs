@@ -10,7 +10,7 @@ namespace AIGame.AI
     {
         private int _turn=0;
 
-        public SimpleAi(Random random, string[] args) : base(random, args) { }
+        public SimpleAi(Random random, params string[] args) : base(random, args) { }
 
         public override IOrder GetOrder(Sensor sensor)
         {

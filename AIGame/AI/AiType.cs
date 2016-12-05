@@ -14,13 +14,13 @@ namespace AIGame.AI
 
         public static AiType Create<T>() where T : BaseAi
         {
-            return new AiType(typeof(T), (string[]) null);
+            return new AiType(typeof(T));
         }
-        public static AiType Create<T>(string[] args) where T : BaseAi
+        public static AiType Create<T>(params string[] args) where T : BaseAi
         {
             return new AiType(typeof(T), args);
         }
-        private  AiType(Type type,string[] args)
+        private  AiType(Type type,params string[] args)
         {
             Type = type;
             Args = args;

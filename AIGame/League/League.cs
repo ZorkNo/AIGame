@@ -62,8 +62,6 @@ namespace AIGame.League
             List<Player> leaguePlayers = new List<Player>
             {
                 new Player(AiType.Create<SimpleMutableAi>()),
-                new Player(AiType.Create<SimpleMutableAi>(new string[] {"23","6","21","82","3"})),
-                new Player(AiType.Create<SimpleMutableAi>(new string[] {"0","14","83","98","4"})),
                 new Player(AiType.Create<SimpleMutableAi>(new string[] {"0","20", "83", "88","3"})),
                 new Player(AiType.Create<DoNothingAI>()),
                 new Player(AiType.Create<RandomAI>()),

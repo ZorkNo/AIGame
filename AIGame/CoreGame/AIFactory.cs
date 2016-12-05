@@ -6,7 +6,7 @@ namespace AIGame.CoreGame
 {
     public static class AIFactory 
     {
-        public static IAi CreateAi(Type aiType, Random random, string[] args) 
+        public static IAi CreateAi(Type aiType, Random random, params string[] args) 
         {
             if (!aiType.IsSubclassOf(typeof(BaseAi)))
                 throw new ArgumentException("Not BaseAi class", nameof(aiType));

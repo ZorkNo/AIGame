@@ -6,7 +6,7 @@ namespace AIGame.AI
 {
     public class FireAllTheTimeAi : BaseAi
     {
-        public FireAllTheTimeAi(Random random, string[] args) : base(random, args) { }
+        public FireAllTheTimeAi(Random random, params string[] args) : base(random, args) { }
 
         public override IOrder GetOrder(Sensor sensor)
         {

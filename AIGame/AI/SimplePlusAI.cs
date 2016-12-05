@@ -14,7 +14,7 @@ namespace AIGame.AI
         private int _fireCounter = 0;
         private Tuple<int, int> _target;
 
-        public SimplePlusAi(Random random, string[] args) : base(random, args) { }
+        public SimplePlusAi(Random random, params string[] args) : base(random, args) { }
 
         public override IOrder GetOrder(Sensor sensor)
         {
