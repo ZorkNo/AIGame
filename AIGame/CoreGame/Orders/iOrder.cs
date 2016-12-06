@@ -7,5 +7,6 @@ namespace AIGame.CoreGame.Orders
         void Execute(IUnit unit, IMap map);
         bool IsValid(IUnit unit, IMap map);
         string Render();
+        bool FreeOrder();
     }
 }

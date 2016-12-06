@@ -21,6 +21,11 @@ namespace AIGame.CoreGame.Orders
             return "";
         }
 
+        public bool FreeOrder()
+        {
+            return false;
+        }
+
         //public void Initilize(IUnit unit, IMap map)
         //{
         //    int xSize = 5;

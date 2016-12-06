@@ -51,5 +51,10 @@ namespace AIGame.CoreGame.Orders
         {
             return "";
         }
+
+        public bool FreeOrder()
+        {
+            return false;
+        }
     }
 }

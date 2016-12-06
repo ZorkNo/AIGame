@@ -17,7 +17,7 @@ namespace AIGame.CoreGame
 
             foreach (IUnit unit in Units)
             {
-                unit.Coordinates = GetValidStartPosition(Units);
+                unit.Coordinates = GetValidStartPosition(Units, unit.Owner);
             }
 
         }
@@ -44,12 +44,22 @@ namespace AIGame.CoreGame
 
             return new Terrain(TerrainType.Sea);
         }
-        public Tuple<int, int> GetValidStartPosition(List<IUnit> units)
+        public Tuple<int, int> GetValidStartPosition(List<IUnit> units, Side side)
         {
             Tuple<int, int> rndCoordinates;
+            int xMin = 0;
+            int xMax = XSize;
+            if (side == Side.Blue)
+            {
+                xMin = (int)Math.Round(XSize/2d)+2;
+            }
+            else
+            {
+                xMax = (int)Math.Round(XSize / 2d)-2;
+            }
             while (true)
             {
-                int rndX = Rnd.Next(0, XSize);
+                int rndX = Rnd.Next(xMin, xMax);
                 int rndY = Rnd.Next(0, YSize);
                 rndCoordinates = new Tuple<int, int>(rndX, rndY);
                 if(Terrain[rndX,rndY].Type != TerrainType.Land && !units.Any(u => u.Coordinates.Equals(rndCoordinates)))

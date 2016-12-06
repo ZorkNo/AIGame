@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using AIGame.AI;
 using AIGame.CoreGame.Orders;
@@ -21,7 +22,7 @@ namespace AIGame.CoreGame
         public Side Owner { get; set; }
         public IAi Ai { get; set; }
         public Sensor Sensor { get; set; }
-        public IOrder LastOrder { get; set; }
+        public List<IOrder> LastOrders { get; set; }
 
         public Unit(string name, Side owner, IAi ai)
         {
@@ -34,12 +35,12 @@ namespace AIGame.CoreGame
             Sensor = new Sensor();
             Sensor.Health = Health;
             Coordinates = new Tuple<int, int>(-1,-1);
+            LastOrders = new List<IOrder>();
         }
         public IOrder GetOrder()
         {
             return Ai.GetOrder(Sensor);
         }
-
         public string Render()
         {
             string message = "";
@@ -61,17 +62,22 @@ namespace AIGame.CoreGame
             {
                 Sensor.HasScanned = false;
                 Sensor.ScannedArea = new ScannedArea();
-                Sensor.ScannedArea.Initilize(this,map);
-
-                //TODO remove rendering
-                //Console.WriteLine(Facing);
-                //Sensor.ScannedArea.ConsoleRenderArea();
-                
+                Sensor.ScannedArea.Initilize(this,map);                
             }
             else
             {
                 Sensor.ScannedArea = new ScannedArea();
                 Sensor.ScannedArea.Initilize();
+            }
+
+            Sensor.Signals = new List<Signal>();
+            foreach (ISignalOrigin signalOrigin in map.SignalOrigins)
+            {
+                Sensor.Signals.Add(signalOrigin.GetSignal(this));
+            }
+            foreach (Signal signal in Sensor.Signals)
+            {
+                Console.WriteLine("direction:" + signal.Direction );
             }
         }
          

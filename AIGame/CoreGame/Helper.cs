@@ -32,6 +32,33 @@ namespace AIGame.CoreGame
                    newCoordinates.Item1 >= xSize || newCoordinates.Item2 >= ySize;
         }
 
+        public static double GetAngle(Tuple<int, int> seenFromCoordinates, Tuple<int, int> toCoordinates)
+        {
+            int y = toCoordinates.Item1- seenFromCoordinates.Item1 ;
+            int x =  toCoordinates.Item2- seenFromCoordinates.Item2 ;
+
+            if (x == 0 && y == 0)
+                return -1;
+
+            double radians = Math.Atan2(y, x);
+            double angle = radians * (180 / Math.PI);
+
+            angle = angle < 0 ? 360 + angle : angle;
+
+            return angle;
+        }
+        public static DirectionPrecise GetDirection(Tuple<int, int> seenFromCoordinates, Tuple<int, int> toCoordinates)
+        {
+            double angle = GetAngle(seenFromCoordinates, toCoordinates);
+
+            if (angle == -1)
+                return DirectionPrecise.OnTop;
+
+            if (angle > (360 - 11.25d) || angle < 11.25d)
+                return DirectionPrecise.North;
+
+            return (DirectionPrecise) (int) Math.Ceiling((angle - 11.25d) / 22.5d);
+        }
         public static Tuple<int, int> RotateCoordinates(Direction facing, int x, int y)
         {
             int newX = 0;

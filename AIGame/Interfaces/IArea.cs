@@ -11,6 +11,7 @@ namespace AIGame.Interfaces
     {
         Terrain[,] Terrain { get; set; }
         List<IUnit> Units { get; set; }
+        List<ISignalOrigin> SignalOrigins { get; set; }
         int XSize { get; }
         int YSize { get; }
         Terrain GetTerrain(Tuple<int, int> coordinates);

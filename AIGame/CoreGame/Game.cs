@@ -78,19 +78,38 @@ namespace AIGame.CoreGame
                 foreach (IUnit unit in Map.Units)
                 {
                     if(!unit.IsDead)
-                    { 
+                    {
+                        unit.LastOrders.Clear();
+
                         unit.UpdateSensor(Map);
-                        IOrder order = unit.GetOrder();
-                        if (order.IsValid(unit, Map))
-                        { 
-                            order.Execute(unit, Map);
-                        }
-                        unit.LastOrder = order;
+                        bool freeOrder = RunOrder(unit);
+                        if (freeOrder)
+                            RunOrder(unit);
                     }
+                    SignalCleanUp();
                 }
                 Turn++;
             }
         }
+
+        private void SignalCleanUp()
+        {
+            Map.SignalOrigins.Select(c => { c.Age++; return c; }).ToList();
+            //This way of evaluating signal age is ok as long as no units is added
+            Map.SignalOrigins.RemoveAll(s => s.Age > Map.Units.Count);
+        }
+
+        private bool RunOrder(IUnit unit)
+        {
+            IOrder order = unit.GetOrder();
+            if (order.IsValid(unit, Map))
+            {
+                order.Execute(unit, Map);
+            }
+            unit.LastOrders.Add(order);
+            return order.FreeOrder();
+        }
+
         public void Render()
         {
             string message = "";
@@ -99,13 +118,17 @@ namespace AIGame.CoreGame
             Console.WriteLine("Messages:");
             foreach (IUnit unit in Map.Units)
             {
-                
-                    if (unit.Render() != string.Empty)
-                        message = string.Format("{0}{1}{2}", message, unit.Render(), System.Environment.NewLine);
-                    if (unit.LastOrder !=null && unit.LastOrder.Render() != string.Empty)
-                        message = string.Format("{0}{1}{2}", message, unit.LastOrder.Render(), System.Environment.NewLine);
-                
+                if (unit.Render() != string.Empty)
+                    message = string.Format("{0}{1}{2}", message, unit.Render(), System.Environment.NewLine);
+
+                foreach (IOrder order in unit.LastOrders)
+                {
+                    if (order.Render() != string.Empty)
+                        message = string.Format("{0}{1}{2}", message, order.Render(),
+                            System.Environment.NewLine);
+                }
             }
+            
             Console.WriteLine(message);
 
             if(GameResult != GameResult.GameNotEnded)

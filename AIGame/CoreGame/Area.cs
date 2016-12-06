@@ -15,7 +15,7 @@ namespace AIGame.CoreGame
         public Terrain[,] Terrain { get; set; }
         public List<IUnit> Units { get; set; }
         public List<ITarget> Targets { get; set; }
-        
+        public List<ISignalOrigin> SignalOrigins { get; set; }
 
         public int XSize
         {
@@ -42,6 +42,7 @@ namespace AIGame.CoreGame
         {
             Units = new List<IUnit>();
             Targets = new List<ITarget>();
+            SignalOrigins = new List<ISignalOrigin>();
         }
         public Terrain GetTerrain(Tuple<int, int> coordinates)
         {
@@ -104,4 +105,10 @@ namespace AIGame.CoreGame
             return Terrain[x, y].Render();
         }
     }
+
+
+
+
+
+
 }

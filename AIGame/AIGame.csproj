@@ -45,6 +45,7 @@
   <ItemGroup>
     <Compile Include="AI\AiType.cs" />
     <Compile Include="AI\BaseAi.cs" />
+    <Compile Include="AI\CryBabyAI.cs" />
     <Compile Include="AI\ScanNFireAI.cs" />
     <Compile Include="AI\FireAllTheTimeAI.cs" />
     <Compile Include="AI\DoNothingAI.cs" />
@@ -52,8 +53,12 @@
     <Compile Include="AI\RunAwayAI.cs" />
     <Compile Include="AI\SimpleMutableAI.cs" />
     <Compile Include="AI\SimplePlusAI.cs" />
-    <Compile Include="AI\SimpleAI.cs" />
+    <Compile Include="AI\NewMutableAI.cs" />
     <Compile Include="CoreGame\AIFactory.cs" />
+    <Compile Include="CoreGame\Broadcast.cs" />
+    <Compile Include="CoreGame\Orders\BroadcastOrder.cs" />
+    <Compile Include="CoreGame\Signal.cs" />
+    <Compile Include="CoreGame\SignalOrigin.cs" />
     <Compile Include="Interfaces\IAi.cs" />
     <Compile Include="CoreGame\Area.cs" />
     <Compile Include="CoreGame\Enums.cs" />
@@ -64,7 +69,6 @@
     <Compile Include="CoreGame\Orders\FireTorpedo.cs" />
     <Compile Include="CoreGame\Orders\IOrder.cs" />
     <Compile Include="CoreGame\Orders\Move.cs" />
-    <Compile Include="CoreGame\Orders\OrderType.cs" />
     <Compile Include="CoreGame\Orders\Rotate.cs" />
     <Compile Include="CoreGame\Orders\SonorScan.cs" />
     <Compile Include="CoreGame\ScannedArea.cs" />
@@ -73,7 +77,9 @@
     <Compile Include="CoreGame\Terrain.cs" />
     <Compile Include="CoreGame\Unit.cs" />
     <Compile Include="Interfaces\IArea.cs" />
+    <Compile Include="Interfaces\ISignalOrigin.cs" />
     <Compile Include="Interfaces\IMap.cs" />
+    <Compile Include="Interfaces\ISignal.cs" />
     <Compile Include="Interfaces\ITarget.cs" />
     <Compile Include="Interfaces\IScannedArea.cs" />
     <Compile Include="Interfaces\IUnit.cs" />

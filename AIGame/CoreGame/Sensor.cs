@@ -1,4 +1,6 @@
-﻿namespace AIGame.CoreGame
+﻿using System.Collections.Generic;
+
+namespace AIGame.CoreGame
 {
     public class Sensor
     {
@@ -7,5 +9,7 @@
         public bool IsUnitInfront;
         public bool HasScanned;
         public ScannedArea ScannedArea;
+        public Direction SelfFacing;
+        public List<Signal> Signals = new List<Signal>();
     }
 }

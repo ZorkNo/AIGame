@@ -36,5 +36,10 @@ namespace AIGame.CoreGame.Orders
         {
             return message;
         }
+
+        public bool FreeOrder()
+        {
+            return false;
+        }
     }
 }

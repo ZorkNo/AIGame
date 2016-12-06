@@ -7,8 +7,12 @@ using AIGame.CoreGame;
 
 namespace AIGame.Interfaces
 {
-    public interface IMap : IArea
+    public interface ISignal
     {
-        Tuple<int, int> GetValidStartPosition(List<IUnit> units, Side Side);
+        DirectionPrecise Direction { get; }
+        Broadcast Broadcast { get; }
+        SignalType Type { get; }
     }
+
+
 }
