@@ -49,7 +49,9 @@ namespace TestAIGame
 
             Assert.AreEqual(66,unitOnMap.Health);
         }
-          [Test,TestCaseSource("IsValidCases")]
+        [Test]
+        [Ignore("")]
+        [TestCaseSource("IsValidCases")]
         public void IsValidTest(int x, int y,bool valid)
         {
             sut.RelativeCoordinates = new Tuple<int, int>(x, y);
