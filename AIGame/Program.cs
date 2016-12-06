@@ -13,33 +13,31 @@ namespace AIGame
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("G for Single game");
-            Console.WriteLine("L for League match ups");
-            Console.WriteLine("E for Ecosystem");
-            ConsoleKeyInfo key =Console.ReadKey();
+            while(true)
+            {
+                Console.Clear();
+                Console.WriteLine("G for Single game");
+                Console.WriteLine("L for League match ups");
+                Console.WriteLine("E for Ecosystem");
+                ConsoleKeyInfo key =Console.ReadKey();
 
-            if(key.Key == ConsoleKey.L)
-            {
-                Console.Clear();
-                LeagueMatchUp();
+                if(key.Key == ConsoleKey.L)
+                    LeagueMatchUp();
+
+                if (key.Key == ConsoleKey.G)
+                    SingleGame();
+
+                if (key.Key == ConsoleKey.E)
+                    Ecosystem();
+                
             }
-            else if (key.Key == ConsoleKey.G)
-            {
-                Console.Clear();
-                SingleGame();
-            }
-            else
-            {
-                Console.Clear();
-                Ecosystem();
-            }
-            
+
         }
 
         private static void SingleGame()
         {
             Random rnd = new Random(Environment.TickCount);
-            var game = Game.Create(AiType.Create<RandomAI>(), AiType.Create<SimpleAi>(), GameMode.HiddenInfo1ShipSmall, rnd);
+            var game = Game.Create(AiType.Create<RunAwayAi>(), AiType.Create<CryBabyAI>(), GameMode.HiddenInfo1ShipSmall, rnd);
 
             for (int i = 0; i < 100000; i++)
             {
@@ -47,12 +45,18 @@ namespace AIGame
                 game.Render();
                 game.NextTurn();
 
+
                 Console.ReadKey();
+
+                if (game.GameResult != GameResult.GameNotEnded)
+                    break;
             }
+            
         }
 
         private static void LeagueMatchUp()
         {
+            Console.Clear();
             League.League league = new League.League();
 
             league.Tournament();
@@ -60,6 +64,7 @@ namespace AIGame
         }
         private static void Ecosystem()
         {
+            Console.Clear();
             Ecosystem ecosystem = new Ecosystem();
 
             ecosystem.RunEco();

@@ -12,7 +12,7 @@ namespace AIGame.League
         {
 
             Random rnd = new Random((int)DateTime.Now.Ticks);
-            List<Player> EcoPlayers= GetNewPlayers(15, rnd);
+            List<Player> EcoPlayers= GetNewPlayers(20, rnd);
             for (int i = 0; i < 1000; i++)
             {
                 AIGame.League.League league = new AIGame.League.League();
@@ -32,7 +32,7 @@ namespace AIGame.League
                 EcoPlayers.RemoveAll(p => p.AiType.Type == typeof(ScanNFireAi));
 
                 //Clean out bad players
-                int removeCount = EcoPlayers.Count-1;
+                int removeCount = EcoPlayers.Count-2;
                 for (int j = 0; j < removeCount; j++)
                 {
 
@@ -48,16 +48,20 @@ namespace AIGame.League
                 List<Player> newPlayers = new List<Player>();
 
                 //Make chilren
-                foreach (Player player in EcoPlayers.OrderBy(p => p.Wins).ThenBy(l => l.Ties))
+                bool bestPlayer = true;
+                foreach (Player player in EcoPlayers.OrderByDescending(p => p.Wins).ThenByDescending(l => l.Ties))
                 {
                     //Console.WriteLine("{0}: Score results Games played:{1} Wins:{2} Ties:{3} Loses:{4} Elo:{5} Args:{6}",
                     //player.AiName, player.GamesPlayed, player.Wins, player.Ties, player.Loses, Math.Round(player.EloRating, 0), player.GetArgs());
 
                     player.Reset();
-                    //EcoPlayers.Remove(player);
-                    for (int m = 0; m < 4; m++)
-                    {
-                        newPlayers.Add(GetMutantet(player.AiType.Args, rnd));
+                    if(bestPlayer)
+                    { 
+                        for (int m = 0; m < 4; m++)
+                        {
+                            newPlayers.Add(GetMutantet(player.AiType.Args, rnd));
+                        }
+                        bestPlayer = false;
                     }
                 }
                 EcoPlayers.AddRange(newPlayers);

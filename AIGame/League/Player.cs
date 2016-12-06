@@ -25,7 +25,7 @@ namespace AIGame.League
         public string GetArgs()
         {
             string args = "";
-            if (AiType.Args != null)
+            if (AiType.Args != null && AiType.Args.Length >0)
                 args = AiType.Args.Aggregate((i, j) => i + ":" + j);
             return args;
         }

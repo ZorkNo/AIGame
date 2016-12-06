@@ -65,7 +65,6 @@ namespace AIGame.League
                 new Player(AiType.Create<SimpleMutableAi>(new string[] {"0","20", "83", "88","3"})),
                 new Player(AiType.Create<DoNothingAI>()),
                 new Player(AiType.Create<RandomAI>()),
-                new Player(AiType.Create<SimpleAi>()),
                 new Player(AiType.Create<RunAwayAi>()),
                 new Player(AiType.Create<FireAllTheTimeAi>()),
                 new Player(AiType.Create<ScanNFireAi>()),
