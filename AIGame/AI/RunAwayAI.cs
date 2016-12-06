@@ -13,20 +13,24 @@ namespace AIGame.AI
 
         public override IOrder GetOrder(Sensor sensor)
         {
+            //Move if hit
             bool hit = false;
             if (sensor.Health != _health)
             {
                 _health = sensor.Health;
                 hit = true;
             }
+            
+            if(hit && sensor.Infront.Type != TerrainType.Land && sensor.Infront.Type == TerrainType.Edge)
+                return new Move();
 
-            if (_random.Next(1, 100) > 75 && hit == false)
+            if (_random.Next(1, 100) > 50 && hit == false)
                 return new FireTorpedo(getCoordinates());
 
             if (sensor.Infront.Type == TerrainType.Land || sensor.Infront.Type == TerrainType.Edge)
                 return Rotate();
 
-            if (_random.Next(1, 100) > 65 && hit==false)
+            if (_random.Next(1, 100) > 65)
                 return Rotate();
 
             return new Move();

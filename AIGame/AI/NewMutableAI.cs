@@ -8,15 +8,15 @@ using Rotate = AIGame.CoreGame.Orders.Rotate;
 namespace AIGame.AI
 {
 
-    public class SimpleMutableAi : BaseAi
+    public class NewMutableAI : BaseAi
     {
         private Tuple<int, int> _target;
-        private readonly MutableParameters _mutableParameters;
+        public readonly NewMutableParameters _mutableParameters;
         private int _fireCounter = 0;
 
-        public SimpleMutableAi(Random random, params string[] args) : base(random, args)
+        public NewMutableAI(Random random, params string[] args) : base(random, args)
         {
-            _mutableParameters = new MutableParameters(args);
+            _mutableParameters = new NewMutableParameters(args);
         }
 
         public override IOrder GetOrder(Sensor sensor)
@@ -69,11 +69,11 @@ namespace AIGame.AI
         }
     }
 
-    internal class MutableParameters
+    public class NewMutableParameters
     {
-        public MutableParameters(params string[] args)
+        public NewMutableParameters(params string[] args)
         {
-            
+
             int outVal = 0;
             FireChance = 100;
             ScanChance = 86;
@@ -81,9 +81,9 @@ namespace AIGame.AI
             MoveChange = 2;
             FireCounter = 4;
 
-            if (args == null || args.Length!=5)
+            if (args == null || args.Length != 5)
                 return;
-            if (int.TryParse(args[0],out outVal))
+            if (int.TryParse(args[0], out outVal))
                 FireChance = int.Parse(args[0]);
             if (int.TryParse(args[1], out outVal))
                 ScanChance = int.Parse(args[1]);
