@@ -4,9 +4,9 @@ using AIGame.CoreGame.Orders;
 
 namespace AIGame.AI
 {
-    public class FireAllTheTimeAi : BaseAi
+    public class FireAllTheTimeAI : BaseAi
     {
-        public FireAllTheTimeAi(Random random, params string[] args) : base(random, args) { }
+        public FireAllTheTimeAI(Random random, params string[] args) : base(random, args) { }
 
         public override IOrder GetOrder(Sensor sensor)
         {

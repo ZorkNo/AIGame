@@ -5,13 +5,13 @@ using AIGame.CoreGame.Orders;
 
 namespace AIGame.AI
 {
-    public class ScanNFireAi : BaseAi
+    public class ScanNFireAI : BaseAi
     {
         private int _fireCounter = 0;
         private Tuple<int, int> _target;
         private int _turn = 0;
 
-        public ScanNFireAi(Random random, params string[] args) : base(random, args) { }
+        public ScanNFireAI(Random random, params string[] args) : base(random, args) { }
 
         public override IOrder GetOrder(Sensor sensor)
         {

@@ -8,13 +8,13 @@ using Rotate = AIGame.CoreGame.Orders.Rotate;
 namespace AIGame.AI
 {
 
-    public class SimplePlusAi : BaseAi
+    public class SimplePlusAI : BaseAi
     {
         private int _turn=0;
         private int _fireCounter = 0;
         private Tuple<int, int> _target;
 
-        public SimplePlusAi(Random random, params string[] args) : base(random, args) { }
+        public SimplePlusAI(Random random, params string[] args) : base(random, args) { }
 
         public override IOrder GetOrder(Sensor sensor)
         {

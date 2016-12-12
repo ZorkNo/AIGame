@@ -8,13 +8,13 @@ using Rotate = AIGame.CoreGame.Orders.Rotate;
 namespace AIGame.AI
 {
 
-    public class SimpleMutableAi : BaseAi
+    public class SimpleMutableAI : BaseAi
     {
         private Tuple<int, int> _target;
         private readonly MutableParameters _mutableParameters;
         private int _fireCounter = 0;
 
-        public SimpleMutableAi(Random random, params string[] args) : base(random, args)
+        public SimpleMutableAI(Random random, params string[] args) : base(random, args)
         {
             _mutableParameters = new MutableParameters(args);
         }
@@ -69,7 +69,7 @@ namespace AIGame.AI
         }
     }
 
-    internal class MutableParameters
+    public class MutableParameters
     {
         public MutableParameters(params string[] args)
         {
@@ -99,5 +99,24 @@ namespace AIGame.AI
         public int RotateChance { get; set; }
         public int MoveChange { get; set; }
         public int FireCounter { get; set; }
+        private static String[] Mutate(String[] args, Random rnd)
+        {
+            string[] mutations = RandomGens(rnd);
+            string[] mutant = new string[5];
+            args.CopyTo(mutant, 0);
+            int mutationNumber = rnd.Next(0, 5);
+            mutant[mutationNumber] = mutations[mutationNumber];
+
+            return mutant;
+        }
+        private static String[] RandomGens(Random rnd)
+        {
+
+            return new string[]
+            {
+                rnd.Next(0, 100).ToString(), rnd.Next(0, 100).ToString(), rnd.Next(0, 100).ToString(),
+                rnd.Next(0, 100).ToString(), rnd.Next(0, 5).ToString()
+            };
+        }
     }
 }

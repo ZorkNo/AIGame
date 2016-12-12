@@ -11,6 +11,7 @@ namespace AIGame.AI
     public class NewMutableAI : BaseAi
     {
         private Tuple<int, int> _target;
+        private int _health = 0;
         public readonly NewMutableParameters _mutableParameters;
         private int _fireCounter = 0;
 
@@ -22,15 +23,30 @@ namespace AIGame.AI
         public override IOrder GetOrder(Sensor sensor)
         {
 
-            if (sensor.ScannedArea.Targets.Any())
+            //Move if hit
+            bool hit = false;
+            if (sensor.Health != _health)
+            {
+                _health = sensor.Health;
+                hit = true;
+            }
+
+            if (_random.Next(1, 100) < _mutableParameters.RunAwayChance && hit &&
+                sensor.Infront.Type != TerrainType.Land && sensor.Infront.Type == TerrainType.Edge)
+            {
+                _fireCounter = 0;
+                return new Move();
+            }
+
+            if (sensor.ScannedArea.Targets.Any() || sensor.IsUnitInfront)
             {
                 _fireCounter = _mutableParameters.FireCounter;
-                _target = sensor.ScannedArea.Targets.First().RelativeCoordinates;
+                _target = sensor.IsUnitInfront? new Tuple<int, int>(0,1) : sensor.ScannedArea.Targets.First().RelativeCoordinates;
             }
 
             if (_random.Next(1, 100) < _mutableParameters.FireChance && _fireCounter > 0)
             {
-                _fireCounter--;
+                _fireCounter--;  
                 return new FireTorpedo(_target);
             }
 
@@ -39,13 +55,22 @@ namespace AIGame.AI
                 return new SonorScan();
 
             if (sensor.Infront.Type == TerrainType.Land || sensor.Infront.Type == TerrainType.Edge)
+            {
+                _fireCounter = 0;
                 return Rotate();
+            }
 
             if (_random.Next(1, 100) < _mutableParameters.RotateChance)
+            {
+                _fireCounter = 0;
                 return Rotate();
+            }
 
             if (_random.Next(1, 100) < _mutableParameters.MoveChange)
+            {
+                _fireCounter = 0;
                 return new Move();
+            }
 
             return new FireTorpedo(getCoordinates());
         }
@@ -75,29 +100,62 @@ namespace AIGame.AI
         {
 
             int outVal = 0;
-            FireChance = 100;
-            ScanChance = 86;
-            RotateChance = 17;
-            MoveChange = 2;
+            RunAwayChance = 53;
+            FireChance = 94;
+            ScanChance = 10;
+            RotateChance = 0;
+            MoveChange = 98;
             FireCounter = 4;
 
-            if (args == null || args.Length != 5)
+            if (args == null || args.Length != 6)
                 return;
             if (int.TryParse(args[0], out outVal))
-                FireChance = int.Parse(args[0]);
+                RunAwayChance = outVal;
             if (int.TryParse(args[1], out outVal))
-                ScanChance = int.Parse(args[1]);
+                FireChance = outVal;
             if (int.TryParse(args[2], out outVal))
-                RotateChance = int.Parse(args[2]);
+                ScanChance = outVal;
             if (int.TryParse(args[3], out outVal))
-                MoveChange = int.Parse(args[3]);
+                RotateChance = outVal;
             if (int.TryParse(args[4], out outVal))
-                FireCounter = int.Parse(args[4]);
+                MoveChange = outVal;
+            if (int.TryParse(args[5], out outVal))
+                FireCounter = outVal;
         }
+        public int RunAwayChance { get; set; }
         public int FireChance { get; set; }
         public int ScanChance { get; set; }
         public int RotateChance { get; set; }
         public int MoveChange { get; set; }
         public int FireCounter { get; set; }
+        public  static String[] Mutate(String[] args, Random rnd)
+        {
+            string[] mutations = RandomGens(rnd);
+            string[] mutant = new string[6];
+            args.CopyTo(mutant, 0);
+            int mutationNumber = rnd.Next(0, 6);
+            mutant[mutationNumber] = mutations[mutationNumber];
+
+            return mutant;
+        }
+        public static String[] SmallMutate(String[] args, Random rnd)
+        {
+            string[] mutations = RandomGens(rnd);
+            string[] mutant = new string[6];
+            args.CopyTo(mutant, 0);
+            int mutationNumber = rnd.Next(0, 6);
+            mutant[mutationNumber] = mutations[mutationNumber];
+
+            return mutant;
+        }
+        public static String[] RandomGens(Random rnd)
+        {
+
+            return new string[]
+            {
+                rnd.Next(0, 100).ToString(), rnd.Next(0, 100).ToString(), rnd.Next(0, 100).ToString(),
+                rnd.Next(0, 100).ToString(), rnd.Next(0, 100).ToString(), rnd.Next(1, 6).ToString()
+            };
+        }
     }
 }

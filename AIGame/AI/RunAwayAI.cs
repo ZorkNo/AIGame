@@ -5,11 +5,11 @@ using Rotate = AIGame.CoreGame.Orders.Rotate;
 
 namespace AIGame.AI
 {
-    public class RunAwayAi : BaseAi
+    public class RunAwayAI : BaseAi
     {
         private int _health = 0;
 
-        public RunAwayAi(Random random, params string[] args) : base(random, args) { }
+        public RunAwayAI(Random random, params string[] args) : base(random, args) { }
 
         public override IOrder GetOrder(Sensor sensor)
         {
