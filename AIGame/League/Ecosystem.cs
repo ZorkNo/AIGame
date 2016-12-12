@@ -13,12 +13,15 @@ namespace AIGame.League
         {
 
             Random rnd = new Random((int)DateTime.Now.Ticks);
-            List<Player> EcoPlayers= GetNewPlayers(20, rnd);
+            List<Player> EcoPlayers= new List<Player>();
+
+            EcoPlayers.AddRange(GetNewPlayers(20, rnd));
+
             for (int i = 0; i < 1000; i++)
             {
                 AIGame.League.League league = new AIGame.League.League();
 
-                EcoPlayers =league.Tournament(EcoPlayers,TournamentType.Dropout,500, GameMode.HiddenInfo1ShipLarge);
+                EcoPlayers =league.Tournament(EcoPlayers,TournamentType.Dropout,2000, GameMode.HiddenInfo1ShipLarge);
 
                 
                 //Clean out bad players

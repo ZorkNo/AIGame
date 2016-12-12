@@ -21,7 +21,7 @@ namespace AIGame.League
 
         public List<Player> Tournament()
         {
-            return Tournament(GetLeaguePlayers(),TournamentType.Dropout,10000,GameMode.HiddenInfo2ShipLarge);
+            return Tournament(GetLeaguePlayers(),TournamentType.Dropout,20000,GameMode.HiddenInfo2ShipLarge);
         }
 
         public List<Player> Tournament(List<Player> players,TournamentType tournamentType, int gamePlayedGoal,GameMode gameMode)
@@ -64,6 +64,7 @@ namespace AIGame.League
             List<Player> leaguePlayers = new List<Player>
             {
                 new Player(AiType.Create<SimpleMutableAI>()),
+                new Player(AiType.Create<NewMutableAI>("94","99","4","0","99","1")),
                 new Player(AiType.Create<NewMutableAI>()),
                 new Player(AiType.Create<DoNothingAI>()),
                 new Player(AiType.Create<RandomAI>()),
@@ -85,6 +86,9 @@ namespace AIGame.League
 
             if(tournamentType == TournamentType.Dropout)
                 DropoutTournement();
+
+            if (tournamentType == TournamentType.VersusTop)
+                VersusTopTournement();
         }
 
         private void AllvsAllTournement()
@@ -94,17 +98,34 @@ namespace AIGame.League
             int gameInterations = (int) Math.Ceiling((_gamePlayedGoal/(double) (playerCombination*parallelMatchUps)));
             for (int i = 0; i < gameInterations; i++)
             {
-                RunIteration(Players);
+                RunIteration(Players, Players);
                 if (i%1 == 0)
                     Console.Write(".");
             }
         }
-
-        private void RunIteration(List<Player> players)
+        private void VersusTopTournement()
         {
-            foreach (Player blue in players)
+            int parallelMatchUps = 10;
+            int playerCombination = Players.Count * (Players.Count - 1);
+            int gameInterations = (int)Math.Ceiling((_gamePlayedGoal / (double)(playerCombination * parallelMatchUps)));
+
+            List<Player> firstPlayers = new List<Player> {Players.First()};
+            Players.RemoveAt(0);
+            List<Player> otherPlayers = Players;
+
+            for (int i = 0; i < gameInterations; i++)
             {
-                foreach (Player red in players)
+                RunIteration(firstPlayers ,otherPlayers);
+                if (i % 1 == 0)
+                    Console.Write(".");
+            }
+        }
+
+        private void RunIteration(List<Player> bluePlayers, List<Player> redPlayers)
+        {
+            foreach (Player blue in bluePlayers)
+            {
+                foreach (Player red in redPlayers)
                 {
                     if (blue.Id != red.Id)
                     {
@@ -130,7 +151,7 @@ namespace AIGame.League
                 gameInterations = (int)Math.Ceiling((_gamePlayedGoal / (double)(playerCombination * parallelMatchUps)));
                 gameInterarionsPerDropout = (int)Math.Ceiling((gameInterations / (double)(CurrentPlayers.Count)));
 
-                RunIteration(CurrentPlayers);
+                RunIteration(CurrentPlayers, CurrentPlayers);
 
                 if (i % 1 == 0)
                     Console.Write(".");
@@ -237,6 +258,7 @@ namespace AIGame.League
     public  enum TournamentType
     {
         AllvsAll,
-        Dropout
+        Dropout,
+        VersusTop
     }
 }
