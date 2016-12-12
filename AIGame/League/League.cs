@@ -14,23 +14,25 @@ namespace AIGame.League
     {
         private int _gamePlayedGoal=1000;
         private int gamesPlayed = 0, blueWins = 0, redWins = 0, ties = 0, didNotFinish = 0;
+        private GameMode _gameMode;
             
         public List<Player> Players;
         public List<Player> CurrentPlayers;
 
         public List<Player> Tournament()
         {
-            return Tournament(GetLeaguePlayers(),TournamentType.Dropout,10000);
+            return Tournament(GetLeaguePlayers(),TournamentType.Dropout,10000,GameMode.HiddenInfo2ShipLarge);
         }
 
-        public List<Player> Tournament(List<Player> players,TournamentType tournamentType, int gamePlayedGoal)
+        public List<Player> Tournament(List<Player> players,TournamentType tournamentType, int gamePlayedGoal,GameMode gameMode)
         {
             Players = players;
             _gamePlayedGoal = gamePlayedGoal;
+            _gameMode = gameMode;
             Stopwatch sw = new Stopwatch();
             sw.Start();
             
-            Console.WriteLine("Running");
+            Console.WriteLine("Running Gamemode:{0} TournamentType:{1} GameplayedGoal:{2}", gameMode, tournamentType, gamePlayedGoal);
 
             RunAllGames(tournamentType);
 
@@ -61,14 +63,15 @@ namespace AIGame.League
             Random rnd = new Random((int)DateTime.Now.Ticks);
             List<Player> leaguePlayers = new List<Player>
             {
-                new Player(AiType.Create<SimpleMutableAi>()),
-                new Player(AiType.Create<SimpleMutableAi>(new string[] {"0","20", "83", "88","3"})),
+                new Player(AiType.Create<SimpleMutableAI>()),
+                new Player(AiType.Create<NewMutableAI>()),
                 new Player(AiType.Create<DoNothingAI>()),
                 new Player(AiType.Create<RandomAI>()),
-                new Player(AiType.Create<RunAwayAi>()),
-                new Player(AiType.Create<FireAllTheTimeAi>()),
-                new Player(AiType.Create<ScanNFireAi>()),
-                new Player(AiType.Create<SimplePlusAi>()),
+                new Player(AiType.Create<RunAwayAI>()),
+                new Player(AiType.Create<CryBabyAI>()),
+                new Player(AiType.Create<FireAllTheTimeAI>()),
+                new Player(AiType.Create<ScanNFireAI>()),
+                new Player(AiType.Create<SimplePlusAI>()),
                 
             };
 
@@ -150,7 +153,7 @@ namespace AIGame.League
             long longRnd = Environment.TickCount + gameInt;
             Random rnd = new Random((int)longRnd);
 
-            Game game = new Game(blue.AiType, red.AiType, GameMode.HiddenInfo2ShipLarge, rnd);
+            Game game = new Game(blue.AiType, red.AiType, GameMode.HiddenInfo1ShipLarge, rnd);
             game.PlayUntilEnd();
 
             if(withLock)

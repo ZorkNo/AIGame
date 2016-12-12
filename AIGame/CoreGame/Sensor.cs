@@ -1,4 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using AIGame.Interfaces;
 
 namespace AIGame.CoreGame
 {
@@ -8,8 +11,10 @@ namespace AIGame.CoreGame
         public Terrain Infront;
         public bool IsUnitInfront;
         public bool HasScanned;
-        public ScannedArea ScannedArea;
         public Direction SelfFacing;
         public List<Signal> Signals = new List<Signal>();
+        public Terrain[,] Terrain { get; set; }
+        public List<ITarget> Targets { get; set; }
+
     }
 }

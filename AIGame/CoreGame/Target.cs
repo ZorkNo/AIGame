@@ -11,16 +11,23 @@ namespace AIGame.CoreGame
 
     public class Target : ITarget
     {
+        public Target(Tuple<int, int> coordinates, Tuple<int, int> selfCoordinates, Tuple<int, int> absoluteCoordinates)
+        {
+            this.coordinates = coordinates;
+            this.selfCoordinates = selfCoordinates;
+            AbsoluteCoordinates = absoluteCoordinates;
+        }
         public Tuple<int, int> RelativeCoordinates
         {
             get
             {
-                return new Tuple<int, int>(Coordinates.Item1 - SelfCoordinates.Item1,Coordinates.Item2 - SelfCoordinates.Item2 );    
+                return new Tuple<int, int>(coordinates.Item1 - selfCoordinates.Item1,coordinates.Item2 - selfCoordinates.Item2 );    
             }
         }
 
-        public Tuple<int, int> Coordinates { get; set; }
+        private Tuple<int, int> coordinates;
 
-        public Tuple<int, int> SelfCoordinates { get; set; }
+        private Tuple<int, int> selfCoordinates;
+        public Tuple<int, int> AbsoluteCoordinates { get; private set; }
     }
 }

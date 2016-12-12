@@ -9,9 +9,11 @@ namespace AIGame.CoreGame
     {
         private Random Rnd;
 
-        public Map(int xSize, int ySize,Random rnd, List<IUnit> units)
+        public Map( int ySize, int xSize, Random rnd, List<IUnit> units)
         {
             Rnd = rnd;
+            YSize = ySize;
+            XSize = xSize;
             GenerateMap(xSize, ySize);
             Units = units;
 

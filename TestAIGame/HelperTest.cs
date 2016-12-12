@@ -68,5 +68,18 @@ namespace TestAIGame
 
             Assert.AreEqual(180, angle);
         }
+        [Test]
+        [Ignore("")]
+        [TestCase(Direction.North, 2, 1, 3, 0)]
+        [TestCase(Direction.South, 2, 1, 1, 0)]
+        [TestCase(Direction.West, 2, 1, 2, 1)]
+        [TestCase(Direction.East, 2, 1, 2, -1)]
+        public void ConvertMapCoordinatesTest(Direction facing, int x, int y, int resultx, int resulty)
+        {
+            Tuple<int, int> unitCoor = new Tuple<int, int>(2, 0);
+            Tuple<int, int> coor = Helper.ConvertMapCoordinates(facing, unitCoor, new Tuple<int, int>((x - 2), y));
+            Assert.AreEqual(resultx, coor.Item1, coor.Item1.ToString());
+            Assert.AreEqual(resulty, coor.Item2, coor.Item2.ToString());
+        }
     }
 }

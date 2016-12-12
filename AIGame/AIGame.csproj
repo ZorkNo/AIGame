@@ -45,7 +45,9 @@
   <ItemGroup>
     <Compile Include="AI\AiType.cs" />
     <Compile Include="AI\BaseAi.cs" />
+    <Compile Include="AI\CooroperateAI.cs" />
     <Compile Include="AI\CryBabyAI.cs" />
+    <Compile Include="AI\ScanNFirePlusAI.cs" />
     <Compile Include="AI\ScanNFireAI.cs" />
     <Compile Include="AI\FireAllTheTimeAI.cs" />
     <Compile Include="AI\DoNothingAI.cs" />
@@ -56,6 +58,7 @@
     <Compile Include="AI\NewMutableAI.cs" />
     <Compile Include="CoreGame\AIFactory.cs" />
     <Compile Include="CoreGame\Broadcast.cs" />
+    <Compile Include="CoreGame\ExplorableMap.cs" />
     <Compile Include="CoreGame\Orders\BroadcastOrder.cs" />
     <Compile Include="CoreGame\Signal.cs" />
     <Compile Include="CoreGame\SignalOrigin.cs" />
@@ -93,7 +96,9 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Content Include="GodeIdeer.txt" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

@@ -27,5 +27,6 @@ namespace TestAIGame
             map.Terrain = Terrain;
             return map;
         }
+
     }
 }

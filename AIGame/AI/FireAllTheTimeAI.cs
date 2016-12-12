@@ -10,7 +10,7 @@ namespace AIGame.AI
 
         public override IOrder GetOrder(Sensor sensor)
         {
-            return new FireTorpedo(getCoordinates()); ;
+            return new FireTorpedo(getCoordinates(), CoordinateType.Relative); ;
         }
 
         private Tuple<int, int> getCoordinates()

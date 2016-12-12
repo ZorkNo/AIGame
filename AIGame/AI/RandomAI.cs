@@ -32,7 +32,7 @@ namespace AIGame.AI
                      order = new Rotate(getDirection());
                     break;
                 case 3:
-                    order = new FireTorpedo(getCoordinates());
+                    order = new FireTorpedo(getCoordinates(), CoordinateType.Relative);
                     break;
                 default:
                     throw new Exception("not a valid direction");

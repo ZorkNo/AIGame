@@ -38,16 +38,16 @@ namespace AIGame.AI
                 return new Move();
             }
 
-            if (sensor.ScannedArea.Targets.Any() || sensor.IsUnitInfront)
+            if (sensor.Targets.Any() || sensor.IsUnitInfront)
             {
                 _fireCounter = _mutableParameters.FireCounter;
-                _target = sensor.IsUnitInfront? new Tuple<int, int>(0,1) : sensor.ScannedArea.Targets.First().RelativeCoordinates;
+                _target = sensor.IsUnitInfront? new Tuple<int, int>(0,1) : sensor.Targets.First().RelativeCoordinates;
             }
 
             if (_random.Next(1, 100) < _mutableParameters.FireChance && _fireCounter > 0)
             {
                 _fireCounter--;  
-                return new FireTorpedo(_target);
+                return new FireTorpedo(_target, CoordinateType.Relative);
             }
 
             //Hvis det en lige tur scan
@@ -72,7 +72,7 @@ namespace AIGame.AI
                 return new Move();
             }
 
-            return new FireTorpedo(getCoordinates());
+            return new FireTorpedo(getCoordinates(), CoordinateType.Relative);
         }
 
         private IOrder Rotate()

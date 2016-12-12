@@ -13,30 +13,13 @@ namespace AIGame.CoreGame
     public class Area : IArea
     {
         public Terrain[,] Terrain { get; set; }
+
         public List<IUnit> Units { get; set; }
         public List<ITarget> Targets { get; set; }
         public List<ISignalOrigin> SignalOrigins { get; set; }
 
-        public int XSize
-        {
-            get
-            {
-                if(Terrain == null )
-                    return 0;
-                
-                return Terrain.GetUpperBound(0)+1;
-            }
-        }
-
-        public int YSize
-        {
-            get
-            {
-                if (Terrain == null)
-                    return 0;
-                return Terrain.GetUpperBound(1)+1;
-            }
-        }
+        public int XSize { get; protected set; }
+        public int YSize { get; protected set; }
 
         public Area()
         {
@@ -52,9 +35,11 @@ namespace AIGame.CoreGame
              return Terrain[coordinates.Item1, coordinates.Item2];
         }
 
-        internal void InitilizeArea(int XSize,int YSize)
+        internal void InitilizeArea(int ySize,int xSize)
         {
-            Terrain = new Terrain[XSize, YSize];
+            YSize = ySize;
+            XSize = xSize;
+            Terrain = new Terrain[YSize,XSize];
 
             for (int x = 0; x < XSize; x++)
             {
@@ -99,7 +84,7 @@ namespace AIGame.CoreGame
             }
             foreach (ITarget target in Targets)
             {
-                if (target.Coordinates.Equals(new Tuple<int, int>(x, y)))
+                if (target.RelativeCoordinates.Equals(new Tuple<int, int>(x, y)))
                     return "X";
             }
             return Terrain[x, y].Render();

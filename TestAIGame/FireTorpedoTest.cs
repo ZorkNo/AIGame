@@ -26,7 +26,7 @@ namespace TestAIGame
             MockUnits = new Mock<List<IUnit>>();
             MockRandom = new Mock<Random>();
 
-            sut = new FireTorpedo(new Tuple<int, int>(0,0));
+            sut = new FireTorpedo(new Tuple<int, int>(0,0), CoordinateType.Relative);
         }
         [Test]
         [TestCase(Direction.North, -1, 2, 1, 4)]
@@ -44,7 +44,7 @@ namespace TestAIGame
             units.Add(unitOnMap);
             MockMap.Setup(m => m.Units).Returns(units);
 
-            sut.RelativeCoordinates = new Tuple<int, int>(x,y);
+            sut.Coordinates = new Tuple<int, int>(x,y);
             sut.Execute(MockUnit.Object,MockMap.Object);
 
             Assert.AreEqual(66,unitOnMap.Health);
@@ -54,7 +54,7 @@ namespace TestAIGame
         [TestCaseSource("IsValidCases")]
         public void IsValidTest(int x, int y,bool valid)
         {
-            sut.RelativeCoordinates = new Tuple<int, int>(x, y);
+            sut.Coordinates = new Tuple<int, int>(x, y);
             bool isValid = sut.IsValid(MockUnit.Object , MockMap.Object);
 
             Assert.AreEqual(valid, isValid);

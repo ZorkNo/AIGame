@@ -25,7 +25,7 @@ namespace AIGame.AI
                 return new Move();
 
             if (_random.Next(1, 100) > 50 && hit == false)
-                return new FireTorpedo(getCoordinates());
+                return new FireTorpedo(getCoordinates(), CoordinateType.Relative);
 
             if (sensor.Infront.Type == TerrainType.Land || sensor.Infront.Type == TerrainType.Edge)
                 return Rotate();

@@ -1,21 +1,22 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using AIGame.CoreGame;
 using AIGame.CoreGame.Orders;
-using AIGame.Interfaces;
-using Rotate = AIGame.CoreGame.Orders.Rotate;
 
 namespace AIGame.AI
 {
-
-    public class SimplePlusAI : BaseAi
+    public class CooroperateAI : BaseAi
     {
-        private int _turn=0;
+        private int _turn = 0;
         private int _fireCounter = 0;
         private Tuple<int, int> _target;
+        private bool _justBroadcasted = false;
 
-        public SimplePlusAI(Random random, params string[] args) : base(random, args) { }
-
+        public CooroperateAI(Random random, params string[] args) : base(random, args) { }
+        
         public override IOrder GetOrder(Sensor sensor)
         {
             _turn++;
@@ -29,7 +30,7 @@ namespace AIGame.AI
             if (_fireCounter > 0)
             {
                 _fireCounter--;
-                return new FireTorpedo(_target, CoordinateType.Relative);
+                return new FireTorpedo(_target,CoordinateType.Relative);
             }
 
             //Hvis det en lige tur scan
@@ -43,7 +44,7 @@ namespace AIGame.AI
                 return Rotate();
 
             return new Move();
-  
+
         }
 
         private IOrder Rotate()
@@ -58,5 +59,5 @@ namespace AIGame.AI
             return order;
         }
     }
-
+    
 }

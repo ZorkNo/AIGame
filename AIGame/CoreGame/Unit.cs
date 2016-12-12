@@ -24,6 +24,8 @@ namespace AIGame.CoreGame
         public Sensor Sensor { get; set; }
         public List<IOrder> LastOrders { get; set; }
 
+        public ExplorableMap Map;
+
         public Unit(string name, Side owner, IAi ai)
         {
             Name = name;
@@ -52,34 +54,91 @@ namespace AIGame.CoreGame
         }
         public void UpdateSensor(IMap map)
         {
-            Sensor.Health = Health;
+            Update(this, map);
 
-            Tuple<int, int> infrontXy= Helper.NewCoordinates(Coordinates, Facing);
-            Sensor.Infront = map.GetTerrain(infrontXy);
-            Sensor.IsUnitInfront = map.Units.Any(u => u.Coordinates.Equals(infrontXy));
-
+            if(Map==null)
+            { 
+                Map= new ExplorableMap();
+                Map.Initilize(this, map);
+            }
+            Map.Explorer(this.Coordinates.Item1, this.Coordinates.Item2);
             if (Sensor.HasScanned)
             {
-                Sensor.HasScanned = false;
-                Sensor.ScannedArea = new ScannedArea();
-                Sensor.ScannedArea.Initilize(this,map);                
+                Sensor.HasScanned = false;        
+                Scan(this,map);
             }
             else
             {
-                Sensor.ScannedArea = new ScannedArea();
-                Sensor.ScannedArea.Initilize();
+                NoScan(this, map);
             }
+        }
+        public void Update(IUnit unit, IMap map)
+        {
+            Health = unit.Health;
+            Sensor.SelfFacing = unit.Facing;
+
+            Tuple<int, int> infrontXy = Helper.NewCoordinates(unit.Coordinates, unit.Facing);
+            Sensor.Infront = map.GetTerrain(infrontXy);
+            Sensor.IsUnitInfront = map.Units.Any(u => u.Coordinates.Equals(infrontXy));
 
             Sensor.Signals = new List<Signal>();
             foreach (ISignalOrigin signalOrigin in map.SignalOrigins)
             {
-                Sensor.Signals.Add(signalOrigin.GetSignal(this));
-            }
-            foreach (Signal signal in Sensor.Signals)
-            {
-                Console.WriteLine("direction:" + signal.Direction );
+                Sensor.Signals.Add(signalOrigin.GetSignal(unit));
             }
         }
-         
+
+        public void Scan(IUnit unit, IMap map)
+        {
+            int xSize = 5;
+            int ySize = 3;
+            for (int x = 0; x < xSize; x++)
+            {
+                for (int y = 0; y < ySize; y++)
+                {
+                    ScanField(unit, map, x, y);
+                }
+            }
+
+        }
+        public void NoScan(IUnit unit, IMap map)
+        {
+            ScanField(unit, map, 2, 0);
+            ScanField(unit, map, 2, 1);
+        }
+
+        private void ScanField(IUnit unit, IMap map, int x, int y)
+        {
+            var coor = ConvertMapCoordinates(unit.Facing, unit.Coordinates,
+                new Tuple<int, int>(x - unit.Coordinates.Item1, y - unit.Coordinates.Item2));
+
+            //only include view cone
+            if ((y == 1 && (x == 0 || x == 4)) || (y == 0 && x != 2))
+            {
+            }
+            else
+            {
+                Map.Explorer(coor.Item1, coor.Item2);
+
+                List<IUnit> units =
+                    map.Units.FindAll(u => u.Coordinates.Item1 == coor.Item1 && u.Coordinates.Item2 == coor.Item2);
+                Map.Targets = new List<ITarget>();
+                foreach (IUnit unitOnMap in units)
+                {
+                    if (!unitOnMap.IsDead && unit.Name != unitOnMap.Name)
+                        Map.Targets.Add(new Target(new Tuple<int, int>(x, y), unit.Coordinates, coor));
+                }
+            }
+        }
+
+        public Tuple<int, int> ConvertMapCoordinates(Direction facing, Tuple<int, int> unitCoordinates, Tuple<int, int> scanCoordinates)
+        {
+            Tuple<int, int> scan = Helper.RotateCoordinates(facing, scanCoordinates.Item1, scanCoordinates.Item2);
+
+            int x = unitCoordinates.Item1 + scan.Item1;
+            int y = unitCoordinates.Item2 + scan.Item2;
+
+            return new Tuple<int, int>(x, y);
+        }
     }
 }

@@ -14,7 +14,7 @@ namespace AIGame.Interfaces
         Broadcast Broadcast { get; }
         SignalType Type { get; }
         int Age { get; set; }
-        Signal GetSignal(Unit unit);
+        Signal GetSignal(IUnit unit);
     }
 
 

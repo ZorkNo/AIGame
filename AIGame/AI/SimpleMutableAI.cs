@@ -22,16 +22,16 @@ namespace AIGame.AI
         public override IOrder GetOrder(Sensor sensor)
         {
 
-            if (sensor.ScannedArea.Targets.Any())
+            if (sensor.Targets.Any())
             {
                 _fireCounter = _mutableParameters.FireCounter;
-                _target = sensor.ScannedArea.Targets.First().RelativeCoordinates;
+                _target = sensor.Targets.First().RelativeCoordinates;
             }
 
             if (_random.Next(1, 100) < _mutableParameters.FireChance && _fireCounter > 0)
             {
                 _fireCounter--;
-                return new FireTorpedo(_target);
+                return new FireTorpedo(_target, CoordinateType.Relative);
             }
 
             //Hvis det en lige tur scan
@@ -47,7 +47,7 @@ namespace AIGame.AI
             if (_random.Next(1, 100) < _mutableParameters.MoveChange)
                 return new Move();
 
-            return new FireTorpedo(getCoordinates());
+            return new FireTorpedo(getCoordinates(), CoordinateType.Relative);
         }
 
         private IOrder Rotate()

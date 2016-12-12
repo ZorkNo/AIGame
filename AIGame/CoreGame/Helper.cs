@@ -47,6 +47,15 @@ namespace AIGame.CoreGame
 
             return angle;
         }
+        public static Tuple<int, int> ConvertMapCoordinates(Direction facing, Tuple<int, int> unitCoordinates, Tuple<int, int> scanCoordinates)
+        {
+            Tuple<int, int> scan = Helper.RotateCoordinates(facing, scanCoordinates.Item1, scanCoordinates.Item2);
+
+            int x = unitCoordinates.Item1 + scan.Item1;
+            int y = unitCoordinates.Item2 + scan.Item2;
+
+            return new Tuple<int, int>(x, y);
+        }
         public static DirectionPrecise GetDirection(Tuple<int, int> seenFromCoordinates, Tuple<int, int> toCoordinates)
         {
             double angle = GetAngle(seenFromCoordinates, toCoordinates);

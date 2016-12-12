@@ -32,7 +32,7 @@ namespace AIGame.CoreGame
             Type = SignalType.Broadcast;
         }
 
-        public Signal GetSignal(Unit unit)
+        public Signal GetSignal(IUnit unit)
         {
             DirectionPrecise directionPrecise = Helper.GetDirection(unit.Coordinates, OriginCoordinates);
 

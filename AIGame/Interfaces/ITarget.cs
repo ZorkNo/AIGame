@@ -9,8 +9,7 @@ namespace AIGame.Interfaces
 {
     public interface ITarget
     {
-        Tuple<int, int> Coordinates { get; set; }
         Tuple<int, int> RelativeCoordinates { get; }
-        Tuple<int, int> SelfCoordinates { get; set; }
+        Tuple<int, int> AbsoluteCoordinates { get; }
     }
 }

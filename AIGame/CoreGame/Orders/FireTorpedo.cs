@@ -6,18 +6,30 @@ namespace AIGame.CoreGame.Orders
     public class FireTorpedo : IOrder
     {
 
-        public Tuple<int, int> RelativeCoordinates;
+        public Tuple<int, int> Coordinates;
+        public CoordinateType CoordinateType;
         private string message;
-        public FireTorpedo(Tuple<int, int> relativeCoordinates)
+        public FireTorpedo(Tuple<int, int> coordinates, CoordinateType coordinateType)
         {
-            RelativeCoordinates = relativeCoordinates;
+            Coordinates = coordinates;
+            CoordinateType = coordinateType;
+
         }
         public void Execute(IUnit unit, IMap map)
         {
-            Tuple<int, int> rotatedCoordinates = Helper.RotateCoordinates(unit.Facing, RelativeCoordinates.Item1,RelativeCoordinates.Item2);
+            Tuple<int, int> coordinates = new Tuple<int, int>(0,0);
+            if (CoordinateType == CoordinateType.Relative)
+            {
+                Tuple<int, int> rotatedCoordinates = Helper.RotateCoordinates(unit.Facing, Coordinates.Item1,
+                    Coordinates.Item2);
 
-            Tuple <int, int> coordinates= new Tuple<int, int>(unit.Coordinates.Item1 + rotatedCoordinates.Item1,unit.Coordinates.Item2 + rotatedCoordinates.Item2  );
-
+                coordinates = new Tuple<int, int>(unit.Coordinates.Item1 + rotatedCoordinates.Item1,
+                    unit.Coordinates.Item2 + rotatedCoordinates.Item2);
+            }
+            else
+            {
+                coordinates = Coordinates;
+            }
             message = string.Format("{0}{1}{2}{3}", message, unit.Name, ": Firing", System.Environment.NewLine);
             foreach (IUnit unitOnMap in map.Units.FindAll(u => u.Coordinates.Equals(coordinates)))
             {
@@ -29,9 +41,16 @@ namespace AIGame.CoreGame.Orders
 
         public bool IsValid(IUnit unit, IMap map)
         {
-            if (RelativeCoordinates == null)
+            if (Coordinates == null)
                 return false;
+            Tuple<int,int> RelativeCoordinates = Coordinates;
+            if (CoordinateType == CoordinateType.Absolute)
+            {
+                RelativeCoordinates = new Tuple<int, int>(unit.Coordinates.Item1 - Coordinates.Item1, unit.Coordinates.Item2 - Coordinates.Item2);
+                RelativeCoordinates = Helper.RotateCoordinates(unit.Facing,RelativeCoordinates.Item1,RelativeCoordinates.Item2);
+            }
 
+            
             var isValid = !(RelativeCoordinates.Item1 < -2 || RelativeCoordinates.Item2 < 0 ||
                           RelativeCoordinates.Item1 > 2 || RelativeCoordinates.Item2 > 3);
             return isValid;
@@ -48,6 +67,10 @@ namespace AIGame.CoreGame.Orders
         }
     }
 
-
+    public enum CoordinateType
+    {
+        Relative,
+        Absolute,
+    }
 }
 
