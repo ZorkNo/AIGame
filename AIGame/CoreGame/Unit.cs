@@ -36,6 +36,7 @@ namespace AIGame.CoreGame
 
             Sensor = new Sensor();
             Sensor.Health = Health;
+            Sensor.Targets = new List<ITarget>();
             Coordinates = new Tuple<int, int>(-1,-1);
             LastOrders = new List<IOrder>();
         }
@@ -57,8 +58,8 @@ namespace AIGame.CoreGame
             Update(this, map);
 
             if(Map==null)
-            { 
-                Map= new ExplorableMap();
+            {
+                Map = new ExplorableMap();
                 Map.Initilize(this, map);
             }
             Map.Explorer(this.Coordinates.Item1, this.Coordinates.Item2);
@@ -71,6 +72,8 @@ namespace AIGame.CoreGame
             {
                 NoScan(this, map);
             }
+            Sensor.Terrain = Map.Terrain;
+            Sensor.Targets = Map.Targets;
         }
         public void Update(IUnit unit, IMap map)
         {
@@ -109,8 +112,9 @@ namespace AIGame.CoreGame
 
         private void ScanField(IUnit unit, IMap map, int x, int y)
         {
+            Tuple<int, int> selfCoordinates = new Tuple<int, int>(2, 0);
             var coor = ConvertMapCoordinates(unit.Facing, unit.Coordinates,
-                new Tuple<int, int>(x - unit.Coordinates.Item1, y - unit.Coordinates.Item2));
+                new Tuple<int, int>(x - selfCoordinates.Item1, y - selfCoordinates.Item2));
 
             //only include view cone
             if ((y == 1 && (x == 0 || x == 4)) || (y == 0 && x != 2))

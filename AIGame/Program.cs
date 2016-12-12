@@ -37,7 +37,7 @@ namespace AIGame
         private static void SingleGame()
         {
             Random rnd = new Random(Environment.TickCount);
-            var game = Game.Create(AiType.Create<RunAwayAI>(), AiType.Create<CryBabyAI>(), GameMode.HiddenInfo1ShipSmall, rnd);
+            var game = Game.Create(AiType.Create<SimplePlusAI>(), AiType.Create<CryBabyAI>(), GameMode.HiddenInfo1ShipSmall, rnd);
 
             for (int i = 0; i < 100000; i++)
             {

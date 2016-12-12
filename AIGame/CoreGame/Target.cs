@@ -21,7 +21,7 @@ namespace AIGame.CoreGame
         {
             get
             {
-                return new Tuple<int, int>(coordinates.Item1 - selfCoordinates.Item1,coordinates.Item2 - selfCoordinates.Item2 );    
+                return new Tuple<int, int>( coordinates.Item1-2,  coordinates.Item2 );    
             }
         }
 
