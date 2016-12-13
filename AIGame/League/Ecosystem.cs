@@ -21,7 +21,7 @@ namespace AIGame.League
             {
                 AIGame.League.League league = new AIGame.League.League();
 
-                EcoPlayers =league.Tournament(EcoPlayers,TournamentType.Dropout,2000, GameMode.HiddenInfo1ShipLarge);
+                EcoPlayers =league.Tournament(EcoPlayers,TournamentType.Dropout,2000, GameMode.HiddenInfo2ShipLarge);
 
                 
                 //Clean out bad players

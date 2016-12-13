@@ -64,7 +64,7 @@ namespace AIGame.League
             List<Player> leaguePlayers = new List<Player>
             {
                 new Player(AiType.Create<SimpleMutableAI>()),
-                new Player(AiType.Create<NewMutableAI>("94","99","4","0","99","1")),
+                new Player(AiType.Create<ScanNFirePlusAI>()),
                 new Player(AiType.Create<NewMutableAI>()),
                 new Player(AiType.Create<DoNothingAI>()),
                 new Player(AiType.Create<RandomAI>()),
@@ -72,8 +72,8 @@ namespace AIGame.League
                 new Player(AiType.Create<CryBabyAI>()),
                 new Player(AiType.Create<FireAllTheTimeAI>()),
                 new Player(AiType.Create<ScanNFireAI>()),
-                new Player(AiType.Create<SimplePlusAI>()),
                 new Player(AiType.Create<CooroperateAI>()),
+                new Player(AiType.Create<SimplePlusAI>()),
             };
 
             return leaguePlayers;
@@ -174,7 +174,7 @@ namespace AIGame.League
             long longRnd = Environment.TickCount + gameInt;
             Random rnd = new Random((int)longRnd);
 
-            Game game = new Game(blue.AiType, red.AiType, GameMode.HiddenInfo1ShipLarge, rnd);
+            Game game = new Game(blue.AiType, red.AiType, _gameMode, rnd);
             game.PlayUntilEnd();
 
             if(withLock)

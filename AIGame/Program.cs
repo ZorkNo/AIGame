@@ -37,7 +37,7 @@ namespace AIGame
         private static void SingleGame()
         {
             Random rnd = new Random(Environment.TickCount);
-            var game = Game.Create(AiType.Create<CooroperateAI>(), AiType.Create<SimplePlusAI>(),
+            var game = Game.Create( AiType.Create<SimplePlusAI>(), AiType.Create<CooroperateAI>(),
                 GameMode.HiddenInfo2ShipLarge, rnd);
 
             for (int i = 0; i < 100000; i++)
