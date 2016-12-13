@@ -34,6 +34,9 @@ namespace AIGame.CoreGame.Orders
             foreach (IUnit unitOnMap in map.Units.FindAll(u => u.Coordinates.Equals(coordinates)))
             {
                 unitOnMap.Health -= 34;
+                if (unitOnMap.Health < 0)
+                    unitOnMap.Health = 0;
+
                 message = string.Format("{0}{1}{2}{3}", message, unitOnMap.Name, ": Hit!", System.Environment.NewLine);
             }
 

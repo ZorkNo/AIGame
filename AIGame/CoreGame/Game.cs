@@ -96,7 +96,7 @@ namespace AIGame.CoreGame
         {
             Map.SignalOrigins.Select(c => { c.Age++; return c; }).ToList();
             //This way of evaluating signal age is ok as long as no units is added
-            Map.SignalOrigins.RemoveAll(s => s.Age > Map.Units.Count);
+            Map.SignalOrigins.RemoveAll(s => s.Age > Map.Units.Count-1);
         }
 
         private bool RunOrder(IUnit unit)
