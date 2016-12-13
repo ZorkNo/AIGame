@@ -49,6 +49,7 @@ namespace AIGame.CoreGame
             string message = "";
 
             message = string.Format("{0}{1}{2}{3}", message, "Unit:", Name, System.Environment.NewLine);
+            message = string.Format("{0}{1}{2}{3}", message, "Side:", Owner, System.Environment.NewLine);
             message = string.Format("{0}{1}{2}{3}", message, "Facing:", Facing, System.Environment.NewLine);
             message = string.Format("{0}{1}{2},{3}{4}", message, "Coordinates:", Coordinates.Item1 ,Coordinates.Item2, System.Environment.NewLine);
             return message;

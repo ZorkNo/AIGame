@@ -37,7 +37,8 @@ namespace AIGame
         private static void SingleGame()
         {
             Random rnd = new Random(Environment.TickCount);
-            var game = Game.Create(AiType.Create<CooroperateAI>(), AiType.Create<CryBabyAI>(), GameMode.HiddenInfo1ShipSmall, rnd);
+            var game = Game.Create(AiType.Create<CooroperateAI>(), AiType.Create<SimplePlusAI>(),
+                GameMode.HiddenInfo2ShipLarge, rnd);
 
             for (int i = 0; i < 100000; i++)
             {
@@ -51,7 +52,15 @@ namespace AIGame
                 if (game.GameResult != GameResult.GameNotEnded)
                     break;
             }
-            
+            Console.WriteLine("Game result:{0}", game.GameResult);
+            Console.WriteLine("Press N to continue");
+            while (true)
+            {
+                ConsoleKeyInfo key = Console.ReadKey();
+
+                if (key.Key == ConsoleKey.N)
+                    break;
+            }
         }
 
         private static void LeagueMatchUp()
