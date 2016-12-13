@@ -35,9 +35,17 @@ namespace AIGame.CoreGame
         public Signal GetSignal(IUnit unit)
         {
             DirectionPrecise directionPrecise = Helper.GetDirection(unit.Coordinates, OriginCoordinates);
+            Broadcast broadcast = new Broadcast();
+            bool sameSide = Broadcaster == unit.Owner;
+            bool encrypted = Broadcast.Type == BroadcastType.Encrypted;
+            broadcast.Type = Broadcast.Type;
 
-            Broadcast.Message = (Broadcast.Type == BroadcastType.Open || Broadcaster == unit.Owner) ? Broadcast.Message : "**Encrypted**";
-            return new Signal(directionPrecise, Broadcast, Type);
+            if (!sameSide && encrypted)
+                broadcast.Message = "**Encrypted**";
+            else
+                broadcast.Message = Broadcast.Message;
+
+            return new Signal(directionPrecise, broadcast, Type);
         }
 
     }

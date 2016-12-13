@@ -73,7 +73,7 @@ namespace AIGame.League
                 new Player(AiType.Create<FireAllTheTimeAI>()),
                 new Player(AiType.Create<ScanNFireAI>()),
                 new Player(AiType.Create<SimplePlusAI>()),
-                
+                new Player(AiType.Create<CooroperateAI>()),
             };
 
             return leaguePlayers;

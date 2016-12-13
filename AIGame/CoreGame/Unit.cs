@@ -79,6 +79,7 @@ namespace AIGame.CoreGame
         {
             Health = unit.Health;
             Sensor.SelfFacing = unit.Facing;
+            Sensor.SelfCoordinates = Coordinates; 
 
             Tuple<int, int> infrontXy = Helper.NewCoordinates(unit.Coordinates, unit.Facing);
             Sensor.Infront = map.GetTerrain(infrontXy);

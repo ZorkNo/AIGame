@@ -101,7 +101,16 @@ namespace AIGame.CoreGame
 
         private bool RunOrder(IUnit unit)
         {
-            IOrder order = unit.GetOrder();
+            IOrder order = new DoNothing();
+            try
+            {
+                order = unit.GetOrder();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error in AI message:{0}",ex.Message);
+            }
+
             if (order.IsValid(unit, Map))
             {
                 order.Execute(unit, Map);
